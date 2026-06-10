@@ -13,15 +13,18 @@ export function Contact() {
       />
       <div className="relative mx-auto max-w-6xl px-6 py-32 sm:py-44">
         <Reveal>
-          <MetaLabel>05 — Contact</MetaLabel>
+          <MetaLabel>
+            <span aria-hidden="true">05 — </span>Contact
+          </MetaLabel>
           <h2 className="text-display-lg mt-8 max-w-4xl text-ink">
             Let&apos;s build something that{" "}
             <em className="font-serif italic text-accent-bright">works</em>.
           </h2>
           <p className="mt-7 max-w-xl text-lg leading-relaxed text-ink-soft">
-            I&apos;m open to frontend roles and freelance projects — remote, or
-            on-site in Lebanon. The fastest way to reach me is email; I usually
-            reply within a day.
+            I take on products, interfaces, and systems: with teams that are
+            hiring, clients with something to build, or anyone who needs a
+            difficult interface shipped properly. Email is fastest; I reply
+            within a day.
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-4">

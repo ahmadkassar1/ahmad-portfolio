@@ -1,6 +1,5 @@
 import { HeroSculpture } from "@/components/hero-sculpture";
 import { MetaLabel } from "@/components/meta-label";
-import { site } from "@/data/site";
 
 /* Server component on purpose: the text column animates with CSS only
    (.rise / .fade-rise), so the headline paints — and counts as LCP —
@@ -24,9 +23,9 @@ export function Hero() {
           </h1>
 
           <p className="fade-rise mt-7 max-w-md text-lg leading-relaxed text-ink-soft [animation-delay:160ms]">
-            ERP modules, CRM pipelines, dashboards, and storefronts — in
-            Angular, React, and Next.js. Currently building TheBridge ERP at
-            Horecons.
+            I design and build the working interfaces behind business
+            software: ERP modules, CRM pipelines, dashboards, and storefronts.
+            Dense, stateful products that people run their workday in.
           </p>
 
           <div className="fade-rise mt-9 flex flex-wrap items-center gap-x-7 gap-y-5 [animation-delay:240ms]">
@@ -50,9 +49,8 @@ export function Hero() {
             </a>
           </div>
 
-          <p className="fade-rise mt-8 flex items-center gap-2 font-mono text-xs text-ink-faint [animation-delay:320ms]">
-            <span className="h-1.5 w-1.5 rounded-full bg-good" aria-hidden="true" />
-            {site.availability}
+          <p className="fade-rise mt-8 font-mono text-xs text-ink-faint [animation-delay:320ms]">
+            Angular · React · Next.js · TypeScript
           </p>
         </div>
 

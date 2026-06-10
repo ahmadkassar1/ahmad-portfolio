@@ -5,8 +5,8 @@ import { site } from "@/data/site";
 
 const links = [
   { href: "#work", label: "Work" },
-  { href: "#experience", label: "Experience" },
-  { href: "#about", label: "About" },
+  { href: "#capabilities", label: "What I build" },
+  { href: "#approach", label: "Approach" },
   { href: "#toolbox", label: "Toolbox" },
 ];
 

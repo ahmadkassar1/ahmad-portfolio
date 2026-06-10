@@ -1,63 +1,29 @@
-export type Role = {
-  company: string;
-  title: string;
+/* Deliberately compact: this site leads with work and capability —
+   employment history is supporting evidence, not the spine. */
+
+export type Shipped = {
+  platform: string;
+  context: string;
   period: string;
-  location: string;
   summary: string;
-  highlights: string[];
 };
 
-export type Education = {
-  school: string;
-  credential: string;
-  period: string;
-  detail: string;
-};
-
-export const roles: Role[] = [
+export const shipped: Shipped[] = [
   {
-    company: "Horecons",
-    title: "Frontend Developer",
-    period: "Oct 2025 — Present",
-    location: "Ghazir / Beirut, Lebanon · On-site",
+    platform: "TheBridge ERP",
+    context: "Horecons",
+    period: "2025 — now",
     summary:
-      "Frontend development on TheBridge ERP and internal operations systems.",
-    highlights: [
-      "Build and ship features across TheBridge ERP — SalesSphere, Stock Management, ProjectPilot, and other operations modules — in Angular and TypeScript.",
-      "Turn operational requirements into scalable frontend logic: reusable screens, CRUD workflows, routing flows, forms, tables, filters, and dashboards wired to REST APIs.",
-      "Contribute to React and Next.js applications for external UAE event projects and interactive web experiences.",
-      "Connect frontend flows to n8n automation and lead-capture pipelines.",
-    ],
+      "The screens Horecons runs its operations on: sales, stock, and project modules in TheBridge ERP, plus Next.js event builds with n8n-connected lead flows.",
   },
   {
-    company: "Interphase — Core Development Team",
-    title: "Frontend Developer",
-    period: "Mar 2024 — Sep 2025",
-    location: "Lebanon",
-    summary:
-      "Frontend modules for Populus, an ERP-style business platform with configurable workflows.",
-    highlights: [
-      "Built a full-featured Kanban board: task states, workflow logic, board columns, filters, and automation-engine behavior on dynamic data.",
-      "Worked on form-builder features — dynamic fields, reusable sections, validation flows, state transitions, and submission logic.",
-      "Implemented reusable UI structures and configurable sections for website-builder features.",
-      "Managed complex frontend state for screens where data moves between statuses, modules, and user actions.",
-    ],
-  },
-];
-
-export const education: Education[] = [
-  {
-    school: "42 Beirut",
-    credential: "Software Engineering / Computer Science Projects",
+    platform: "Populus",
+    context: "Interphase",
     period: "2024 — 2025",
-    detail:
-      "C, C++, algorithms, memory management, Linux, Git, shell scripting, and peer code review.",
-  },
-  {
-    school: "Institut Renée Mouawad",
-    credential: "B.A. in Business Administration",
-    period: "2020 — 2022",
-    detail:
-      "The business-side foundation behind how I read operational requirements today.",
+    summary:
+      "Kanban boards, form-builder flows, and website-builder modules on an ERP-style platform with configurable workflows.",
   },
 ];
+
+export const training =
+  "42 Beirut — systems programming, peer review · business degree before code";

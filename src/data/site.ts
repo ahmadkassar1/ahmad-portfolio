@@ -8,7 +8,6 @@ export const site = {
   url: "https://ahmad-kassar-portfolio.vercel.app",
   github: "https://github.com/ahmadkassar1",
   linkedin: "https://www.linkedin.com/in/ahmad-kassar-2627ab2bb",
-  availability: "Open to frontend roles & freelance projects",
   description:
-    "Frontend developer building ERP modules, dashboards, and business web applications in Angular, React, and Next.js. Based in Lebanon — open to roles and freelance work.",
+    "Frontend developer who designs and builds the interfaces behind business software: ERP systems, CRM pipelines, dashboards, and storefronts. Angular, React, and Next.js. Based in Beirut.",
 } as const;

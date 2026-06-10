@@ -33,20 +33,27 @@ src/
 │   └── sitemap.ts            # sitemap.xml
 ├── components/
 │   ├── nav.tsx               # fixed nav + mobile menu
-│   ├── hero.tsx              # landing hero (staggered entrance)
-│   ├── selected-work.tsx     # projects
-│   ├── experience.tsx        # roles + education
-│   ├── about.tsx
+│   ├── hero.tsx              # identity hero (CSS entrance)
+│   ├── hero-sculpture.tsx    # interactive CSS-3D centerpiece
+│   ├── selected-work.tsx     # project showcase (vignettes as art)
+│   ├── detail-strip.tsx      # scroll-snap component gallery
+│   ├── capabilities.tsx      # what I build
+│   ├── about.tsx             # approach + principles
 │   ├── skills.tsx            # toolbox
+│   ├── experience.tsx        # compact "where this shipped" band
 │   ├── contact.tsx
 │   ├── footer.tsx
 │   ├── section-heading.tsx
-│   ├── motion/               # MotionConfig provider + Reveal primitive
+│   ├── meta-label.tsx        # the single mono-label spec
+│   ├── spotlight-card.tsx
+│   ├── vignettes/            # hand-coded UI mockups + shared bits
+│   ├── motion/               # LazyMotion provider + Reveal primitive
 │   └── ui/copy-email-button.tsx
 └── data/
     ├── site.ts               # name, links, email, site URL  ← edit me
-    ├── projects.ts           # project case studies           ← edit me
-    ├── experience.ts         # roles + education
+    ├── projects.ts           # project showcases              ← edit me
+    ├── capabilities.ts       # what-I-build cards + principles
+    ├── experience.ts         # compact shipped-at entries
     └── skills.ts             # toolbox groups
 ```
 

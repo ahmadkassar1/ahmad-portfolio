@@ -12,6 +12,8 @@ export type Project = {
   outcome: string;
   /** Up to two supporting points. */
   highlights: string[];
+  /** What building this proves — capability, not features. */
+  demonstrates: string;
   /** Which coded vignette renders as this project's visual. */
   vignette: "pipeline" | "qr-menu" | "publishing" | "storefront";
   /**
@@ -33,11 +35,13 @@ export const projects: Project[] = [
     kind: "SaaS product",
     stack: ["Next.js", "TypeScript", "Supabase", "AI workflows"],
     outcome:
-      "A compact SaaS that takes a business lead from first contact to closed — capture, pipeline stages, follow-ups, and AI-drafted outreach in one system.",
+      "A compact SaaS that takes a business lead from first contact to closed. Capture, pipeline stages, follow-ups, and AI-drafted outreach in one system.",
     highlights: [
       "Built around sales operations from the start: pipeline logic, API routes, and automation hooks shape the whole data model.",
       "Lead capture stores straight into Supabase and surfaces in a CRM-style pipeline with stages and follow-ups.",
     ],
+    demonstrates:
+      "One person owned the whole shape of it: schema, pipeline state, and the AI integration that writes into both.",
     vignette: "pipeline",
     links: [],
   },
@@ -47,11 +51,13 @@ export const projects: Project[] = [
     kind: "Multi-tenant product",
     stack: ["Next.js", "Angular", "Supabase"],
     outcome:
-      "One reusable codebase any venue can be onboarded onto — QR menu browsing, product management, and ordering flows tuned for phones at the table.",
+      "One reusable codebase any venue can be onboarded onto: QR menu browsing, product management, and ordering flows tuned for phones at the table.",
     highlights: [
       "The operator side gets the same care as the guest side: admin screens for restaurant data, categories, and menu items.",
       "Reusable business patterns make onboarding another restaurant a configuration exercise.",
     ],
+    demonstrates:
+      "Two audiences, one codebase: staff at a laptop, guests on a phone at the table, and the tenant model that keeps them out of each other's way.",
     vignette: "qr-menu",
     links: [],
   },
@@ -66,6 +72,8 @@ export const projects: Project[] = [
       "Admin publishing workflow from draft to live, on reusable page layouts with per-page SEO metadata.",
       "Newsletter collection wired into the same data layer, ready for an email pipeline.",
     ],
+    demonstrates:
+      "The publishing workflow came first: article schema, categories, and per-page SEO all hang off decisions made before any UI existed.",
     vignette: "publishing",
     links: [],
   },
@@ -80,6 +88,8 @@ export const projects: Project[] = [
       "Reactive state with Angular Signals keeps interactions, loading states, and flow changes predictable.",
       "Reusable component patterns and clean routing — the structure holds up as the catalog grows.",
     ],
+    demonstrates:
+      "Fine-grained reactivity end to end: every cart change, filter, and loading state derives from signals instead of duplicated flags.",
     vignette: "storefront",
     links: [],
   },

@@ -26,7 +26,7 @@ export function SelectedWork() {
         <SectionHeading
           index="01"
           title="Selected work"
-          lede="Personal product builds, drawn as the interfaces they are. The ERP work I ship professionally is internal — it lives under experience."
+          lede="Products I've designed and built end to end, drawn as the interfaces they are. Behind each drawing is a working product with users."
         />
 
         <div className="mt-20 space-y-24 sm:space-y-32">
@@ -82,6 +82,12 @@ export function SelectedWork() {
                         </li>
                       ))}
                     </ul>
+                    <div className="mt-6 border-l-2 border-accent/40 pl-4">
+                      <MetaLabel>What it shows</MetaLabel>
+                      <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
+                        {project.demonstrates}
+                      </p>
+                    </div>
                     <ul
                       aria-label="Stack"
                       className="mt-7 flex flex-wrap gap-2"

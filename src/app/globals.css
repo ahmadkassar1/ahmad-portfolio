@@ -12,9 +12,7 @@
   --line-bright: #3a3833;
   --accent: #4d7cff;
   --accent-bright: #7396ff;
-  /* Data ink — desaturated functional tones used only inside UI vignettes.
-     One sanctioned exception: the hero availability dot uses --good, because
-     a green status dot is a stronger convention than palette purity. */
+  /* Data ink — desaturated functional tones used only inside UI vignettes. */
   --good: #6fae8a;
   --warn: #c9a35c;
   --bad: #c9786b;
