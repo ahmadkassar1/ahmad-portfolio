@@ -6,7 +6,7 @@ import { skillGroups } from "@/data/skills";
 export function Skills() {
   return (
     <section id="toolbox" className="scroll-mt-24">
-      <div className="mx-auto max-w-5xl px-6 py-24 sm:py-32">
+      <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
         <SectionHeading
           index="04"
           title="Toolbox"

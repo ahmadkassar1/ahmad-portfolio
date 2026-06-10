@@ -58,7 +58,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#faf9f7",
+  themeColor: "#111110",
 };
 
 // Static, hand-authored data — nothing user-supplied ever reaches this JSON.
@@ -92,9 +92,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${newsreader.variable}`}>
       <body className="font-sans">
+        {/* Structural background: hairline grid fading from the top. Fixed,
+            painted once, never animated. */}
+        <div aria-hidden="true" className="bg-blueprint pointer-events-none fixed inset-0 -z-10" />
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-accent focus:px-5 focus:py-2.5 focus:text-sm focus:font-medium focus:text-white"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-accent focus:px-5 focus:py-2.5 focus:text-sm focus:font-medium focus:text-ground"
         >
           Skip to content
         </a>

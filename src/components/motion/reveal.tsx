@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { m } from "motion/react";
 
 export const EASE: [number, number, number, number] = [0.21, 0.47, 0.32, 0.98];
 
@@ -12,7 +12,7 @@ type RevealProps = {
 
 export function Reveal({ children, delay = 0, className }: RevealProps) {
   return (
-    <motion.div
+    <m.div
       className={className}
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -20,6 +20,6 @@ export function Reveal({ children, delay = 0, className }: RevealProps) {
       transition={{ duration: 0.7, delay, ease: EASE }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }

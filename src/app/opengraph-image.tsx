@@ -15,8 +15,8 @@ export default function OpenGraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#faf9f7",
-          color: "#1a1c21",
+          background: "#111110",
+          color: "#f2f0ea",
           padding: 80,
         }}
       >
@@ -26,7 +26,7 @@ export default function OpenGraphImage() {
               width: 14,
               height: 14,
               borderRadius: 9999,
-              background: "#12399a",
+              background: "#4d7cff",
             }}
           />
           <div
@@ -34,7 +34,7 @@ export default function OpenGraphImage() {
               fontSize: 26,
               letterSpacing: 6,
               textTransform: "uppercase",
-              color: "#83878f",
+              color: "#8e8b81",
             }}
           >
             Ahmad Kassar
@@ -43,14 +43,15 @@ export default function OpenGraphImage() {
 
         <div
           style={{
-            fontSize: 72,
+            fontSize: 76,
             fontWeight: 600,
             letterSpacing: -2,
-            lineHeight: 1.12,
-            maxWidth: 980,
+            lineHeight: 1.08,
+            maxWidth: 950,
+            display: "flex",
           }}
         >
-          Building the front end of software that runs real businesses.
+          Interfaces that run the business.
         </div>
 
         <div
@@ -59,11 +60,11 @@ export default function OpenGraphImage() {
             justifyContent: "space-between",
             alignItems: "center",
             fontSize: 26,
-            color: "#4b4f57",
+            color: "#a8a59a",
           }}
         >
           <div>Frontend Developer — Angular · React · Next.js</div>
-          <div style={{ color: "#12399a" }}>Beirut, Lebanon</div>
+          <div style={{ color: "#7396ff" }}>Beirut, Lebanon</div>
         </div>
       </div>
     ),

@@ -1,73 +1,44 @@
-"use client";
-
-import { motion, stagger } from "motion/react";
+import { HeroSculpture } from "@/components/hero-sculpture";
 import { MetaLabel } from "@/components/meta-label";
-import { EASE } from "@/components/motion/reveal";
 import { site } from "@/data/site";
 
-const container = {
-  hidden: {},
-  show: {
-    transition: { delayChildren: stagger(0.1, { startDelay: 0.1 }) },
-  },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } },
-};
-
-function Fact({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <MetaLabel>{label}</MetaLabel>
-      <p className="mt-2 text-sm text-ink-soft">{children}</p>
-    </div>
-  );
-}
+/* Server component on purpose: the text column animates with CSS only
+   (.rise / .fade-rise), so the headline paints — and counts as LCP —
+   before any JavaScript arrives. */
 
 export function Hero() {
   return (
-    <section>
-      <div className="mx-auto max-w-5xl px-6 pb-20 pt-36 sm:pb-28 sm:pt-48">
-        <motion.div variants={container} initial="hidden" animate="show">
-          <motion.div variants={item}>
+    <section className="relative overflow-hidden">
+      <div className="mx-auto grid max-w-6xl items-center gap-14 px-6 pb-24 pt-32 sm:pt-40 lg:grid-cols-12 lg:gap-6 lg:pb-32">
+        <div className="relative z-10 lg:col-span-5">
+          <div className="fade-rise">
             <MetaLabel>Ahmad Kassar — Frontend Developer, Beirut</MetaLabel>
-          </motion.div>
+          </div>
 
-          <motion.h1
-            variants={item}
-            className="mt-6 max-w-3xl text-4xl font-semibold leading-[1.08] tracking-tight text-ink sm:text-5xl lg:text-6xl"
-          >
-            Building the front end of software that{" "}
-            <em className="font-serif font-medium italic text-accent">
-              runs real businesses
+          <h1 className="text-display rise mt-6 text-ink [animation-delay:80ms]">
+            Interfaces that{" "}
+            <em className="font-serif italic text-accent-bright">
+              run the business
             </em>
             .
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            variants={item}
-            className="mt-7 max-w-xl text-lg leading-relaxed text-ink-soft"
-          >
-            Two years shipping ERP modules, dashboards, and workflow tools in
+          <p className="fade-rise mt-7 max-w-md text-lg leading-relaxed text-ink-soft [animation-delay:160ms]">
+            ERP modules, CRM pipelines, dashboards, and storefronts — in
             Angular, React, and Next.js. Currently building TheBridge ERP at
             Horecons.
-          </motion.p>
+          </p>
 
-          <motion.div
-            variants={item}
-            className="mt-10 flex flex-wrap items-center gap-x-7 gap-y-5"
-          >
+          <div className="fade-rise mt-9 flex flex-wrap items-center gap-x-7 gap-y-5 [animation-delay:240ms]">
             <a
               href="#work"
-              className="rounded-full bg-accent px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-accent-deep"
+              className="rounded-full bg-accent px-6 py-3 text-sm font-medium text-ground transition-colors hover:bg-accent-bright"
             >
-              Selected work
+              See the work
             </a>
             <a
               href="#contact"
-              className="group text-sm font-medium text-ink transition-colors hover:text-accent"
+              className="group text-sm font-medium text-ink transition-colors hover:text-accent-bright"
             >
               Get in touch{" "}
               <span
@@ -77,56 +48,19 @@ export function Hero() {
                 →
               </span>
             </a>
-            <span className="flex items-center gap-2 font-mono text-xs text-ink-faint">
-              <span
-                className="h-1.5 w-1.5 rounded-full bg-accent"
-                aria-hidden="true"
-              />
-              {site.availability}
-            </span>
-          </motion.div>
+          </div>
 
-          <motion.div
-            variants={item}
-            className="mt-20 grid gap-8 border-t border-line pt-8 sm:grid-cols-3"
-          >
-            <Fact label="Currently">Frontend Developer · Horecons</Fact>
-            <Fact label="Previously">Interphase — Core Development Team</Fact>
-            <Fact label="Elsewhere">
-              <a
-                href={site.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group transition-colors hover:text-accent"
-              >
-                GitHub{" "}
-                <span
-                  className="inline-block transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                  aria-hidden="true"
-                >
-                  ↗
-                </span>
-              </a>
-              <span className="mx-2 text-ink-faint" aria-hidden="true">
-                /
-              </span>
-              <a
-                href={site.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group transition-colors hover:text-accent"
-              >
-                LinkedIn{" "}
-                <span
-                  className="inline-block transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                  aria-hidden="true"
-                >
-                  ↗
-                </span>
-              </a>
-            </Fact>
-          </motion.div>
-        </motion.div>
+          <p className="fade-rise mt-8 flex items-center gap-2 font-mono text-xs text-ink-faint [animation-delay:320ms]">
+            <span className="h-1.5 w-1.5 rounded-full bg-good" aria-hidden="true" />
+            {site.availability}
+          </p>
+        </div>
+
+        {/* The sculpture intrudes into the type column's territory on
+            large screens — the overlap is what keeps it off one plane. */}
+        <div className="lg:col-span-7 lg:-ml-10">
+          <HeroSculpture />
+        </div>
       </div>
     </section>
   );

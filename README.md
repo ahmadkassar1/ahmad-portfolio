@@ -59,11 +59,13 @@ All content lives in `src/data/` — components never hardcode copy that belongs
 3. **Phone number** — intentionally left off the public site to avoid scraping/spam. Add it to `contact.tsx` if you want it visible.
 4. **Project screenshots** — the layout is text-first by design. If you add imagery later, use `next/image` inside the project article's right column.
 
-## Design system
+## Design system — "Cobalt Ledger"
 
-- **Palette** (defined in `globals.css`): warm off-white paper `#faf9f7`, ink `#1a1c21`, two muted grays, hairline `#e7e5df`, and one accent — `#12399a` — used only for emphasis, focus rings, and interactive states.
-- **Type**: Geist (UI/body), Geist Mono (labels, indices, meta), Newsreader italic (editorial accents). All self-hosted via `next/font` — no external font requests.
-- **Motion**: one `Reveal` primitive (fade + 24px rise, custom ease) plus a staggered hero. `MotionConfig reducedMotion="user"` honors `prefers-reduced-motion` globally; smooth scrolling is also gated behind the same media query.
+- **Palette** (defined in `globals.css`): warm graphite ground `#111110`, panel `#1b1a18`, bone text `#f2f0ea` with two muted tiers, hairlines `#2a2925`, and one accent — cobalt `#4d7cff` (the brand `#12399a` evolved two stops lighter to survive on dark; `#7396ff` for hovers). Desaturated data-ink tones (`good`/`warn`/`bad`) appear only inside UI vignettes, with one documented exception (the hero availability dot). All combinations verified WCAG AA.
+- **Project art**: no screenshots — each project renders as a hand-coded UI vignette (`src/components/vignettes/`) built from shared primitives (`bits.tsx`: GreekBar, MiniChip, MicroAction, Value, Browser/PhoneFrame). Replace any vignette with a real screenshot later by swapping the component inside the showcase's `role="img"` wrapper.
+- **Hero sculpture** (`hero-sculpture.tsx`): CSS-3D layered panels with pointer tilt (gated to fine pointers and `prefers-reduced-motion: no-preference`), an ambient state cycle (paused offscreen, in hidden tabs, under reduced motion, or via the visible pause control), and a keyboard-operable kanban card with focus restoration and `aria-live` announcements.
+- **Type**: Geist (UI/body), Geist Mono (labels, data), Newsreader italic (editorial accents), plus `.text-display` / `.text-display-lg` clamp utilities for the showcase scale. All self-hosted via `next/font`.
+- **Motion**: `LazyMotion strict` + `m` components keep the animation runtime out of the critical bundle; the hero text column animates with pure CSS (`.rise` / `.fade-rise`) so the headline is LCP-eligible before hydration. `MotionConfig reducedMotion="user"` covers every JS animation; CSS animations and smooth scroll sit behind the same media query.
 
 ## Security
 

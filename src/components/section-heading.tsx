@@ -10,10 +10,10 @@ export function SectionHeading({ index, title, lede }: SectionHeadingProps) {
   return (
     <Reveal>
       <div className="flex items-baseline gap-4">
-        <span aria-hidden="true" className="font-mono text-sm text-accent">
+        <span aria-hidden="true" className="font-mono text-sm text-accent-bright">
           {index}
         </span>
-        <h2 className="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+        <h2 className="text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
           {title}
         </h2>
       </div>

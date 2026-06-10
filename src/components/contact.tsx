@@ -1,42 +1,45 @@
+import { MetaLabel } from "@/components/meta-label";
 import { Reveal } from "@/components/motion/reveal";
-import { SectionHeading } from "@/components/section-heading";
 import { CopyEmailButton } from "@/components/ui/copy-email-button";
 import { site } from "@/data/site";
 
 export function Contact() {
   return (
-    <section id="contact" className="scroll-mt-24">
-      <div className="mx-auto max-w-5xl px-6 py-24 sm:py-32">
-        <SectionHeading index="05" title="Contact" />
-
-        <Reveal delay={0.05}>
-          <p className="mt-10 max-w-2xl text-2xl font-medium leading-snug tracking-tight text-ink sm:text-3xl">
-            I&apos;m open to{" "}
-            <em className="font-serif italic text-accent">frontend roles</em> and
-            freelance projects — remote, or on-site in Lebanon.
-          </p>
-          <p className="mt-5 max-w-xl leading-relaxed text-ink-soft">
-            If you&apos;re hiring, or you have a product that needs a serious
-            front end, the fastest way to reach me is email. I usually reply
-            within a day.
+    <section id="contact" className="relative scroll-mt-24 overflow-hidden">
+      {/* Structural wash, not decoration: pulls the closing section forward. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 [background:radial-gradient(70%_55%_at_50%_115%,rgba(77,124,255,0.12),transparent_70%)]"
+      />
+      <div className="relative mx-auto max-w-6xl px-6 py-32 sm:py-44">
+        <Reveal>
+          <MetaLabel>05 — Contact</MetaLabel>
+          <h2 className="text-display-lg mt-8 max-w-4xl text-ink">
+            Let&apos;s build something that{" "}
+            <em className="font-serif italic text-accent-bright">works</em>.
+          </h2>
+          <p className="mt-7 max-w-xl text-lg leading-relaxed text-ink-soft">
+            I&apos;m open to frontend roles and freelance projects — remote, or
+            on-site in Lebanon. The fastest way to reach me is email; I usually
+            reply within a day.
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <a
               href={`mailto:${site.email}`}
-              className="rounded-full bg-accent px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-accent-deep"
+              className="rounded-full bg-accent px-6 py-3 text-sm font-medium text-ground transition-colors hover:bg-accent-bright"
             >
               Email me
             </a>
             <CopyEmailButton email={site.email} />
           </div>
 
-          <div className="mt-14 flex flex-wrap gap-x-8 gap-y-3 border-t border-line pt-8 font-mono text-sm">
+          <div className="mt-16 flex flex-wrap gap-x-8 gap-y-3 border-t border-line pt-8 font-mono text-sm">
             <a
               href={site.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="group text-ink-soft transition-colors hover:text-accent"
+              className="group text-ink-soft transition-colors hover:text-accent-bright"
             >
               GitHub{" "}
               <span
@@ -50,7 +53,7 @@ export function Contact() {
               href={site.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="group text-ink-soft transition-colors hover:text-accent"
+              className="group text-ink-soft transition-colors hover:text-accent-bright"
             >
               LinkedIn{" "}
               <span

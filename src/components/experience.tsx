@@ -6,62 +6,71 @@ import { education, roles } from "@/data/experience";
 export function Experience() {
   return (
     <section id="experience" className="scroll-mt-24">
-      <div className="mx-auto max-w-5xl px-6 py-24 sm:py-32">
+      <div className="mx-auto max-w-6xl px-6 py-24 sm:py-28">
         <SectionHeading
           index="02"
           title="Experience"
           lede="Two ERP platforms, two teams, one through-line: turning operational requirements into interfaces people run their day on."
         />
 
-        <div className="mt-16">
-          {roles.map((role) => (
-            <Reveal key={role.company}>
-              <article className="grid gap-6 border-t border-line py-12 md:grid-cols-12 md:gap-10">
-                <div className="md:col-span-4">
-                  <p className="font-mono text-sm text-ink">{role.period}</p>
-                  <p className="mt-2 font-mono text-xs text-ink-faint">
+        <div className="mt-14 grid gap-6 lg:grid-cols-2">
+          {roles.map((role, index) => (
+            <Reveal key={role.company} delay={Math.min(index * 0.08, 0.16)}>
+              <article className="h-full rounded-2xl border border-line bg-panel p-7 sm:p-8">
+                <div className="flex flex-wrap items-baseline justify-between gap-2">
+                  <p className="font-mono text-sm text-accent-bright">
+                    {role.period}
+                  </p>
+                  <p className="font-mono text-xs text-ink-faint">
                     {role.location}
                   </p>
                 </div>
-                <div className="md:col-span-8">
-                  <h3 className="text-xl font-semibold tracking-tight text-ink">
-                    {role.title}{" "}
-                    <span className="font-normal text-ink-soft">
-                      · {role.company}
-                    </span>
-                  </h3>
-                  <p className="mt-3 text-ink-soft">{role.summary}</p>
-                  <ul className="mt-5 space-y-3">
-                    {role.highlights.map((highlight) => (
-                      <li
-                        key={highlight}
-                        className="flex gap-3 text-sm leading-relaxed text-ink-soft"
+                <h3 className="mt-4 text-xl font-semibold tracking-tight text-ink">
+                  {role.title}{" "}
+                  <span className="font-normal text-ink-soft">
+                    · {role.company}
+                  </span>
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-ink-soft">
+                  {role.summary}
+                </p>
+                <ul className="mt-5 space-y-3 border-t border-line pt-5">
+                  {role.highlights.map((highlight) => (
+                    <li
+                      key={highlight}
+                      className="flex gap-3 text-sm leading-relaxed text-ink-soft"
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="select-none text-accent-bright"
                       >
-                        <span
-                          aria-hidden="true"
-                          className="select-none text-accent"
-                        >
-                          —
-                        </span>
-                        <span>{highlight}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                        —
+                      </span>
+                      <span>{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
               </article>
             </Reveal>
           ))}
         </div>
 
         <Reveal>
-          <div className="border-t border-line pt-10">
+          <div className="mt-12">
             <MetaLabel as="h3">Education & training</MetaLabel>
-            <div className="mt-6 grid gap-8 sm:grid-cols-2">
+            <div className="mt-5 grid gap-6 sm:grid-cols-2">
               {education.map((entry) => (
-                <div key={entry.school}>
-                  <p className="font-mono text-sm text-ink">{entry.period}</p>
-                  <p className="mt-2 font-medium text-ink">{entry.credential}</p>
-                  <p className="text-sm text-ink-soft">{entry.school}</p>
+                <div
+                  key={entry.school}
+                  className="rounded-xl border border-line px-6 py-5"
+                >
+                  <div className="flex flex-wrap items-baseline justify-between gap-2">
+                    <p className="font-medium text-ink">{entry.credential}</p>
+                    <p className="font-mono text-xs text-ink-faint">
+                      {entry.period}
+                    </p>
+                  </div>
+                  <p className="mt-1 text-sm text-ink-soft">{entry.school}</p>
                   <p className="mt-2 text-sm leading-relaxed text-ink-soft">
                     {entry.detail}
                   </p>

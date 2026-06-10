@@ -1,24 +1,38 @@
 @import "tailwindcss";
 
 :root {
-  --paper: #faf9f7;
-  --ink: #1a1c21;
-  --ink-soft: #4b4f57;
-  /* Lightest tone still passing WCAG AA (4.79:1) on paper at small sizes. */
-  --ink-faint: #6b6f77;
-  --line: #e7e5df;
-  --accent: #12399a;
-  --accent-deep: #0e2c78;
+  /* Cobalt Ledger — warm graphite dark, bone text, brand blue evolved
+     two stops lighter so it carries on a dark ground. */
+  --ground: #111110;
+  --panel: #1b1a18;
+  --ink: #f2f0ea;
+  --ink-soft: #a8a59a;
+  --ink-faint: #8e8b81;
+  --line: #2a2925;
+  --line-bright: #3a3833;
+  --accent: #4d7cff;
+  --accent-bright: #7396ff;
+  /* Data ink — desaturated functional tones used only inside UI vignettes.
+     One sanctioned exception: the hero availability dot uses --good, because
+     a green status dot is a stronger convention than palette purity. */
+  --good: #6fae8a;
+  --warn: #c9a35c;
+  --bad: #c9786b;
 }
 
 @theme inline {
-  --color-paper: var(--paper);
+  --color-ground: var(--ground);
+  --color-panel: var(--panel);
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
   --color-ink-faint: var(--ink-faint);
   --color-line: var(--line);
+  --color-line-bright: var(--line-bright);
   --color-accent: var(--accent);
-  --color-accent-deep: var(--accent-deep);
+  --color-accent-bright: var(--accent-bright);
+  --color-good: var(--good);
+  --color-warn: var(--warn);
+  --color-bad: var(--bad);
 
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
@@ -36,7 +50,7 @@ html {
 }
 
 body {
-  background: var(--paper);
+  background: var(--ground);
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -44,11 +58,100 @@ body {
 
 ::selection {
   background: var(--accent);
-  color: #ffffff;
+  color: var(--ground);
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--accent-bright);
   outline-offset: 3px;
   border-radius: 2px;
+}
+
+/* Structural background: hairline grid that fades out radially.
+   Painted once on a fixed layer — never animated. */
+.bg-blueprint {
+  background-image: linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(
+    ellipse 90% 70% at 50% 0%,
+    black 0%,
+    transparent 75%
+  );
+  opacity: 0.5;
+}
+
+/* Display type: the scale jump that separates a showcase from a blog. */
+.text-display {
+  font-size: clamp(2.75rem, 5.2vw, 4.75rem);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+}
+
+.text-display-lg {
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+}
+
+/* CSS-only hero entrance — no hydration dependency, so the headline can be
+   the LCP element. .rise animates transform only (the element is visible
+   from first paint); .fade-rise adds opacity for non-LCP elements. */
+@media (prefers-reduced-motion: no-preference) {
+  .rise {
+    animation: rise 0.7s cubic-bezier(0.21, 0.47, 0.32, 0.98) both;
+  }
+
+  .fade-rise {
+    animation: fade-rise 0.7s cubic-bezier(0.21, 0.47, 0.32, 0.98) both;
+  }
+
+  @keyframes rise {
+    from {
+      transform: translateY(24px);
+    }
+    to {
+      transform: none;
+    }
+  }
+
+  @keyframes fade-rise {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* Spotlight hover surface — painted via --mx/--my custom properties set
+   from a rAF-throttled pointermove. Static (and invisible) without hover. */
+.spotlight {
+  position: relative;
+}
+
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(
+    340px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(115, 150, 255, 0.08),
+    transparent 70%
+  );
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .spotlight:hover::before {
+    opacity: 1;
+  }
 }

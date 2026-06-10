@@ -24,7 +24,7 @@ export function CopyEmailButton({ email }: { email: string }) {
     <button
       type="button"
       onClick={copy}
-      className="rounded-full border border-line px-6 py-3 font-mono text-sm text-ink transition-colors hover:border-accent hover:text-accent"
+      className="rounded-full border border-line px-6 py-3 font-mono text-sm text-ink transition-colors hover:border-accent-bright hover:text-accent-bright"
     >
       {/* Both labels share one grid cell so the button keeps the wider
           (email) width while showing the confirmation. */}

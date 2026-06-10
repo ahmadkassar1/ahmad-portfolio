@@ -61,20 +61,20 @@ export function Nav() {
       <header
       className={`fixed inset-x-0 top-0 z-40 border-b transition-colors duration-300 ${
         solid
-          ? "border-line bg-paper/90 backdrop-blur-sm"
+          ? "border-line bg-ground/85 backdrop-blur-sm"
           : "border-transparent bg-transparent"
       }`}
     >
       <nav
         aria-label="Main"
-        className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6"
+        className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6"
       >
         <a
           href="#main"
           className="font-serif text-xl italic text-ink"
           aria-label="Ahmad Kassar — back to top"
         >
-          ak<span className="text-accent">.</span>
+          ak<span className="text-accent-bright">.</span>
         </a>
 
         <div className="hidden items-center gap-8 md:flex">
@@ -83,7 +83,7 @@ export function Nav() {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="text-sm text-ink-soft transition-colors hover:text-ink"
+                  className="text-sm text-ink-soft transition-colors hover:text-accent-bright"
                 >
                   {link.label}
                 </a>
@@ -92,7 +92,7 @@ export function Nav() {
           </ul>
           <a
             href="#contact"
-            className="rounded-full border border-line px-4 py-1.5 text-sm font-medium text-ink transition-colors hover:border-accent hover:text-accent"
+            className="rounded-full border border-line px-4 py-1.5 text-sm font-medium text-ink transition-colors hover:border-accent-bright hover:text-accent-bright"
           >
             Get in touch
           </a>
@@ -138,7 +138,7 @@ export function Nav() {
       {open ? (
         <div
           id="mobile-nav"
-          className="fixed inset-x-0 bottom-0 top-16 z-30 overflow-y-auto bg-paper pb-8 md:hidden"
+          className="fixed inset-x-0 bottom-0 top-16 z-30 overflow-y-auto bg-ground pb-8 md:hidden"
         >
           <ul className="flex flex-col gap-2 px-6 pt-8">
             {links.map((link, index) => (
@@ -148,7 +148,7 @@ export function Nav() {
                   onClick={() => setOpen(false)}
                   className="block border-b border-line py-4 text-2xl font-medium tracking-tight text-ink"
                 >
-                  <span className="mr-4 font-mono text-sm text-accent" aria-hidden="true">
+                  <span className="mr-4 font-mono text-sm text-accent-bright" aria-hidden="true">
                     0{index + 1}
                   </span>
                   {link.label}
@@ -159,7 +159,7 @@ export function Nav() {
               <a
                 href="#contact"
                 onClick={() => setOpen(false)}
-                className="block py-4 text-2xl font-medium tracking-tight text-accent"
+                className="block py-4 text-2xl font-medium tracking-tight text-accent-bright"
               >
                 <span className="mr-4 font-mono text-sm" aria-hidden="true">
                   05

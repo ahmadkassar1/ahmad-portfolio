@@ -13,18 +13,24 @@ const facts = [
 export function About() {
   return (
     <section id="about" className="scroll-mt-24">
-      <div className="mx-auto max-w-5xl px-6 py-24 sm:py-32">
+      <div className="mx-auto max-w-6xl px-6 py-24 sm:py-32">
         <SectionHeading index="03" title="About" />
 
-        <div className="mt-12 grid gap-12 md:grid-cols-12">
-          <Reveal className="space-y-6 text-base leading-relaxed text-ink-soft md:col-span-7">
+        <Reveal>
+          <p className="mt-12 max-w-3xl font-serif text-2xl italic leading-snug text-ink sm:text-3xl">
+            I studied business before I wrote software —{" "}
+            <span className="text-accent-bright">it changed what I build.</span>
+          </p>
+        </Reveal>
+
+        <div className="mt-12 grid gap-12 lg:grid-cols-12">
+          <Reveal className="space-y-6 text-base leading-relaxed text-ink-soft lg:col-span-7">
             <p>
-              I came to software from the business side. I finished a degree in
-              business administration before I wrote a line of production code —
-              and that background still shapes how I work. When I build a
-              stock-management screen or a sales pipeline, I&apos;m thinking
-              about the person processing orders with it, not just the
-              component tree.
+              I finished a degree in business administration before I wrote a
+              line of production code — and that background still shapes how I
+              work. When I build a stock-management screen or a sales pipeline,
+              I&apos;m thinking about the person processing orders with it, not
+              just the component tree.
             </p>
             <p>
               The engineering rigor came from 42 Beirut: a year of C, C++,
@@ -42,8 +48,8 @@ export function About() {
             </p>
           </Reveal>
 
-          <Reveal delay={0.1} className="md:col-span-4 md:col-start-9">
-            <dl className="space-y-6 border-l border-line pl-6">
+          <Reveal delay={0.1} className="lg:col-span-4 lg:col-start-9">
+            <dl className="space-y-6 rounded-2xl border border-line bg-panel p-7">
               {facts.map((fact) => (
                 <div key={fact.label}>
                   <MetaLabel as="dt">{fact.label}</MetaLabel>
