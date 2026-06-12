@@ -2,6 +2,7 @@
 
 import { projects } from "@/data/projects";
 import { stations } from "@/data/stations";
+import { techIdForStackItem } from "@/data/tech";
 import { useExperience } from "@/lib/experience-store";
 import { moods } from "@/lib/moods";
 import { PanelShell } from "@/components/world/ui/panel-shell";
@@ -9,17 +10,19 @@ import { PanelShell } from "@/components/world/ui/panel-shell";
 /**
  * The focused station's project, in real DOM. Same content the ledger
  * shows in Selected Work — outcome first, highlights, what it
- * demonstrates, stack, links when they exist.
+ * demonstrates, stack, links when they exist. Stack chips that match a
+ * tech in the constellation fly the camera to that tech.
  */
 export function ProjectPanel() {
   const openPanel = useExperience((s) => s.openPanel);
-  const focusedStation = useExperience((s) => s.focusedStation);
+  const focusTarget = useExperience((s) => s.focusTarget);
   const closePanel = useExperience((s) => s.closePanel);
+  const focusOn = useExperience((s) => s.focusOn);
 
-  if (openPanel !== "project" || !focusedStation) return null;
+  if (openPanel !== "project" || focusTarget?.kind !== "station") return null;
 
-  const station = stations.find((s) => s.id === focusedStation);
-  const project = projects.find((p) => p.vignette === focusedStation);
+  const station = stations.find((s) => s.id === focusTarget.id);
+  const project = projects.find((p) => p.vignette === focusTarget.id);
   if (!station || !project) return null;
 
   const mood = moods[station.mood];
@@ -55,14 +58,27 @@ export function ProjectPanel() {
         </div>
 
         <ul className="flex flex-wrap gap-2" aria-label="Stack">
-          {project.stack.map((item) => (
-            <li
-              key={item}
-              className="rounded-full border border-line px-3 py-1 font-mono text-xs text-ink-soft"
-            >
-              {item}
-            </li>
-          ))}
+          {project.stack.map((item) => {
+            const techId = techIdForStackItem(item);
+            return (
+              <li key={item}>
+                {techId ? (
+                  <button
+                    type="button"
+                    onClick={() => focusOn({ kind: "tech", id: techId })}
+                    title={`Fly to ${item} in the constellation`}
+                    className="rounded-full border border-line px-3 py-1 font-mono text-xs text-ink-soft transition-colors hover:border-line-bright hover:text-ink"
+                  >
+                    {item} →
+                  </button>
+                ) : (
+                  <span className="inline-block rounded-full border border-line px-3 py-1 font-mono text-xs text-ink-soft">
+                    {item}
+                  </span>
+                )}
+              </li>
+            );
+          })}
         </ul>
 
         {project.links.length > 0 && (

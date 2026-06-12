@@ -6,13 +6,16 @@ import { Suspense } from "react";
 import * as THREE from "three";
 import { useExperience } from "@/lib/experience-store";
 import { worldPalette } from "@/lib/moods";
+import { AboutArea } from "@/components/world/about-area";
 import { CameraRig } from "@/components/world/camera-rig";
+import { ContactTerminal } from "@/components/world/contact-terminal";
 import { Effects } from "@/components/world/effects";
 import { HoloCore } from "@/components/world/holo-core";
 import { Lighting } from "@/components/world/lighting";
 import { Particles } from "@/components/world/particles";
 import { ProjectStations } from "@/components/world/project-station";
 import { Room } from "@/components/world/room";
+import { SkillsConstellation } from "@/components/world/skills-constellation";
 
 /**
  * Canvas root. Only ever mounted client-side (dynamic ssr:false in
@@ -52,8 +55,11 @@ export function WorldCanvas() {
           <Lighting />
           <Room />
           <HoloCore />
+          <SkillsConstellation />
           <Particles />
           <ProjectStations />
+          <AboutArea />
+          <ContactTerminal />
           <Effects />
         </Suspense>
       </PerformanceMonitor>

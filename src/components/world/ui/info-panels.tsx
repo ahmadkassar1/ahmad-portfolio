@@ -4,16 +4,20 @@ import { aboutFacts, aboutNarrative } from "@/data/about";
 import { principles } from "@/data/capabilities";
 import { skillGroups } from "@/data/skills";
 import { site } from "@/data/site";
+import { techs } from "@/data/tech";
 import { useExperience } from "@/lib/experience-store";
 import { PanelShell } from "@/components/world/ui/panel-shell";
 
 /**
  * About / Contact / Toolbox panels — the rest of the ledger's content,
  * reachable from the HUD so the world never hides anything behind WebGL.
+ * The toolbox doubles as the DOM route into the constellation: every
+ * orbiting tech is focusable from here without touching the canvas.
  */
 export function InfoPanels() {
   const openPanel = useExperience((s) => s.openPanel);
   const closePanel = useExperience((s) => s.closePanel);
+  const focusOn = useExperience((s) => s.focusOn);
 
   if (openPanel === "about")
     return (
@@ -96,6 +100,30 @@ export function InfoPanels() {
     return (
       <PanelShell eyebrow="04" title="Toolbox" onClose={closePanel}>
         <div className="space-y-5">
+          <div>
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-faint">
+              In the constellation
+            </p>
+            <div className="mt-2.5 flex flex-wrap gap-2">
+              {techs.map((tech) => (
+                <button
+                  key={tech.id}
+                  type="button"
+                  onClick={() => focusOn({ kind: "tech", id: tech.id })}
+                  title={`Fly to ${tech.name}`}
+                  className="flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 font-mono text-xs text-ink-soft transition-colors hover:border-line-bright hover:text-ink"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="h-2 w-2 rounded-full"
+                    style={{ background: tech.color }}
+                  />
+                  {tech.name} →
+                </button>
+              ))}
+            </div>
+          </div>
+
           {skillGroups.map((group) => (
             <div key={group.label}>
               <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-faint">

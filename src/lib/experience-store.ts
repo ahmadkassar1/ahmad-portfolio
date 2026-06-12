@@ -9,9 +9,11 @@ import type { DeviceProfile, Quality } from "@/lib/device-profile";
  * starts at "ledger"). The store is only ever read from client
  * components, so the module-scope instance never leaks across requests.
  *
- * Camera phases: intro → idle ⇄ (focusing → focused → returning).
- * Guards below keep the rig from wedging: you can't focus before the
- * intro lands, and switching stations mid-return simply retargets.
+ * Focus is generalized: stations, orbiting techs, the About desk, and
+ * the Contact terminal are all camera targets. Camera phases:
+ * intro → idle ⇄ (focusing → focused → returning). Guards keep the rig
+ * from wedging: no focusing before the intro lands, and switching
+ * targets mid-flight or mid-return simply retargets.
  */
 export type Mode = "ledger" | "world";
 export type CameraPhase =
@@ -20,34 +22,62 @@ export type CameraPhase =
   | "focusing"
   | "focused"
   | "returning";
-export type PanelKind = "project" | "about" | "contact" | "toolbox";
+export type PanelKind = "project" | "tech" | "about" | "contact" | "toolbox";
+export type TargetKind = "station" | "tech" | "about" | "contact";
+export type FocusTarget = { kind: TargetKind; id: string };
+
+/** Which panel a camera target opens on arrival. */
+const PANEL_FOR_KIND: Record<TargetKind, PanelKind> = {
+  station: "project",
+  tech: "tech",
+  about: "about",
+  contact: "contact",
+};
+
+/** Auto-tour itinerary: the four stations, then the desk, then contact. */
+export const TOUR_STOPS: FocusTarget[] = [
+  { kind: "station", id: "pipeline" },
+  { kind: "station", id: "qr-menu" },
+  { kind: "station", id: "publishing" },
+  { kind: "station", id: "storefront" },
+  { kind: "about", id: "about" },
+  { kind: "contact", id: "contact" },
+];
 
 type ExperienceState = {
   mode: Mode;
   profile: DeviceProfile | null;
   quality: Quality;
-  /** Reduced-motion visitor opted into the world: ambient motion stills. */
+  /** Reduced-motion visitor opted into the world: ambient motion stills
+   *  and camera transitions become near-instant cuts. */
   ambientStill: boolean;
   phase: CameraPhase;
   introDone: boolean;
-  focusedStation: string | null;
-  hoveredStation: string | null;
+  focusTarget: FocusTarget | null;
+  hoveredTarget: FocusTarget | null;
   openPanel: PanelKind | null;
+  tourActive: boolean;
+  tourIndex: number;
 
   setProfile: (profile: DeviceProfile) => void;
   setQuality: (quality: Quality) => void;
   enterWorld: () => void;
   exitToLedger: () => void;
   finishIntro: () => void;
+  focusOn: (target: FocusTarget) => void;
+  /** Convenience used by stations and the HUD dock. */
   focusStation: (id: string) => void;
   clearFocus: () => void;
-  /** Camera rig reports arrival at the focused station. */
-  arriveAtStation: () => void;
+  /** Camera rig reports arrival at the focused target. */
+  arriveAtTarget: () => void;
   /** Camera rig reports it returned home. */
   arriveHome: () => void;
-  setHovered: (id: string | null) => void;
+  setHovered: (target: FocusTarget | null) => void;
   showPanel: (panel: PanelKind) => void;
   closePanel: () => void;
+  startTour: () => void;
+  stopTour: () => void;
+  advanceTour: () => void;
 };
 
 export const useExperience = create<ExperienceState>((set, get) => ({
@@ -57,9 +87,11 @@ export const useExperience = create<ExperienceState>((set, get) => ({
   ambientStill: false,
   phase: "intro",
   introDone: false,
-  focusedStation: null,
-  hoveredStation: null,
+  focusTarget: null,
+  hoveredTarget: null,
   openPanel: null,
+  tourActive: false,
+  tourIndex: 0,
 
   setProfile: (profile) =>
     set({
@@ -77,8 +109,9 @@ export const useExperience = create<ExperienceState>((set, get) => ({
       mode: "world",
       phase: "intro",
       introDone: false,
-      focusedStation: null,
+      focusTarget: null,
       openPanel: null,
+      tourActive: false,
     });
   },
 
@@ -87,9 +120,10 @@ export const useExperience = create<ExperienceState>((set, get) => ({
       mode: "ledger",
       phase: "intro",
       introDone: false,
-      focusedStation: null,
-      hoveredStation: null,
+      focusTarget: null,
+      hoveredTarget: null,
       openPanel: null,
+      tourActive: false,
     }),
 
   finishIntro: () => {
@@ -98,21 +132,20 @@ export const useExperience = create<ExperienceState>((set, get) => ({
     set({ introDone: true, phase: "idle" });
   },
 
-  focusStation: (id) => {
-    const { introDone, phase, focusedStation } = get();
+  focusOn: (target) => {
+    const { introDone, phase, focusTarget } = get();
     // Guard: no focusing until the intro has landed.
     if (!introDone) return;
-    if (focusedStation === id && (phase === "focusing" || phase === "focused"))
-      return;
-    // Valid from idle, focused (station switch), and returning (retarget
-    // mid-flight) — the rig just damps toward the new target.
-    set({
-      focusedStation: id,
-      phase: "focusing",
-      // Panel content swaps instantly on station switch.
-      openPanel: phase === "focused" ? "project" : null,
-    });
+    const same =
+      focusTarget?.kind === target.kind && focusTarget?.id === target.id;
+    if (same && (phase === "focusing" || phase === "focused")) return;
+    // Valid from idle, focused (target switch), and returning (retarget
+    // mid-flight) — the rig just damps toward the new goal. The panel
+    // closes for the flight; arrival opens the right one.
+    set({ focusTarget: target, phase: "focusing", openPanel: null });
   },
+
+  focusStation: (id) => get().focusOn({ kind: "station", id }),
 
   clearFocus: () => {
     const { phase } = get();
@@ -120,26 +153,53 @@ export const useExperience = create<ExperienceState>((set, get) => ({
     set({ phase: "returning", openPanel: null });
   },
 
-  arriveAtStation: () => {
-    if (get().phase !== "focusing") return;
-    set({ phase: "focused", openPanel: "project" });
+  arriveAtTarget: () => {
+    const { phase, focusTarget } = get();
+    if (phase !== "focusing" || !focusTarget) return;
+    set({ phase: "focused", openPanel: PANEL_FOR_KIND[focusTarget.kind] });
   },
 
   arriveHome: () => {
     if (get().phase !== "returning") return;
-    set({ phase: "idle", focusedStation: null });
+    set({ phase: "idle", focusTarget: null });
   },
 
-  setHovered: (id) => set({ hoveredStation: id }),
+  setHovered: (target) => set({ hoveredTarget: target }),
 
   showPanel: (panel) => set({ openPanel: panel }),
 
   closePanel: () => {
-    const { openPanel, phase } = get();
+    const { openPanel, phase, focusTarget } = get();
     if (!openPanel) return;
-    // Closing the project panel also releases the camera.
-    if (openPanel === "project" && (phase === "focused" || phase === "focusing"))
+    // Closing the panel that belongs to the focused target also
+    // releases the camera; the toolbox (no camera target) just closes.
+    const belongsToFocus =
+      focusTarget && openPanel === PANEL_FOR_KIND[focusTarget.kind];
+    if (belongsToFocus && (phase === "focused" || phase === "focusing"))
       set({ openPanel: null, phase: "returning" });
     else set({ openPanel: null });
+  },
+
+  startTour: () => {
+    const { introDone } = get();
+    if (!introDone) return;
+    set({ tourActive: true, tourIndex: 0 });
+    get().focusOn(TOUR_STOPS[0]);
+  },
+
+  stopTour: () => set({ tourActive: false }),
+
+  advanceTour: () => {
+    const { tourActive, tourIndex } = get();
+    if (!tourActive) return;
+    const next = tourIndex + 1;
+    if (next >= TOUR_STOPS.length) {
+      // Tour complete — release the camera and end the tour.
+      set({ tourActive: false, tourIndex: 0 });
+      get().clearFocus();
+      return;
+    }
+    set({ tourIndex: next });
+    get().focusOn(TOUR_STOPS[next]);
   },
 }));

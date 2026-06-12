@@ -1,8 +1,8 @@
 # Ahmad Kassar — Portfolio
 
-Personal portfolio site. Single page, statically rendered, built for speed and clarity.
+Personal portfolio as a navigable 3D world ("the Ops Deck") layered over a fully server-rendered 2D site ("the Ledger"). Capable devices walk into the world; everyone else — crawlers, reduced-motion visitors, weak GPUs — gets the complete 2D site with an opt-in pill.
 
-**Stack:** Next.js (App Router) · React · TypeScript · Tailwind CSS v4 · Motion
+**Stack:** Next.js (App Router) · React · TypeScript · Tailwind CSS v4 · Motion · React Three Fiber · drei · zustand · maath
 
 ## Local development
 
@@ -32,6 +32,16 @@ src/
 │   ├── robots.ts             # robots.txt
 │   └── sitemap.ts            # sitemap.xml
 ├── components/
+│   ├── ledger-site.tsx       # the full 2D site, server-rendered (SSR fallback)
+│   ├── world/                # the 3D Ops Deck
+│   │   ├── ops-deck.tsx      # client shell: device probe, mode flip, tour driver, Escape
+│   │   ├── world-canvas.tsx  # Canvas root, quality tiers, PerformanceMonitor
+│   │   ├── camera-rig.tsx    # camera state machine + OrbitControls handoff
+│   │   ├── skills-constellation.tsx  # orbiting tech objects
+│   │   ├── project-station.tsx / station-props.tsx  # project pedestals + holo props
+│   │   ├── about-area.tsx / contact-terminal.tsx    # physical About + Contact
+│   │   ├── holo-core.tsx / room.tsx / lighting.tsx / particles.tsx / effects.tsx
+│   │   └── ui/               # DOM overlay: hud, panel-shell, project/tech/info panels, loader, enter-pill
 │   ├── nav.tsx               # fixed nav + mobile menu
 │   ├── hero.tsx              # identity hero (CSS entrance)
 │   ├── hero-sculpture.tsx    # interactive CSS-3D centerpiece
@@ -49,12 +59,23 @@ src/
 │   ├── vignettes/            # hand-coded UI mockups + shared bits
 │   ├── motion/               # LazyMotion provider + Reveal primitive
 │   └── ui/copy-email-button.tsx
-└── data/
-    ├── site.ts               # name, links, email, site URL  ← edit me
-    ├── projects.ts           # project showcases              ← edit me
-    ├── capabilities.ts       # what-I-build cards + principles
-    ├── experience.ts         # compact shipped-at entries
-    └── skills.ts             # toolbox groups
+├── data/
+│   ├── site.ts               # name, links, email, site URL  ← edit me
+│   ├── projects.ts           # project showcases              ← edit me
+│   ├── capabilities.ts       # what-I-build cards + principles
+│   ├── experience.ts         # compact shipped-at entries
+│   ├── skills.ts             # toolbox groups
+│   ├── tech.ts               # constellation: shapes, levels, orbits  ← edit me
+│   ├── stations.ts           # station ring layout + camera framing
+│   ├── areas.ts              # About desk / Contact terminal placement
+│   └── about.ts              # about-panel narrative + facts
+└── lib/
+    ├── experience-store.ts   # zustand state machine (mode, focus, tour)
+    ├── device-profile.ts     # capability probe → quality tier / auto-enter
+    ├── canvas-textures.ts    # procedural CanvasTextures (labels, screens, QR, floor)
+    ├── tech-positions.ts     # live orbit positions for the camera rig
+    ├── moods.ts              # station mood palettes
+    └── prng.ts               # seeded randomness (mulberry32)
 ```
 
 All content lives in `src/data/` — components never hardcode copy that belongs to data.
@@ -65,6 +86,31 @@ All content lives in `src/data/` — components never hardcode copy that belongs
 2. **Project links** — `src/data/projects.ts` → each project's `links` array is empty on purpose. Add GitHub/demo URLs as repos go public (the link row renders automatically).
 3. **Phone number** — intentionally left off the public site to avoid scraping/spam. Add it to `contact.tsx` if you want it visible.
 4. **Project screenshots** — the layout is text-first by design. If you add imagery later, use `next/image` inside the project article's right column.
+
+## The Ops Deck (3D world)
+
+### Scene layout
+
+A circular deck under a star field, dissolving into fog at the rim:
+
+- **Holo core** (center) — wireframe icosahedron pair around an emissive heart; pure ambiance.
+- **Skills constellation** — ten technologies orbit the core as symbolic procedural objects (React's atom, RxJS's stream knot, SQL's drum, Git's commit graph…). Orbits freeze while one is focused so the camera target holds still.
+- **Four project stations** on a ring (radius 6.2) at the diagonal angles — pedestal, mood-colored trim, painted label plate, and a per-project holo prop (pipeline stages, QR phone, page stack, shelf rack).
+- **About desk** (left wing) — monitor, keyboard, coffee, books, lamp. The person as a place.
+- **Contact terminal** (right wing) — console kiosk with a terminal screen and blinking cursor.
+
+### Interaction system
+
+One zustand state machine (`src/lib/experience-store.ts`) drives everything: `intro → idle ⇄ (focusing → focused → returning)`. Any clickable thing in the world is a *focus target* (`station | tech | about | contact`); clicking it (or its DOM twin in the HUD/toolbox) flies the camera in (maath damped easing) and opens the matching DOM panel on arrival. Escape unwinds one layer per press: tour → panel → focus. Panels cross-navigate — a tech's "Shipped in" buttons jump to stations, a project's stack chips jump to techs. **Tour** auto-cycles every target with a 5.5s dwell; any scene interaction cancels it. In idle, OrbitControls own the camera (drag to orbit, clamped angles).
+
+The canvas is `aria-hidden` decoration: every action and all content is reachable through the DOM HUD, the panels, and the toolbox — and the entire 2D site remains underneath as server-rendered HTML.
+
+### Performance decisions
+
+- **Zero external assets** — no GLTF/Draco/textures to load or compress because everything is procedural geometry and canvas-painted textures (CSP pins `font-src`/`connect-src` to `'self'`). First render needs nothing but the JS bundle, which is code-split behind `dynamic(…, { ssr: false })` and never loaded by visitors who stay on the ledger.
+- **Quality tiers** (`high`/`medium`/`low`) probed on entry — DPR caps, shadow resolution, particle count, antialiasing, and postprocessing (bloom + vignette skipped on low) all scale; drei's `PerformanceMonitor` walks quality down live if the GPU can't hold frame rate.
+- **No per-frame allocations** — every `useFrame` reuses preallocated vectors and mutates buffers in place; orbit clocks accumulate deltas so freezes are true pauses.
+- **Mobile/weak devices** default to the 2D ledger (full content, no WebGL cost) with the world one explicit tap away.
 
 ## Design system — "Cobalt Ledger"
 

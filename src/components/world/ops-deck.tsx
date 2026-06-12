@@ -8,6 +8,7 @@ import { EnterPill } from "@/components/world/ui/enter-pill";
 import { Hud } from "@/components/world/ui/hud";
 import { WorldLoader } from "@/components/world/ui/loader";
 import { ProjectPanel } from "@/components/world/ui/project-panel";
+import { TechPanel } from "@/components/world/ui/tech-panel";
 import { InfoPanels } from "@/components/world/ui/info-panels";
 
 // ssr:false is only legal inside a client component — the canvas touches
@@ -26,6 +27,9 @@ const WorldCanvas = dynamic(
 export function OpsDeck({ children }: { children: ReactNode }) {
   const mode = useExperience((s) => s.mode);
   const profile = useExperience((s) => s.profile);
+  const tourActive = useExperience((s) => s.tourActive);
+  const phase = useExperience((s) => s.phase);
+  const focusTarget = useExperience((s) => s.focusTarget);
   const setProfile = useExperience((s) => s.setProfile);
   const enterWorld = useExperience((s) => s.enterWorld);
   // The element focused before entering the world, restored on exit.
@@ -49,7 +53,7 @@ export function OpsDeck({ children }: { children: ReactNode }) {
     };
   }, [mode]);
 
-  // Escape unwinds one layer at a time: panel → station focus. Exiting
+  // Escape unwinds one layer at a time: tour → panel → focus. Exiting
   // the world itself stays an explicit HUD action so a stray Escape
   // can't yank someone out of the experience.
   useEffect(() => {
@@ -57,12 +61,39 @@ export function OpsDeck({ children }: { children: ReactNode }) {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "Escape") return;
       const s = useExperience.getState();
-      if (s.openPanel) s.closePanel();
+      if (s.tourActive) s.stopTour();
+      else if (s.openPanel) s.closePanel();
       else if (s.phase === "focused" || s.phase === "focusing") s.clearFocus();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [mode]);
+
+  // Auto-tour driver: dwell at each stop once the camera has landed,
+  // then advance. The timer re-arms whenever the stop or phase changes.
+  useEffect(() => {
+    if (!tourActive || phase !== "focused") return;
+    const t = setTimeout(() => useExperience.getState().advanceTour(), 5500);
+    return () => clearTimeout(t);
+  }, [tourActive, phase, focusTarget]);
+
+  // Any real interaction with the scene hands control back to the user.
+  // HUD/panel buttons manage the tour themselves (and panel clicks
+  // shouldn't kill it), so only canvas-level pointer activity cancels.
+  useEffect(() => {
+    if (!tourActive) return;
+    const cancel = (e: Event) => {
+      const el = e.target as HTMLElement | null;
+      if (el?.closest("[role='dialog']") || el?.closest("nav")) return;
+      useExperience.getState().stopTour();
+    };
+    window.addEventListener("pointerdown", cancel, true);
+    window.addEventListener("wheel", cancel, { capture: true, passive: true });
+    return () => {
+      window.removeEventListener("pointerdown", cancel, true);
+      window.removeEventListener("wheel", cancel, true);
+    };
+  }, [tourActive]);
 
   const inWorld = mode === "world";
 
@@ -85,6 +116,7 @@ export function OpsDeck({ children }: { children: ReactNode }) {
           <WorldLoader />
           <Hud />
           <ProjectPanel />
+          <TechPanel />
           <InfoPanels />
         </div>
       )}

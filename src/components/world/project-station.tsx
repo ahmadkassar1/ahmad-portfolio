@@ -37,8 +37,11 @@ function ProjectStation({ station }: { station: Station }) {
   useCursor(hovered);
 
   const focusStation = useExperience((s) => s.focusStation);
-  const setHoveredStation = useExperience((s) => s.setHovered);
-  const isFocused = useExperience((s) => s.focusedStation === station.id);
+  const setHoveredTarget = useExperience((s) => s.setHovered);
+  const isFocused = useExperience(
+    (s) =>
+      s.focusTarget?.kind === "station" && s.focusTarget.id === station.id,
+  );
 
   const labelTexture = useMemo(
     () => makeLabelTexture({ text: `${station.index} ${station.shortName}` }),
@@ -64,12 +67,12 @@ function ProjectStation({ station }: { station: Station }) {
   const onOver = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation();
     setHovered(true);
-    setHoveredStation(station.id);
+    setHoveredTarget({ kind: "station", id: station.id });
   };
   const onOut = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation();
     setHovered(false);
-    setHoveredStation(null);
+    setHoveredTarget(null);
   };
   const onClick = (e: ThreeEvent<MouseEvent>) => {
     e.stopPropagation();
