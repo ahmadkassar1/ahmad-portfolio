@@ -1,29 +1,15 @@
-import { About } from "@/components/about";
-import { Capabilities } from "@/components/capabilities";
-import { Contact } from "@/components/contact";
-import { DetailStrip } from "@/components/detail-strip";
-import { Experience } from "@/components/experience";
-import { Footer } from "@/components/footer";
-import { Hero } from "@/components/hero";
-import { Nav } from "@/components/nav";
-import { SelectedWork } from "@/components/selected-work";
-import { Skills } from "@/components/skills";
+import { LedgerSite } from "@/components/ledger-site";
+import { OpsDeck } from "@/components/world/ops-deck";
 
+/**
+ * The ledger is passed as a server-rendered child so the full site lives
+ * in the static HTML regardless of what the client-side deck decides to
+ * show. OpsDeck (client) flips between ledger and world after mount.
+ */
 export default function Home() {
   return (
-    <>
-      <Nav />
-      <main id="main">
-        <Hero />
-        <SelectedWork />
-        <DetailStrip />
-        <Capabilities />
-        <About />
-        <Skills />
-        <Experience />
-        <Contact />
-      </main>
-      <Footer />
-    </>
+    <OpsDeck>
+      <LedgerSite />
+    </OpsDeck>
   );
 }
