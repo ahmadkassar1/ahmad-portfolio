@@ -10,6 +10,7 @@ import { aboutArea, contactArea } from "@/data/areas";
 import { stations, stationCameraPosition, stationPosition } from "@/data/stations";
 import { useExperience, type FocusTarget } from "@/lib/experience-store";
 import { getTechPosition } from "@/lib/tech-positions";
+import { WalkControls } from "@/components/world/walk-controls";
 
 const HOME_POS = new THREE.Vector3(0, 3.6, 10.8);
 const HOME_TARGET = new THREE.Vector3(0, 1.1, 0);
@@ -78,6 +79,12 @@ export function CameraRig() {
   const phase = useExperience((s) => s.phase);
   const focusTarget = useExperience((s) => s.focusTarget);
   const ambientStill = useExperience((s) => s.ambientStill);
+  const navMode = useExperience((s) => s.navMode);
+  // Touch users get a slightly roomier orbit cone — the desktop clamps
+  // feel boxed-in on a small viewport.
+  const coarsePointer = useExperience((s) => s.profile?.isCoarsePointer ?? false);
+  // Scratch vector for deriving the walk-mode look target.
+  const fwdTmp = useRef(new THREE.Vector3());
 
   // Place the camera at the intro start exactly once per world entry.
   useEffect(() => {
@@ -88,13 +95,38 @@ export function CameraRig() {
       lookAt.current.copy(HOME_TARGET);
       camera.lookAt(HOME_TARGET);
       useExperience.getState().finishIntro();
-    } else {
-      camera.position.copy(INTRO_POS);
-      camera.lookAt(HOME_TARGET);
+      return;
     }
+    camera.position.copy(INTRO_POS);
+    camera.lookAt(HOME_TARGET);
+    // Safety net: the intro normally lands when the damp loop crosses the
+    // arrival threshold in useFrame, but if frames stall (backgrounded tab,
+    // PerformanceMonitor churn) that test may never fire — which would leave
+    // the HUD inert and OrbitControls disabled forever. finishIntro is
+    // idempotent, so a timed fallback can only help.
+    const t = setTimeout(() => useExperience.getState().finishIntro(), 4000);
+    return () => clearTimeout(t);
     // Run on mount only — phase changes after this are the rig's own doing.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Switching back to orbit while idle: snap to the canonical orbit home so
+  // re-enabling OrbitControls doesn't fight its distance/polar clamps from
+  // wherever the walker happened to be standing. (Walk takes over smoothly
+  // on its own — WalkControls seeds from the live camera — so it needs no
+  // reset here.)
+  useEffect(() => {
+    if (navMode !== "orbit") return;
+    if (useExperience.getState().phase !== "idle") return;
+    camera.position.copy(HOME_POS);
+    lookAt.current.copy(HOME_TARGET);
+    camera.lookAt(HOME_TARGET);
+    const c = controlsRef.current;
+    if (c) {
+      c.target.copy(HOME_TARGET);
+      c.update();
+    }
+  }, [navMode, camera]);
 
   // Retarget goals whenever the machine moves.
   useEffect(() => {
@@ -115,15 +147,33 @@ export function CameraRig() {
     const s = useExperience.getState();
 
     if (s.phase === "idle") {
-      // OrbitControls own the camera; keep our look target in sync so the
-      // next handoff starts from where the user actually left it.
       const controls = controlsRef.current;
-      if (controls) lookAt.current.copy(controls.target);
+      if (s.navMode === "orbit") {
+        // OrbitControls own the camera; keep our look target in sync so the
+        // next handoff starts from where the user actually left it.
+        if (controls) lookAt.current.copy(controls.target);
+      } else {
+        // Walk mode: WalkControls own the camera. Track a look point a few
+        // units ahead so a focus flight (and an orbit handoff) starts from
+        // the live first-person view rather than snapping.
+        camera.getWorldDirection(fwdTmp.current);
+        lookAt.current.copy(camera.position).addScaledVector(fwdTmp.current, 6);
+        if (controls) controls.target.copy(lookAt.current);
+      }
       return;
     }
 
+    const dist = camera.position.distanceTo(goalPos.current);
+
     // Reduced motion: transitions become fast cuts, not flights.
-    const speed = s.ambientStill ? 0.07 : s.phase === "intro" ? 0.9 : 0.45;
+    let speed = s.ambientStill ? 0.07 : s.phase === "intro" ? 0.9 : 0.45;
+    // Distance-aware focus easing: a short hop settles snappily while a long
+    // sweep across the deck reads more cinematic. Intro keeps its own pace;
+    // reduced-motion keeps its fast cut.
+    if (!s.ambientStill && s.phase !== "intro") {
+      const t = THREE.MathUtils.clamp(dist / 8, 0.35, 1);
+      speed *= 0.6 + 0.4 * t;
+    }
     easing.damp3(camera.position, goalPos.current, speed, delta);
     easing.damp3(lookAt.current, goalTarget.current, speed * 0.8, delta);
     camera.lookAt(lookAt.current);
@@ -133,24 +183,26 @@ export function CameraRig() {
     const controls = controlsRef.current;
     if (controls) controls.target.copy(lookAt.current);
 
-    const dist = camera.position.distanceTo(goalPos.current);
     if (s.phase === "intro" && dist < 0.35) s.finishIntro();
     else if (s.phase === "focusing" && dist < 0.18) s.arriveAtTarget();
     else if (s.phase === "returning" && dist < 0.3) s.arriveHome();
   });
 
   return (
-    <OrbitControls
-      ref={controlsRef}
-      enabled={phase === "idle"}
-      enableDamping
-      dampingFactor={0.08}
-      enablePan={false}
-      minDistance={5}
-      maxDistance={16}
-      minPolarAngle={Math.PI * 0.18}
-      maxPolarAngle={Math.PI * 0.46}
-      target={[HOME_TARGET.x, HOME_TARGET.y, HOME_TARGET.z]}
-    />
+    <>
+      <OrbitControls
+        ref={controlsRef}
+        enabled={phase === "idle" && navMode === "orbit"}
+        enableDamping
+        dampingFactor={0.08}
+        enablePan={false}
+        minDistance={5}
+        maxDistance={coarsePointer ? 18 : 16}
+        minPolarAngle={Math.PI * 0.18}
+        maxPolarAngle={coarsePointer ? Math.PI * 0.5 : Math.PI * 0.46}
+        target={[HOME_TARGET.x, HOME_TARGET.y, HOME_TARGET.z]}
+      />
+      <WalkControls />
+    </>
   );
 }

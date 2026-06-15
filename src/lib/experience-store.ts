@@ -25,6 +25,8 @@ export type CameraPhase =
 export type PanelKind = "project" | "tech" | "about" | "contact" | "toolbox";
 export type TargetKind = "station" | "tech" | "about" | "contact";
 export type FocusTarget = { kind: TargetKind; id: string };
+/** Idle navigation style: orbit around the deck, or walk it first-person. */
+export type NavMode = "orbit" | "walk";
 
 /** Which panel a camera target opens on arrival. */
 const PANEL_FOR_KIND: Record<TargetKind, PanelKind> = {
@@ -53,6 +55,9 @@ type ExperienceState = {
   ambientStill: boolean;
   phase: CameraPhase;
   introDone: boolean;
+  /** Idle navigation style — drives whether OrbitControls or WalkControls
+   *  own the camera while idle. */
+  navMode: NavMode;
   focusTarget: FocusTarget | null;
   hoveredTarget: FocusTarget | null;
   openPanel: PanelKind | null;
@@ -60,6 +65,8 @@ type ExperienceState = {
   tourIndex: number;
 
   setProfile: (profile: DeviceProfile) => void;
+  setNavMode: (mode: NavMode) => void;
+  toggleNavMode: () => void;
   setQuality: (quality: Quality) => void;
   enterWorld: () => void;
   exitToLedger: () => void;
@@ -87,6 +94,7 @@ export const useExperience = create<ExperienceState>((set, get) => ({
   ambientStill: false,
   phase: "intro",
   introDone: false,
+  navMode: "walk",
   focusTarget: null,
   hoveredTarget: null,
   openPanel: null,
@@ -102,6 +110,10 @@ export const useExperience = create<ExperienceState>((set, get) => ({
 
   setQuality: (quality) => set({ quality }),
 
+  setNavMode: (mode) => set({ navMode: mode }),
+  toggleNavMode: () =>
+    set((s) => ({ navMode: s.navMode === "walk" ? "orbit" : "walk" })),
+
   enterWorld: () => {
     const { mode, profile } = get();
     if (mode === "world" || !profile?.webglOk) return;
@@ -112,6 +124,10 @@ export const useExperience = create<ExperienceState>((set, get) => ({
       focusTarget: null,
       openPanel: null,
       tourActive: false,
+      // Always start a world session on foot — walking is the default
+      // experience, and resetting here means a stale orbit choice (or a
+      // persisted dev session) can never leave a visitor unable to move.
+      navMode: "walk",
     });
   },
 

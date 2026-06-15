@@ -117,6 +117,208 @@ export function makeQrTexture(seed: number, accent: string): THREE.CanvasTexture
   return toTexture(canvas);
 }
 
+/**
+ * Stylized, recognizable tech mark for a constellation medallion. Drawn
+ * procedurally — the CSP forbids fetching an SVG/PNG logo — as a simplified
+ * symbol or wordmark in the tech's brand hue on a transparent ground. These
+ * are on-brand stylizations, not pixel-exact trademarks.
+ */
+export function makeTechMark(opts: {
+  id: string;
+  name: string;
+  color: string;
+}): THREE.CanvasTexture {
+  const { id, color, name } = opts;
+  const S = 256;
+  const { canvas, ctx } = makeCanvas(S, S);
+  const ink = "#f2f0ea";
+  const cx = S / 2;
+  const cy = S / 2;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+
+  const word = (t: string, size: number, fill: string) => {
+    ctx.fillStyle = fill;
+    ctx.font = `700 ${size}px ${MONO_STACK}`;
+    ctx.fillText(t, cx, cy + 2);
+  };
+
+  switch (id) {
+    case "react": // nucleus + three electron rings
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 9;
+      for (let i = 0; i < 3; i++) {
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate((i * Math.PI) / 3);
+        ctx.beginPath();
+        ctx.ellipse(0, 0, 96, 37, 0, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+      }
+      ctx.fillStyle = ink;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 15, 0, Math.PI * 2);
+      ctx.fill();
+      break;
+
+    case "nextjs": // ringed bold N
+      ctx.strokeStyle = ink;
+      ctx.lineWidth = 8;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 88, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.lineWidth = 17;
+      ctx.beginPath();
+      ctx.moveTo(cx - 34, cy + 46);
+      ctx.lineTo(cx - 34, cy - 46);
+      ctx.lineTo(cx + 34, cy + 52);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(cx + 34, cy - 46);
+      ctx.lineTo(cx + 34, cy + 4);
+      ctx.stroke();
+      break;
+
+    case "typescript": // brand chip + TS
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.roundRect(cx - 92, cy - 92, 184, 184, 28);
+      ctx.fill();
+      word("TS", 104, "#0b0d12");
+      break;
+
+    case "cpp": { // C with two plus signs
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 17;
+      ctx.beginPath();
+      ctx.arc(cx - 18, cy, 62, Math.PI * 0.34, Math.PI * 1.66);
+      ctx.stroke();
+      ctx.lineWidth = 11;
+      const plus = (px: number) => {
+        ctx.beginPath();
+        ctx.moveTo(px - 17, cy);
+        ctx.lineTo(px + 17, cy);
+        ctx.moveTo(px, cy - 17);
+        ctx.lineTo(px, cy + 17);
+        ctx.stroke();
+      };
+      plus(cx + 40);
+      plus(cx + 84);
+      break;
+    }
+
+    case "angular": // shield + A
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 9;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - 94);
+      ctx.lineTo(cx + 80, cy - 62);
+      ctx.lineTo(cx + 58, cy + 80);
+      ctx.lineTo(cx, cy + 98);
+      ctx.lineTo(cx - 58, cy + 80);
+      ctx.lineTo(cx - 80, cy - 62);
+      ctx.closePath();
+      ctx.stroke();
+      word("A", 90, ink);
+      break;
+
+    case "tailwind": { // twin swooshes
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 27;
+      const swoosh = (oy: number) => {
+        ctx.beginPath();
+        ctx.moveTo(cx - 92, cy + oy + 16);
+        ctx.bezierCurveTo(cx - 60, cy + oy - 24, cx - 30, cy + oy - 24, cx - 4, cy + oy + 8);
+        ctx.bezierCurveTo(cx + 16, cy + oy + 26, cx + 42, cy + oy + 26, cx + 66, cy + oy - 2);
+        ctx.stroke();
+      };
+      swoosh(-26);
+      swoosh(30);
+      break;
+    }
+
+    case "supabase": // two offset triangles (bolt)
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy + 98);
+      ctx.lineTo(cx, cy + 6);
+      ctx.lineTo(cx + 72, cy + 6);
+      ctx.closePath();
+      ctx.fill();
+      ctx.globalAlpha = 0.5;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - 98);
+      ctx.lineTo(cx, cy - 6);
+      ctx.lineTo(cx - 72, cy - 6);
+      ctx.closePath();
+      ctx.fill();
+      ctx.globalAlpha = 1;
+      break;
+
+    case "rxjs": // ringed Rx
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 8;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 88, 0, Math.PI * 2);
+      ctx.stroke();
+      word("Rx", 86, ink);
+      break;
+
+    case "sql": { // database cylinder
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 8;
+      const rx = 68;
+      const ry = 22;
+      const top = cy - 54;
+      const bot = cy + 54;
+      ctx.beginPath();
+      ctx.ellipse(cx, top, rx, ry, 0, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(cx - rx, top);
+      ctx.lineTo(cx - rx, bot);
+      ctx.ellipse(cx, bot, rx, ry, 0, Math.PI, 0, true);
+      ctx.lineTo(cx + rx, top);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI);
+      ctx.stroke();
+      break;
+    }
+
+    case "git": { // commit graph
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = 12;
+      ctx.beginPath();
+      ctx.moveTo(cx - 38, cy - 72);
+      ctx.lineTo(cx - 38, cy + 72);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(cx - 38, cy + 8);
+      ctx.bezierCurveTo(cx - 38, cy - 32, cx + 42, cy - 18, cx + 42, cy - 58);
+      ctx.stroke();
+      const node = (nx: number, ny: number) => {
+        ctx.beginPath();
+        ctx.arc(nx, ny, 18, 0, Math.PI * 2);
+        ctx.fill();
+      };
+      node(cx - 38, cy - 72);
+      node(cx - 38, cy + 72);
+      node(cx + 42, cy - 72);
+      break;
+    }
+
+    default:
+      word(name.slice(0, 2).toUpperCase(), 92, color);
+  }
+
+  return toTexture(canvas);
+}
+
 /** Radial-faded grid for the deck floor. */
 export function makeFloorTexture(): THREE.CanvasTexture {
   const size = 1024;

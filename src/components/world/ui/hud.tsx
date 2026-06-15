@@ -4,6 +4,7 @@ import { site } from "@/data/site";
 import { stations } from "@/data/stations";
 import { useExperience } from "@/lib/experience-store";
 import { moods } from "@/lib/moods";
+import { WalkJoystick } from "@/components/world/ui/walk-joystick";
 
 /**
  * The HUD — the world's DOM control surface. Every action the 3D scene
@@ -24,6 +25,16 @@ export function Hud() {
   const startTour = useExperience((s) => s.startTour);
   const stopTour = useExperience((s) => s.stopTour);
   const exitToLedger = useExperience((s) => s.exitToLedger);
+  const navMode = useExperience((s) => s.navMode);
+  const toggleNavMode = useExperience((s) => s.toggleNavMode);
+  const coarse = useExperience((s) => s.profile?.isCoarsePointer ?? false);
+
+  const moveHint =
+    navMode === "walk"
+      ? coarse
+        ? "Joystick to move · drag to look · tap a station"
+        : "WASD / arrows to move · drag to look · click a station"
+      : "Drag to orbit · tap a station or a floating tech";
 
   const inFlight = phase === "focused" || phase === "focusing";
   const isOn = (kind: string, id?: string) =>
@@ -40,7 +51,11 @@ export function Hud() {
   return (
     <div
       inert={!introDone}
-      className={`absolute inset-0 z-50 transition-opacity duration-700 ${
+      // pointer-events-none lets drag/click/touch fall through to the canvas
+      // (OrbitControls + mesh raycasting); only the interactive islands below
+      // (the dock) opt back in with pointer-events-auto. z-[55] keeps the dock
+      // above the z-50 panels so an open panel can't cover it on mobile.
+      className={`pointer-events-none absolute inset-0 z-[55] transition-opacity duration-700 ${
         introDone ? "opacity-100" : "opacity-0"
       }`}
     >
@@ -54,15 +69,18 @@ export function Hud() {
         </p>
       </header>
 
-      {/* Orbit hint, only while idle and nothing is open. */}
+      {/* Navigation hint, only while idle and nothing is open. */}
       {phase === "idle" && !openPanel && !tourActive && (
         <p
           aria-hidden="true"
-          className="pointer-events-none absolute left-1/2 top-6 hidden -translate-x-1/2 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-faint sm:block"
+          className="pointer-events-none absolute left-1/2 top-6 max-w-[92vw] -translate-x-1/2 text-center font-mono text-[11px] uppercase tracking-[0.18em] text-ink-faint"
         >
-          Drag to orbit — pick a station or a floating tech
+          {moveHint}
         </p>
       )}
+
+      {/* Touch movement stick — Walk mode only. */}
+      {navMode === "walk" && coarse && <WalkJoystick />}
 
       {/* Tour indicator. */}
       {tourActive && (
@@ -143,6 +161,23 @@ export function Hud() {
 
           <span aria-hidden="true" className="mx-1 h-5 w-px bg-line" />
 
+          <button
+            type="button"
+            onClick={toggleNavMode}
+            aria-pressed={navMode === "walk"}
+            title={
+              navMode === "walk"
+                ? "Walking — switch to orbit view"
+                : "Orbit view — switch to first-person walking"
+            }
+            className={`rounded-xl px-3 py-2 font-mono text-xs transition-colors ${
+              navMode === "walk"
+                ? "bg-ink/10 text-accent-bright"
+                : "text-ink-soft hover:bg-ink/5 hover:text-ink"
+            }`}
+          >
+            {navMode === "walk" ? "Walking" : "Walk"}
+          </button>
           <button
             type="button"
             onClick={() => (tourActive ? stopTour() : startTour())}

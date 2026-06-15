@@ -106,6 +106,16 @@ export function ContactTerminal() {
   return (
     <group position={contactArea.position} rotation={[0, contactArea.rotation, 0]}>
       <group onPointerOver={onOver} onPointerOut={onOut} onClick={onClick}>
+        {/* Contiguous click/hover proxy over the whole kiosk — the base and
+            angled head are separate meshes, so one invisible collider makes
+            the whole console a single reliable target. visible={false} keeps
+            it out of every render pass (no contact shadow), but three's
+            Raycaster ignores .visible, so it still catches the click. */}
+        <mesh position={[0, 1.0, 0.05]} visible={false}>
+          <boxGeometry args={[1.2, 2.3, 1.0]} />
+          <meshBasicMaterial />
+        </mesh>
+
         {/* Kiosk base and angled console head. */}
         <RoundedBox args={[0.9, 1.1, 0.45]} radius={0.05} position={[0, 0.55, 0]} castShadow receiveShadow>
           <meshStandardMaterial color={worldPalette.panel} roughness={0.7} metalness={0.35} />

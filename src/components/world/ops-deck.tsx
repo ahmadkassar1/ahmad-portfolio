@@ -109,8 +109,10 @@ export function OpsDeck({ children }: { children: ReactNode }) {
       {inWorld && (
         <div className="fixed inset-0 z-40 bg-[#0b0d12]">
           {/* The scene is decoration; every action and all content it
-              gestures at is reachable through the DOM HUD and panels. */}
-          <div aria-hidden="true" className="absolute inset-0">
+              gestures at is reachable through the DOM HUD and panels.
+              touch-none hands touch gestures to OrbitControls instead of
+              letting the browser claim them as scroll/pinch. */}
+          <div aria-hidden="true" className="absolute inset-0 touch-none">
             <WorldCanvas />
           </div>
           <WorldLoader />
