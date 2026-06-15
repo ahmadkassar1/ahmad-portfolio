@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { labProjects } from "@/data/lab";
 
 export const metadata: Metadata = {
   title: "Lab",
@@ -7,124 +8,85 @@ export const metadata: Metadata = {
     "Self-contained builds and experiments — a SaaS analytics console, a form builder, a generative art studio, and a browser game.",
 };
 
-type LabProject = {
-  slug: string;
-  name: string;
-  tagline: string;
-  tags: string[];
-  status: "live" | "building";
-  accent: string;
-};
-
-const projects: LabProject[] = [
-  {
-    slug: "helm",
-    name: "Helm",
-    tagline:
-      "Analytics console for a fictional email + webhooks API — KPIs, hand-built SVG charts, a command palette, and a live deliveries table.",
-    tags: ["Dashboard", "Data viz", "⌘K"],
-    status: "live",
-    accent: "#0f766e",
-  },
-  {
-    slug: "forge",
-    name: "Forge",
-    tagline:
-      "Drag-and-drop form builder: compose fields on a canvas, edit properties, undo/redo, preview, and export a shareable schema.",
-    tags: ["Builder", "Drag & drop", "Schema"],
-    status: "building",
-    accent: "#b45309",
-  },
-  {
-    slug: "atelier",
-    name: "Atelier",
-    tagline:
-      "Generative art studio — parametric compositions you can tune by hand, reseed, and export as a high-resolution image.",
-    tags: ["Canvas", "Generative", "Export"],
-    status: "building",
-    accent: "#3f3f46",
-  },
-  {
-    slug: "tempo",
-    name: "Tempo",
-    tagline:
-      "A small, fast browser game with a real game loop, particle feedback, and a local leaderboard. Built to feel good to play.",
-    tags: ["Game", "Canvas", "Game loop"],
-    status: "building",
-    accent: "#1d4ed8",
-  },
-];
-
 export default function LabIndex() {
   return (
-    <div className="min-h-dvh bg-zinc-50 font-sans text-zinc-900 antialiased">
+    // Transparent surface: the layout's --ground + blueprint grid show
+    // through, so the Lab reads as a native part of the portfolio.
+    <main className="relative min-h-dvh font-sans text-ink">
       <div className="mx-auto max-w-5xl px-6 py-16 sm:py-24">
-        <Link href="/" className="font-mono text-xs text-zinc-500 transition-colors hover:text-zinc-900">
+        <Link
+          href="/"
+          className="font-mono text-xs text-ink-faint transition-colors hover:text-accent-bright"
+        >
           ← Ahmad Kassar
         </Link>
 
-        <header className="mt-8 max-w-2xl">
-          <p className="font-mono text-xs uppercase tracking-[0.18em] text-zinc-400">The Lab</p>
-          <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
-            Builds &amp; experiments
+        <header className="mt-10 max-w-2xl">
+          <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-faint">The Lab</p>
+          <h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">
+            Builds &amp; <span className="font-serif italic text-accent-bright">experiments</span>
           </h1>
-          <p className="mt-4 text-base leading-relaxed text-zinc-600">
+          <p className="mt-5 text-base leading-relaxed text-ink-soft">
             Four self-contained projects — each a different corner of frontend work, built to be
-            production-real rather than a demo. No external services; everything runs in the browser.
+            production-real rather than a throwaway demo. No external services; everything runs in
+            the browser.
           </p>
         </header>
 
-        <div className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-200 sm:grid-cols-2">
-          {projects.map((p) => {
+        <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {labProjects.map((p) => {
             const inner = (
-              <div className="flex h-full flex-col bg-white p-7 transition-colors group-hover:bg-zinc-50">
+              <>
                 <div className="flex items-center gap-3">
                   <span
-                    className="grid h-9 w-9 place-items-center rounded-lg text-sm font-semibold text-white"
+                    className="grid h-9 w-9 place-items-center rounded-lg text-sm font-semibold text-ground"
                     style={{ backgroundColor: p.accent }}
                   >
                     {p.name[0]}
                   </span>
                   <h2 className="text-lg font-semibold tracking-tight">{p.name}</h2>
                   {p.status === "building" ? (
-                    <span className="ml-auto rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs font-medium text-zinc-500">
+                    <span className="ml-auto rounded-full border border-line px-2.5 py-0.5 font-mono text-[11px] text-ink-faint">
                       Building
                     </span>
                   ) : (
-                    <span className="ml-auto inline-flex items-center gap-1.5 rounded-full bg-teal-50 px-2.5 py-0.5 text-xs font-medium text-teal-700">
-                      <span className="h-1.5 w-1.5 rounded-full bg-teal-600" /> Live
+                    <span className="ml-auto inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/10 px-2.5 py-0.5 font-mono text-[11px] text-accent-bright">
+                      <span className="h-1.5 w-1.5 rounded-full bg-accent-bright" /> Live
                     </span>
                   )}
                 </div>
-                <p className="mt-4 flex-1 text-sm leading-relaxed text-zinc-600">{p.tagline}</p>
+                <p className="mt-4 flex-1 text-sm leading-relaxed text-ink-soft">{p.tagline}</p>
                 <div className="mt-5 flex flex-wrap gap-2">
                   {p.tags.map((t) => (
                     <span
                       key={t}
-                      className="rounded-full border border-zinc-200 px-2.5 py-1 font-mono text-xs text-zinc-500"
+                      className="rounded-full border border-line px-2.5 py-1 font-mono text-[11px] text-ink-faint"
                     >
                       {t}
                     </span>
                   ))}
                 </div>
                 {p.status === "live" && (
-                  <span className="mt-5 text-sm font-medium text-teal-700">Open project →</span>
+                  <span className="mt-5 font-mono text-xs text-accent-bright">Open project →</span>
                 )}
-              </div>
+              </>
             );
 
+            const cardCls =
+              "flex h-full flex-col rounded-2xl border border-line bg-panel/60 p-7 backdrop-blur-sm transition-colors";
+
             return p.status === "live" ? (
-              <Link key={p.slug} href={`/lab/${p.slug}`} className="group block">
+              <Link key={p.slug} href={`/lab/${p.slug}`} className={`${cardCls} hover:border-line-bright`}>
                 {inner}
               </Link>
             ) : (
-              <div key={p.slug} className="group block opacity-90">
+              <div key={p.slug} className={`${cardCls} opacity-70`}>
                 {inner}
               </div>
             );
           })}
         </div>
       </div>
-    </div>
+    </main>
   );
 }

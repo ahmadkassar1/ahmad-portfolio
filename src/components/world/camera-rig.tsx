@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { easing } from "maath";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
-import { aboutArea, contactArea } from "@/data/areas";
+import { aboutArea, contactArea, labArea } from "@/data/areas";
 import { stations, stationCameraPosition, stationPosition } from "@/data/stations";
 import { useExperience, type FocusTarget } from "@/lib/experience-store";
 import { getTechPosition } from "@/lib/tech-positions";
@@ -53,6 +53,10 @@ function resolveGoal(
     case "contact":
       outPos.set(...contactArea.cameraPosition);
       outLook.set(...contactArea.cameraTarget);
+      return true;
+    case "lab":
+      outPos.set(...labArea.cameraPosition);
+      outLook.set(...labArea.cameraTarget);
       return true;
   }
 }

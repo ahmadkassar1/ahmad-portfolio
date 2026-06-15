@@ -19,3 +19,11 @@ export const contactArea = {
   cameraPosition: [4.0, 1.9, 0] as [number, number, number],
   cameraTarget: [7.0, 1.35, 0] as [number, number, number],
 };
+
+export const labArea = {
+  /** A raised pod floating in the front gap between the two near stations. */
+  position: [0, 2.0, 5.6] as [number, number, number],
+  rotation: 0,
+  cameraPosition: [0, 2.2, 8.5] as [number, number, number],
+  cameraTarget: [0, 2.0, 5.6] as [number, number, number],
+};

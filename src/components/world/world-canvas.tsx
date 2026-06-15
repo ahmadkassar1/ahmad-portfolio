@@ -18,6 +18,7 @@ import { CameraRig } from "@/components/world/camera-rig";
 import { ContactTerminal } from "@/components/world/contact-terminal";
 import { Effects } from "@/components/world/effects";
 import { HoloCore } from "@/components/world/holo-core";
+import { LabStation } from "@/components/world/lab-station";
 import { Lighting } from "@/components/world/lighting";
 import { Particles } from "@/components/world/particles";
 import { ProjectStations } from "@/components/world/project-station";
@@ -161,6 +162,7 @@ export function WorldCanvas() {
           <ProjectStations />
           <AboutArea />
           <ContactTerminal />
+          <LabStation />
           <Effects />
         </Suspense>
       </PerformanceMonitor>

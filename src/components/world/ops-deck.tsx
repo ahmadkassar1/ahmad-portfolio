@@ -10,6 +10,7 @@ import { WorldLoader } from "@/components/world/ui/loader";
 import { ProjectPanel } from "@/components/world/ui/project-panel";
 import { TechPanel } from "@/components/world/ui/tech-panel";
 import { InfoPanels } from "@/components/world/ui/info-panels";
+import { LabPanel } from "@/components/world/ui/lab-panel";
 
 // ssr:false is only legal inside a client component — the canvas touches
 // window/WebGL at module scope and must never be evaluated on the server.
@@ -120,6 +121,7 @@ export function OpsDeck({ children }: { children: ReactNode }) {
           <ProjectPanel />
           <TechPanel />
           <InfoPanels />
+          <LabPanel />
         </div>
       )}
     </>

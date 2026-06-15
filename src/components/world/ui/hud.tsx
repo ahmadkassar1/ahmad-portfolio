@@ -42,7 +42,7 @@ export function Hud() {
     focusTarget?.kind === kind &&
     (id === undefined || focusTarget.id === id);
 
-  const toggleTarget = (kind: "station" | "about" | "contact", id: string) => {
+  const toggleTarget = (kind: "station" | "about" | "contact" | "lab", id: string) => {
     stopTour();
     if (isOn(kind, id)) clearFocus();
     else focusOn({ kind, id });
@@ -189,6 +189,18 @@ export function Hud() {
             }`}
           >
             {tourActive ? "Stop tour" : "Tour"}
+          </button>
+          <button
+            type="button"
+            onClick={() => toggleTarget("lab", "lab")}
+            aria-pressed={isOn("lab")}
+            className={`rounded-xl px-3 py-2 font-mono text-xs transition-colors ${
+              isOn("lab")
+                ? "bg-ink/10 text-accent-bright"
+                : "text-ink-soft hover:bg-ink/5 hover:text-ink"
+            }`}
+          >
+            Lab
           </button>
           <button
             type="button"

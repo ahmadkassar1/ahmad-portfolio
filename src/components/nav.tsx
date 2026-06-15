@@ -8,6 +8,7 @@ const links = [
   { href: "#capabilities", label: "What I build" },
   { href: "#approach", label: "Approach" },
   { href: "#toolbox", label: "Toolbox" },
+  { href: "/lab", label: "Lab" },
 ];
 
 export function Nav() {
@@ -162,7 +163,7 @@ export function Nav() {
                 className="block py-4 text-2xl font-medium tracking-tight text-accent-bright"
               >
                 <span className="mr-4 font-mono text-sm" aria-hidden="true">
-                  05
+                  0{links.length + 1}
                 </span>
                 Get in touch
               </a>

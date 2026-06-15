@@ -22,8 +22,8 @@ export type CameraPhase =
   | "focusing"
   | "focused"
   | "returning";
-export type PanelKind = "project" | "tech" | "about" | "contact" | "toolbox";
-export type TargetKind = "station" | "tech" | "about" | "contact";
+export type PanelKind = "project" | "tech" | "about" | "contact" | "toolbox" | "lab";
+export type TargetKind = "station" | "tech" | "about" | "contact" | "lab";
 export type FocusTarget = { kind: TargetKind; id: string };
 /** Idle navigation style: orbit around the deck, or walk it first-person. */
 export type NavMode = "orbit" | "walk";
@@ -34,9 +34,10 @@ const PANEL_FOR_KIND: Record<TargetKind, PanelKind> = {
   tech: "tech",
   about: "about",
   contact: "contact",
+  lab: "lab",
 };
 
-/** Auto-tour itinerary: the four stations, then the desk, then contact. */
+/** Auto-tour itinerary: the four stations, the desk, contact, then the Lab. */
 export const TOUR_STOPS: FocusTarget[] = [
   { kind: "station", id: "pipeline" },
   { kind: "station", id: "qr-menu" },
@@ -44,6 +45,7 @@ export const TOUR_STOPS: FocusTarget[] = [
   { kind: "station", id: "storefront" },
   { kind: "about", id: "about" },
   { kind: "contact", id: "contact" },
+  { kind: "lab", id: "lab" },
 ];
 
 type ExperienceState = {
