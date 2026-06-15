@@ -96,7 +96,10 @@ export const useExperience = create<ExperienceState>((set, get) => ({
   ambientStill: false,
   phase: "intro",
   introDone: false,
-  navMode: "walk",
+  // Start in orbit: the intro lands at the deck's edge, so dropping straight
+  // into first-person there puts the visitor at the dark rim looking into
+  // fog. Orbit gives the lit overview; walking is one dock toggle away.
+  navMode: "orbit",
   focusTarget: null,
   hoveredTarget: null,
   openPanel: null,
@@ -126,10 +129,10 @@ export const useExperience = create<ExperienceState>((set, get) => ({
       focusTarget: null,
       openPanel: null,
       tourActive: false,
-      // Always start a world session on foot — walking is the default
-      // experience, and resetting here means a stale orbit choice (or a
-      // persisted dev session) can never leave a visitor unable to move.
-      navMode: "walk",
+      // Always begin a world session in orbit (lit overview). Resetting here
+      // also guarantees a persisted dev session can't strand the visitor in a
+      // stale mode. Walking is a dock toggle away once they're oriented.
+      navMode: "orbit",
     });
   },
 

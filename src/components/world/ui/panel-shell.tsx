@@ -61,7 +61,7 @@ export function PanelShell({
       role="dialog"
       aria-modal="true"
       aria-labelledby={headingId}
-      className="panel-in fixed inset-x-4 bottom-4 z-50 max-h-[72vh] overflow-y-auto rounded-2xl border border-line bg-panel/95 p-6 backdrop-blur-md sm:inset-x-auto sm:right-6 sm:top-1/2 sm:bottom-auto sm:w-[26rem] sm:max-h-[80vh] sm:-translate-y-1/2 sm:p-7"
+      className="panel-in fixed inset-x-4 top-16 z-50 max-h-[calc(100dvh-8.5rem)] overflow-y-auto rounded-2xl border border-line bg-panel/95 p-6 backdrop-blur-md sm:inset-x-auto sm:right-6 sm:top-20 sm:max-h-[calc(100dvh-7rem)] sm:w-[26rem] sm:p-7"
     >
       <div className="flex items-start justify-between gap-4">
         <div>
