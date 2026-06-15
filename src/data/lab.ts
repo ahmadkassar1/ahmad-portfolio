@@ -65,7 +65,7 @@ export const labProjects: LabProject[] = [
       "Pricing & margin modeler for product makers — turn costs and platform fees into defensible prices, break-even points, and side-by-side what-if scenarios.",
     blurb: "Pricing & margin modeler — solves the circular fee math, runs scenarios.",
     tags: ["Modeling", "Pricing", "Charts"],
-    status: "building",
+    status: "live",
     accent: "#15803d",
   },
 ];
