@@ -82,18 +82,30 @@ export function ProjectPanel() {
         </ul>
 
         {project.links.length > 0 && (
-          <div className="flex gap-4 border-t border-line pt-4">
-            {project.links.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-mono text-xs text-accent-bright underline-offset-4 hover:underline"
-              >
-                {link.label} ↗
-              </a>
-            ))}
+          <div className="flex flex-wrap items-center gap-2.5 border-t border-line pt-4">
+            {project.links.map((link) =>
+              link.type === "demo" ? (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-full bg-accent px-4 py-2 font-mono text-xs font-medium text-ground transition-colors hover:bg-accent-bright"
+                >
+                  {link.label} ↗
+                </a>
+              ) : (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-full border border-line px-4 py-2 font-mono text-xs text-ink-soft transition-colors hover:border-line-bright hover:text-ink"
+                >
+                  {link.label} ↗
+                </a>
+              ),
+            )}
           </div>
         )}
       </div>

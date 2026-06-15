@@ -22,9 +22,11 @@ export type CameraPhase =
   | "focusing"
   | "focused"
   | "returning";
-export type PanelKind = "project" | "tech" | "about" | "contact" | "toolbox";
-export type TargetKind = "station" | "tech" | "about" | "contact";
+export type PanelKind = "project" | "tech" | "about" | "contact" | "toolbox" | "lab";
+export type TargetKind = "station" | "tech" | "about" | "contact" | "lab";
 export type FocusTarget = { kind: TargetKind; id: string };
+/** Idle navigation style: orbit around the deck, or walk it first-person. */
+export type NavMode = "orbit" | "walk";
 
 /** Which panel a camera target opens on arrival. */
 const PANEL_FOR_KIND: Record<TargetKind, PanelKind> = {
@@ -32,9 +34,10 @@ const PANEL_FOR_KIND: Record<TargetKind, PanelKind> = {
   tech: "tech",
   about: "about",
   contact: "contact",
+  lab: "lab",
 };
 
-/** Auto-tour itinerary: the four stations, then the desk, then contact. */
+/** Auto-tour itinerary: the four stations, the desk, contact, then the Lab. */
 export const TOUR_STOPS: FocusTarget[] = [
   { kind: "station", id: "pipeline" },
   { kind: "station", id: "qr-menu" },
@@ -42,6 +45,7 @@ export const TOUR_STOPS: FocusTarget[] = [
   { kind: "station", id: "storefront" },
   { kind: "about", id: "about" },
   { kind: "contact", id: "contact" },
+  { kind: "lab", id: "lab" },
 ];
 
 type ExperienceState = {
@@ -53,6 +57,9 @@ type ExperienceState = {
   ambientStill: boolean;
   phase: CameraPhase;
   introDone: boolean;
+  /** Idle navigation style — drives whether OrbitControls or WalkControls
+   *  own the camera while idle. */
+  navMode: NavMode;
   focusTarget: FocusTarget | null;
   hoveredTarget: FocusTarget | null;
   openPanel: PanelKind | null;
@@ -60,6 +67,8 @@ type ExperienceState = {
   tourIndex: number;
 
   setProfile: (profile: DeviceProfile) => void;
+  setNavMode: (mode: NavMode) => void;
+  toggleNavMode: () => void;
   setQuality: (quality: Quality) => void;
   enterWorld: () => void;
   exitToLedger: () => void;
@@ -87,6 +96,10 @@ export const useExperience = create<ExperienceState>((set, get) => ({
   ambientStill: false,
   phase: "intro",
   introDone: false,
+  // Start in orbit: the intro lands at the deck's edge, so dropping straight
+  // into first-person there puts the visitor at the dark rim looking into
+  // fog. Orbit gives the lit overview; walking is one dock toggle away.
+  navMode: "orbit",
   focusTarget: null,
   hoveredTarget: null,
   openPanel: null,
@@ -102,6 +115,10 @@ export const useExperience = create<ExperienceState>((set, get) => ({
 
   setQuality: (quality) => set({ quality }),
 
+  setNavMode: (mode) => set({ navMode: mode }),
+  toggleNavMode: () =>
+    set((s) => ({ navMode: s.navMode === "walk" ? "orbit" : "walk" })),
+
   enterWorld: () => {
     const { mode, profile } = get();
     if (mode === "world" || !profile?.webglOk) return;
@@ -112,6 +129,10 @@ export const useExperience = create<ExperienceState>((set, get) => ({
       focusTarget: null,
       openPanel: null,
       tourActive: false,
+      // Always begin a world session in orbit (lit overview). Resetting here
+      // also guarantees a persisted dev session can't strand the visitor in a
+      // stale mode. Walking is a dock toggle away once they're oriented.
+      navMode: "orbit",
     });
   },
 

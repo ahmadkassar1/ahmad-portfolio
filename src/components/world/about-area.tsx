@@ -69,6 +69,17 @@ export function AboutArea() {
   return (
     <group position={aboutArea.position} rotation={[0, aboutArea.rotation, 0]}>
       <group onPointerOver={onOver} onPointerOut={onOut} onClick={onClick}>
+        {/* Contiguous click/hover proxy spanning the whole workstation. The
+            real meshes are a sparse union of thin legs/props, so this gives
+            one reliable hit target and stops hover flicker across internal
+            seams. visible={false} keeps it out of every render pass (so it
+            casts no contact shadow), but three's Raycaster ignores .visible,
+            so it still catches the click. */}
+        <mesh position={[0, 0.95, -0.05]} visible={false}>
+          <boxGeometry args={[2.6, 2.0, 1.4]} />
+          <meshBasicMaterial />
+        </mesh>
+
         {/* Desk top + legs. */}
         <RoundedBox args={[2.2, 0.08, 1.1]} radius={0.02} position={[0, 0.78, 0]} castShadow receiveShadow>
           <meshStandardMaterial color={worldPalette.panel} roughness={0.7} metalness={0.25} />

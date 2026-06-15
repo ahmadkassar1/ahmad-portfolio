@@ -10,6 +10,7 @@ import { WorldLoader } from "@/components/world/ui/loader";
 import { ProjectPanel } from "@/components/world/ui/project-panel";
 import { TechPanel } from "@/components/world/ui/tech-panel";
 import { InfoPanels } from "@/components/world/ui/info-panels";
+import { LabPanel } from "@/components/world/ui/lab-panel";
 
 // ssr:false is only legal inside a client component — the canvas touches
 // window/WebGL at module scope and must never be evaluated on the server.
@@ -109,8 +110,10 @@ export function OpsDeck({ children }: { children: ReactNode }) {
       {inWorld && (
         <div className="fixed inset-0 z-40 bg-[#0b0d12]">
           {/* The scene is decoration; every action and all content it
-              gestures at is reachable through the DOM HUD and panels. */}
-          <div aria-hidden="true" className="absolute inset-0">
+              gestures at is reachable through the DOM HUD and panels.
+              touch-none hands touch gestures to OrbitControls instead of
+              letting the browser claim them as scroll/pinch. */}
+          <div aria-hidden="true" className="absolute inset-0 touch-none">
             <WorldCanvas />
           </div>
           <WorldLoader />
@@ -118,6 +121,7 @@ export function OpsDeck({ children }: { children: ReactNode }) {
           <ProjectPanel />
           <TechPanel />
           <InfoPanels />
+          <LabPanel />
         </div>
       )}
     </>

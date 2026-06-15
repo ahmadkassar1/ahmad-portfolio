@@ -1,6 +1,9 @@
 export type ProjectLink = {
   label: string;
   href: string;
+  /** "demo" renders as the primary (filled) button; "repo"/undefined as a
+   *  secondary outline link. */
+  type?: "demo" | "repo";
 };
 
 export type Project = {
@@ -17,13 +20,18 @@ export type Project = {
   /** Which coded vignette renders as this project's visual. */
   vignette: "pipeline" | "qr-menu" | "publishing" | "storefront";
   /**
-   * Public links for this project.
-   * TODO: add real URLs when the repos/demos are public, e.g.
+   * Public links for this project (rendered by ProjectPanel; "demo" is the
+   * primary button, "repo" a secondary outline link). Rows with no links
+   * render nothing.
+   *
+   * NOTE (2026-06-15): the repos below are currently PRIVATE, so a public
+   * visitor following a repo link gets a 404. To make these work for
+   * recruiters, flip the repo to public in its GitHub settings (and redeploy
+   * a live demo), then add it here, e.g.:
    *   links: [
-   *     { label: "GitHub", href: "https://github.com/ahmadkassar1/<repo>" },
-   *     { label: "Live demo", href: "https://<demo-url>" },
+   *     { type: "demo", label: "Live demo", href: "https://<demo-url>" },
+   *     { type: "repo", label: "GitHub",    href: "https://github.com/ahmadkassar1/<repo>" },
    *   ]
-   * Rows without links simply don't render a link row.
    */
   links: ProjectLink[];
 };
@@ -91,6 +99,16 @@ export const projects: Project[] = [
     demonstrates:
       "Fine-grained reactivity end to end: every cart change, filter, and loading state derives from signals instead of duplicated flags.",
     vignette: "storefront",
-    links: [],
+    // Matched to the `ecommerce-project` repo by its Angular e-commerce
+    // description. Repo is currently PRIVATE (link 404s until made public);
+    // its old Vercel demo is down. Flip the repo public / redeploy, then this
+    // works as-is. Swap the href if Scoopadoop lives in a different repo.
+    links: [
+      {
+        type: "repo",
+        label: "GitHub",
+        href: "https://github.com/ahmadkassar1/ecommerce-project",
+      },
+    ],
   },
 ];

@@ -51,11 +51,19 @@ function ProjectStation({ station }: { station: Station }) {
 
   const trimRef = useRef<THREE.MeshStandardMaterial>(null);
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
     // Ease the trim's emissive level toward its state target in place.
     const material = trimRef.current;
     if (!material) return;
-    const target = isFocused ? 2.2 : hovered ? 1.5 : 0.7;
+    // A subtle sine pulse on top of the hover/focus level makes an active
+    // station's trim breathe rather than just sit brighter. Stilled for
+    // reduced-motion visitors.
+    const active = isFocused || hovered;
+    const pulse =
+      active && !useExperience.getState().ambientStill
+        ? Math.sin(state.clock.elapsedTime * 4) * 0.25
+        : 0;
+    const target = (isFocused ? 2.2 : hovered ? 1.5 : 0.7) + pulse;
     material.emissiveIntensity = THREE.MathUtils.damp(
       material.emissiveIntensity,
       target,
