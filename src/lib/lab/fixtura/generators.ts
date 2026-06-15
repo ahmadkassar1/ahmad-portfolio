@@ -101,14 +101,23 @@ export function genValue(field: Field, rng: () => number, index: number): unknow
       return pick(rng, COUNTRIES);
     case "street":
       return `${intIn(rng, 1, 240)} ${pick(rng, STREETS)} St`;
-    case "int":
-      return intIn(rng, field.min ?? 0, field.max ?? 1000);
+    case "int": {
+      // Defensive: a clipboard-shared schema or a cleared input can deliver
+      // NaN / undefined here; never propagate NaN into a row.
+      const lo = Number.isFinite(field.min) ? (field.min as number) : 0;
+      const hi = Number.isFinite(field.max) ? (field.max as number) : 1000;
+      return intIn(rng, Math.min(lo, hi), Math.max(lo, hi));
+    }
     case "float":
     case "money": {
-      const min = field.min ?? 0;
-      const max = field.max ?? (kind === "money" ? 500 : 100);
+      const lo = Number.isFinite(field.min) ? (field.min as number) : 0;
+      const hi = Number.isFinite(field.max) ? (field.max as number) : kind === "money" ? 500 : 100;
+      const min = Math.min(lo, hi);
+      const max = Math.max(lo, hi);
+      // toFixed throws RangeError outside 0–100; clamp to a sane 0–6.
+      const dp = Math.min(6, Math.max(0, Number.isFinite(field.decimals) ? Math.trunc(field.decimals as number) : 2));
       const v = min + rng() * (max - min);
-      return Number(v.toFixed(field.decimals ?? 2));
+      return Number(v.toFixed(dp));
     }
     case "bool":
       return rng() < 0.5;

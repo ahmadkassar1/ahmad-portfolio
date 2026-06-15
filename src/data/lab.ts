@@ -55,7 +55,7 @@ export const labProjects: LabProject[] = [
       "Provably-local document redaction — auto-detect and truly burn out PII from a PDF or image, with nothing ever leaving your browser (the CSP is the proof).",
     blurb: "On-device PDF/image redaction — detect & truly remove PII, zero upload.",
     tags: ["Privacy", "PDF", "On-device"],
-    status: "building",
+    status: "live",
     accent: "#b91c1c",
   },
   {

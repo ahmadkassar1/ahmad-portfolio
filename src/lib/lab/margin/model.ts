@@ -100,12 +100,46 @@ export const DEFAULT_PRODUCT: Product = {
 export function encodeProduct(p: Product): string {
   return btoa(encodeURIComponent(JSON.stringify(p)));
 }
+const fnum = (v: unknown, d: number) => (Number.isFinite(Number(v)) ? Number(v) : d);
+
 export function decodeProduct(s: string): Product | null {
+  // #p= hash is untrusted: coerce every numeric so a crafted payload can't
+  // feed NaN into the pricing math, and require at least one channel.
   try {
-    const obj = JSON.parse(decodeURIComponent(atob(s)));
-    if (obj && Array.isArray(obj.components) && Array.isArray(obj.channels)) return obj as Product;
+    const obj: unknown = JSON.parse(decodeURIComponent(atob(s)));
+    if (!obj || typeof obj !== "object") return null;
+    const o = obj as Record<string, unknown>;
+    if (!Array.isArray(o.components) || !Array.isArray(o.channels) || o.channels.length === 0) return null;
+    const components: Component[] = o.components.map((c, i) => {
+      const r = (c ?? {}) as Record<string, unknown>;
+      return {
+        id: typeof r.id === "string" ? r.id : `c${i}`,
+        name: typeof r.name === "string" ? r.name : "Item",
+        qty: fnum(r.qty, 1),
+        unitCost: fnum(r.unitCost, 0),
+      };
+    });
+    const channels: Channel[] = o.channels.map((c, i) => {
+      const r = (c ?? {}) as Record<string, unknown>;
+      return {
+        id: typeof r.id === "string" ? r.id : `ch${i}`,
+        name: typeof r.name === "string" ? r.name : "Channel",
+        pctFee: fnum(r.pctFee, 0),
+        flatFee: fnum(r.flatFee, 0),
+        perTxnFee: fnum(r.perTxnFee, 0),
+      };
+    });
+    return {
+      name: typeof o.name === "string" ? o.name : "Product",
+      components,
+      channels,
+      laborMinutes: fnum(o.laborMinutes, 0),
+      laborRate: fnum(o.laborRate, 0),
+      overhead: fnum(o.overhead, 0),
+      fixedCosts: fnum(o.fixedCosts, 0),
+      targetMargin: fnum(o.targetMargin, 0),
+    };
   } catch {
-    /* ignore */
+    return null;
   }
-  return null;
 }

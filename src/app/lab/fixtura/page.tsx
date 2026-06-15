@@ -74,7 +74,10 @@ export default function FixturaPage() {
       ),
     }));
   const removeField = (eid: string, fid: string) =>
-    patchEntity(eid, { fields: schema.entities.find((e) => e.id === eid)!.fields.filter((f) => f.id !== fid) });
+    setSchema((s) => ({
+      ...s,
+      entities: s.entities.map((e) => (e.id === eid ? { ...e, fields: e.fields.filter((f) => f.id !== fid) } : e)),
+    }));
   const addEntity = () => {
     const id = uid("e");
     setSchema((s) => ({
@@ -100,7 +103,7 @@ export default function FixturaPage() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `${format === "json" ? schema.name : selected.name}.${EXT[format]}`;
+    a.download = `${((format === "json" ? schema.name : selected.name) || "").trim() || "data"}.${EXT[format]}`;
     a.click();
     URL.revokeObjectURL(url);
     setExportOpen(false);
@@ -383,13 +386,13 @@ function FieldEditor({
       {meta.opts.includes("range") && (
         <div className="mt-2 flex items-center gap-2 text-xs text-zinc-500">
           <span>min</span>
-          <input type="number" value={field.min ?? 0} onChange={(e) => onChange({ min: Number(e.target.value) })} className="w-20 rounded border border-zinc-300 px-2 py-1 text-xs outline-none focus:border-indigo-600" />
+          <input type="number" value={field.min ?? 0} onChange={(e) => onChange({ min: Number(e.target.value) || 0 })} className="w-20 rounded border border-zinc-300 px-2 py-1 text-xs outline-none focus:border-indigo-600" />
           <span>max</span>
-          <input type="number" value={field.max ?? 0} onChange={(e) => onChange({ max: Number(e.target.value) })} className="w-20 rounded border border-zinc-300 px-2 py-1 text-xs outline-none focus:border-indigo-600" />
+          <input type="number" value={field.max ?? 0} onChange={(e) => onChange({ max: Number(e.target.value) || 0 })} className="w-20 rounded border border-zinc-300 px-2 py-1 text-xs outline-none focus:border-indigo-600" />
           {meta.opts.includes("decimals") && (
             <>
               <span>dp</span>
-              <input type="number" min={0} max={6} value={field.decimals ?? 2} onChange={(e) => onChange({ decimals: Number(e.target.value) })} className="w-14 rounded border border-zinc-300 px-2 py-1 text-xs outline-none focus:border-indigo-600" />
+              <input type="number" min={0} max={6} value={field.decimals ?? 2} onChange={(e) => onChange({ decimals: Math.min(6, Math.max(0, Number(e.target.value) || 0)) })} className="w-14 rounded border border-zinc-300 px-2 py-1 text-xs outline-none focus:border-indigo-600" />
             </>
           )}
         </div>

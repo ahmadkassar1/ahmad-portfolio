@@ -102,13 +102,36 @@ export function encodeSchema(schema: FormSchema): string {
 }
 
 export function decodeSchema(s: string): FormSchema | null {
+  // The #f= hash is untrusted public input — validate every field so a
+  // tampered/garbage payload can't crash the editor (unknown type → the
+  // inspector reads FIELD_META[type].label; duplicate/missing id → React-key
+  // state bleed). Anything invalid is dropped; a fully bad payload returns
+  // null so the app falls back to DEFAULT_FORM.
   try {
-    const obj = JSON.parse(decodeURIComponent(atob(s)));
-    if (obj && typeof obj.title === "string" && Array.isArray(obj.fields)) {
-      return obj as FormSchema;
+    const obj: unknown = JSON.parse(decodeURIComponent(atob(s)));
+    if (!obj || typeof obj !== "object") return null;
+    const o = obj as { title?: unknown; fields?: unknown };
+    if (typeof o.title !== "string" || !Array.isArray(o.fields)) return null;
+    const seen = new Set<string>();
+    const fields: Field[] = [];
+    for (const raw of o.fields) {
+      if (!raw || typeof raw !== "object") continue;
+      const r = raw as Record<string, unknown>;
+      if (typeof r.type !== "string" || !(r.type in FIELD_META)) continue;
+      const type = r.type as FieldType;
+      let id = typeof r.id === "string" && r.id ? r.id : `f_${fields.length}`;
+      while (seen.has(id)) id += "_";
+      seen.add(id);
+      const f: Field = { id, type, label: typeof r.label === "string" ? r.label : FIELD_META[type].label };
+      if (typeof r.name === "string") f.name = r.name;
+      if (typeof r.placeholder === "string") f.placeholder = r.placeholder;
+      if (typeof r.help === "string") f.help = r.help;
+      if (r.required === true) f.required = true;
+      if (Array.isArray(r.options)) f.options = r.options.filter((x): x is string => typeof x === "string");
+      fields.push(f);
     }
+    return { title: o.title, fields };
   } catch {
-    /* fall through */
+    return null;
   }
-  return null;
 }

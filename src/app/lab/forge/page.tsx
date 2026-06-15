@@ -166,15 +166,20 @@ export default function ForgePage() {
     }
   };
 
-  const copyJson = async () => {
-    await navigator.clipboard.writeText(JSON.stringify(schema, null, 2));
-    flash("Schema JSON copied to clipboard");
+  const copyText = async (text: string, ok: string) => {
+    try {
+      if (!navigator.clipboard) throw new Error("unavailable");
+      await navigator.clipboard.writeText(text);
+      flash(ok);
+    } catch {
+      flash("Couldn’t copy automatically — select and copy manually");
+    }
   };
-  const share = async () => {
+  const copyJson = () => copyText(JSON.stringify(schema, null, 2), "Schema JSON copied to clipboard");
+  const share = () => {
     const url = `${window.location.origin}${window.location.pathname}#f=${encodeSchema(schema)}`;
     window.history.replaceState(null, "", url);
-    await navigator.clipboard.writeText(url);
-    flash("Shareable link copied");
+    copyText(url, "Shareable link copied");
   };
   const download = () => {
     const blob = new Blob([JSON.stringify(schema, null, 2)], { type: "application/json" });
