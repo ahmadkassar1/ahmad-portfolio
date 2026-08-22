@@ -25,14 +25,14 @@ test("3D navigation, panels and walk mode stay responsive", async ({ page }) => 
   expect(webgl, "CI browser must expose WebGL for the real 3D smoke test").toBe(true);
 
   const enter = page.getByRole("button", { name: /Enter the Ops Deck/i });
-  const deck = page.getByText("Ops Deck", { exact: true });
+  const deckControls = page.getByRole("navigation", { name: "Deck controls" });
 
   // Device probing happens after hydration. Capable CI may auto-enter; lower
   // software-GPU tiers show the explicit opt-in button instead. Support both.
-  await expect(enter.or(deck)).toBeVisible({ timeout: 15000 });
+  await expect(enter.or(deckControls)).toBeVisible({ timeout: 15000 });
   if (await enter.isVisible()) await enter.click();
 
-  await expect(deck).toBeVisible({ timeout: 15000 });
+  await expect(deckControls).toBeVisible({ timeout: 15000 });
   await page.waitForTimeout(3800);
 
   const walk = page.getByRole("button", { name: /^Walk$/ });
