@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - fix/3d-navigation-wasd
+  pull_request:
+    branches:
+      - main
 
 jobs:
   navigation-smoke:
