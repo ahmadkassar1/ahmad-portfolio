@@ -16,6 +16,7 @@ const HOME_POS = new THREE.Vector3(0, 3.6, 10.8);
 const HOME_TARGET = new THREE.Vector3(0, 1.1, 0);
 const INTRO_POS = new THREE.Vector3(0, 14, 22);
 const ORBIT_HANDOFF_DISTANCE = 6;
+const MAX_TRANSITION_DELTA = 0.1;
 
 function resolveGoal(
   target: FocusTarget,
@@ -94,9 +95,6 @@ export function CameraRig() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Keep the current view when switching from walking to orbiting. The old
-  // implementation snapped back to HOME, which made the navigation feel
-  // broken and discarded the visitor's position.
   useEffect(() => {
     if (navMode !== "orbit" || useExperience.getState().phase !== "idle") return;
     camera.getWorldDirection(fwdTmp.current);
@@ -115,9 +113,6 @@ export function CameraRig() {
   useEffect(() => {
     const prev = previousPhase.current;
 
-    // Capture the exact exploration pose only when a new focus trip begins
-    // from idle. Switching directly between focused targets keeps the same
-    // return destination.
     if (phase === "focusing" && prev === "idle") {
       returnPos.current.copy(camera.position);
       returnTarget.current.copy(lookAt.current);
@@ -139,7 +134,10 @@ export function CameraRig() {
   }, [phase, focusTarget, camera]);
 
   useFrame((_, rawDelta) => {
-    const delta = Math.min(rawDelta, 1 / 30);
+    // Keep transitions tied to real elapsed time on low-FPS devices while
+    // still capping huge deltas after a backgrounded tab. A 1/30 cap made a
+    // 10fps device animate roughly 3x slower than intended.
+    const delta = Math.min(rawDelta, MAX_TRANSITION_DELTA);
     const s = useExperience.getState();
 
     if (s.phase === "idle") {
@@ -156,13 +154,10 @@ export function CameraRig() {
 
     const dist = camera.position.distanceTo(goalPos.current);
 
-    // Faster, responsive focus flights while still preserving a cinematic
-    // feel. The prior damping values made target changes and panel closing
-    // feel laggy, especially when crossing the deck.
-    let speed = s.ambientStill ? 0.06 : s.phase === "intro" ? 0.72 : 0.28;
+    let speed = s.ambientStill ? 0.06 : s.phase === "intro" ? 0.72 : 0.24;
     if (!s.ambientStill && s.phase !== "intro") {
       const t = THREE.MathUtils.clamp(dist / 8, 0.35, 1);
-      speed *= 0.72 + 0.28 * t;
+      speed *= 0.7 + 0.3 * t;
     }
 
     easing.damp3(camera.position, goalPos.current, speed, delta);
