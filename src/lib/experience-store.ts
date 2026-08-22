@@ -1,20 +1,6 @@
 import { create } from "zustand";
 import type { DeviceProfile, Quality } from "@/lib/device-profile";
 
-/**
- * Experience store — single source of truth for the deck.
- *
- * Mode: SSR always renders the ledger; the client may flip to "world"
- * after mount, so the first client render must match the server (mode
- * starts at "ledger"). The store is only ever read from client
- * components, so the module-scope instance never leaks across requests.
- *
- * Focus is generalized: stations, orbiting techs, the About desk, and
- * the Contact terminal are all camera targets. Camera phases:
- * intro → idle ⇄ (focusing → focused → returning). Guards keep the rig
- * from wedging: no focusing before the intro lands, and switching
- * targets mid-flight or mid-return simply retargets.
- */
 export type Mode = "ledger" | "world";
 export type CameraPhase =
   | "intro"
@@ -25,10 +11,8 @@ export type CameraPhase =
 export type PanelKind = "project" | "tech" | "about" | "contact" | "toolbox" | "lab";
 export type TargetKind = "station" | "tech" | "about" | "contact" | "lab";
 export type FocusTarget = { kind: TargetKind; id: string };
-/** Idle navigation style: orbit around the deck, or walk it first-person. */
 export type NavMode = "orbit" | "walk";
 
-/** Which panel a camera target opens on arrival. */
 const PANEL_FOR_KIND: Record<TargetKind, PanelKind> = {
   station: "project",
   tech: "tech",
@@ -37,7 +21,6 @@ const PANEL_FOR_KIND: Record<TargetKind, PanelKind> = {
   lab: "lab",
 };
 
-/** Auto-tour itinerary: the four stations, the desk, contact, then the Lab. */
 export const TOUR_STOPS: FocusTarget[] = [
   { kind: "station", id: "pipeline" },
   { kind: "station", id: "qr-menu" },
@@ -52,13 +35,9 @@ type ExperienceState = {
   mode: Mode;
   profile: DeviceProfile | null;
   quality: Quality;
-  /** Reduced-motion visitor opted into the world: ambient motion stills
-   *  and camera transitions become near-instant cuts. */
   ambientStill: boolean;
   phase: CameraPhase;
   introDone: boolean;
-  /** Idle navigation style — drives whether OrbitControls or WalkControls
-   *  own the camera while idle. */
   navMode: NavMode;
   focusTarget: FocusTarget | null;
   hoveredTarget: FocusTarget | null;
@@ -74,12 +53,9 @@ type ExperienceState = {
   exitToLedger: () => void;
   finishIntro: () => void;
   focusOn: (target: FocusTarget) => void;
-  /** Convenience used by stations and the HUD dock. */
   focusStation: (id: string) => void;
   clearFocus: () => void;
-  /** Camera rig reports arrival at the focused target. */
   arriveAtTarget: () => void;
-  /** Camera rig reports it returned home. */
   arriveHome: () => void;
   setHovered: (target: FocusTarget | null) => void;
   showPanel: (panel: PanelKind) => void;
@@ -89,6 +65,17 @@ type ExperienceState = {
   advanceTour: () => void;
 };
 
+function navTransitionPatch(state: ExperienceState, mode: NavMode) {
+  if (state.navMode === mode) return {};
+  const focused = state.phase === "focused" || state.phase === "focusing";
+  return {
+    navMode: mode,
+    tourActive: false,
+    openPanel: focused ? null : state.openPanel,
+    phase: focused ? ("returning" as CameraPhase) : state.phase,
+  };
+}
+
 export const useExperience = create<ExperienceState>((set, get) => ({
   mode: "ledger",
   profile: null,
@@ -96,9 +83,6 @@ export const useExperience = create<ExperienceState>((set, get) => ({
   ambientStill: false,
   phase: "intro",
   introDone: false,
-  // Start in orbit: the intro lands at the deck's edge, so dropping straight
-  // into first-person there puts the visitor at the dark rim looking into
-  // fog. Orbit gives the lit overview; walking is one dock toggle away.
   navMode: "orbit",
   focusTarget: null,
   hoveredTarget: null,
@@ -115,9 +99,12 @@ export const useExperience = create<ExperienceState>((set, get) => ({
 
   setQuality: (quality) => set({ quality }),
 
-  setNavMode: (mode) => set({ navMode: mode }),
-  toggleNavMode: () =>
-    set((s) => ({ navMode: s.navMode === "walk" ? "orbit" : "walk" })),
+  setNavMode: (mode) => set((s) => navTransitionPatch(s, mode)),
+  toggleNavMode: () => {
+    const state = get();
+    const next = state.navMode === "walk" ? "orbit" : "walk";
+    set(navTransitionPatch(state, next));
+  },
 
   enterWorld: () => {
     const { mode, profile } = get();
@@ -127,11 +114,10 @@ export const useExperience = create<ExperienceState>((set, get) => ({
       phase: "intro",
       introDone: false,
       focusTarget: null,
+      hoveredTarget: null,
       openPanel: null,
       tourActive: false,
-      // Always begin a world session in orbit (lit overview). Resetting here
-      // also guarantees a persisted dev session can't strand the visitor in a
-      // stale mode. Walking is a dock toggle away once they're oriented.
+      tourIndex: 0,
       navMode: "orbit",
     });
   },
@@ -145,24 +131,21 @@ export const useExperience = create<ExperienceState>((set, get) => ({
       hoveredTarget: null,
       openPanel: null,
       tourActive: false,
+      tourIndex: 0,
+      navMode: "orbit",
     }),
 
   finishIntro: () => {
-    // Idempotent — the rig may report arrival across several frames.
     if (get().introDone) return;
     set({ introDone: true, phase: "idle" });
   },
 
   focusOn: (target) => {
     const { introDone, phase, focusTarget } = get();
-    // Guard: no focusing until the intro has landed.
     if (!introDone) return;
     const same =
       focusTarget?.kind === target.kind && focusTarget?.id === target.id;
     if (same && (phase === "focusing" || phase === "focused")) return;
-    // Valid from idle, focused (target switch), and returning (retarget
-    // mid-flight) — the rig just damps toward the new goal. The panel
-    // closes for the flight; arrival opens the right one.
     set({ focusTarget: target, phase: "focusing", openPanel: null });
   },
 
@@ -187,13 +170,16 @@ export const useExperience = create<ExperienceState>((set, get) => ({
 
   setHovered: (target) => set({ hoveredTarget: target }),
 
-  showPanel: (panel) => set({ openPanel: panel }),
+  showPanel: (panel) => {
+    const state = get();
+    if (panel === "toolbox") set({ openPanel: panel, tourActive: false });
+    else set({ openPanel: panel });
+    if (state.tourActive && panel === "toolbox") get().stopTour();
+  },
 
   closePanel: () => {
     const { openPanel, phase, focusTarget } = get();
     if (!openPanel) return;
-    // Closing the panel that belongs to the focused target also
-    // releases the camera; the toolbox (no camera target) just closes.
     const belongsToFocus =
       focusTarget && openPanel === PANEL_FOR_KIND[focusTarget.kind];
     if (belongsToFocus && (phase === "focused" || phase === "focusing"))
@@ -204,7 +190,7 @@ export const useExperience = create<ExperienceState>((set, get) => ({
   startTour: () => {
     const { introDone } = get();
     if (!introDone) return;
-    set({ tourActive: true, tourIndex: 0 });
+    set({ tourActive: true, tourIndex: 0, openPanel: null });
     get().focusOn(TOUR_STOPS[0]);
   },
 
@@ -215,7 +201,6 @@ export const useExperience = create<ExperienceState>((set, get) => ({
     if (!tourActive) return;
     const next = tourIndex + 1;
     if (next >= TOUR_STOPS.length) {
-      // Tour complete — release the camera and end the tour.
       set({ tourActive: false, tourIndex: 0 });
       get().clearFocus();
       return;
