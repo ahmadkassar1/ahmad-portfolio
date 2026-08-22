@@ -41,8 +41,8 @@ jobs:
           cat /tmp/next.log
           exit 1
 
-      - name: Run Playwright smoke test
-        run: npx playwright test e2e/navigation.spec.ts --reporter=line --workers=1
+      - name: Run Playwright 3D smoke test
+        run: xvfb-run -a npx playwright test e2e/navigation.spec.ts --reporter=line --workers=1
 
       - name: Print Next.js log on failure
         if: failure()
