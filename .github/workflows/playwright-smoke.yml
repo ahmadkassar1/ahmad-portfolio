@@ -1,0 +1,46 @@
+name: Playwright 3D Smoke
+
+on:
+  push:
+    branches:
+      - fix/3d-navigation-wasd
+
+jobs:
+  navigation-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install app dependencies
+        run: npm ci
+
+      - name: Install Playwright test runner
+        run: npm install --no-save @playwright/test@1.55.0
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Start Next.js
+        run: |
+          npm run dev -- --hostname 127.0.0.1 > /tmp/next.log 2>&1 &
+          for i in {1..60}; do
+            if curl -fsS http://127.0.0.1:3000 >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/next.log
+          exit 1
+
+      - name: Run Playwright smoke test
+        run: npx playwright test e2e/navigation.spec.ts --reporter=line --workers=1
+
+      - name: Print Next.js log on failure
+        if: failure()
+        run: cat /tmp/next.log || true
