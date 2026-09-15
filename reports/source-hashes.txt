@@ -1,0 +1,3 @@
+Command: python3 (hashlib.sha256 over original byte streams)
+736c67784e08c80ba474e9ec09fd8d0664c82df8bd44113d64c61a10563cf73e  /workspace/scratch/7b09987e149f/upload/Ahmad_Kassar_Full_Stack_Developer_CV.pdf
+9c942d475d0440594788bb7541b2bddb2ea77182552d3a2caf7ee87d3dbdab99  /workspace/scratch/7b09987e149f/ahmad-kassar-portfolio/content/cv.source.txt

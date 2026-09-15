@@ -1,0 +1,1206 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "/workspace/scratch/7b09987e149f/ahmad-kassar-portfolio/scripts/audit-content.mjs",
+    "--pdf",
+    "../upload/Ahmad_Kassar_Full_Stack_Developer_CV.pdf"
+  ],
+  "executedAt": "2026-09-15T11:49:50.901Z",
+  "overall": "PASS",
+  "scope": "CV content/provenance audit only. Not a static typecheck, site build or accessibility/performance audit.",
+  "counts": {
+    "roles": 2,
+    "projects": 4,
+    "educationEntries": 2,
+    "languageEntries": 2,
+    "sourceBullets": 17,
+    "structuredBullets": 17,
+    "mappedFields": 130,
+    "explicitQuantitativeClaims": 6
+  },
+  "roles": [
+    {
+      "title": "Frontend Developer",
+      "employer": "Horecons",
+      "datesAsWritten": "Oct 2025 – Present"
+    },
+    {
+      "title": "Frontend Developer",
+      "employer": "Interphase",
+      "datesAsWritten": "Mar 2024 – Sep 2025"
+    }
+  ],
+  "metrics": [
+    {
+      "claim": "3 years",
+      "startLine": 7,
+      "endLine": 8,
+      "status": "CV claim; not an independently measured result"
+    },
+    {
+      "claim": "two production systems",
+      "startLine": 8,
+      "endLine": 10,
+      "status": "CV claim; not an independently measured result"
+    },
+    {
+      "claim": "4 products",
+      "startLine": 11,
+      "endLine": 12,
+      "status": "CV claim; not an independently measured result"
+    },
+    {
+      "claim": "3 ERP modules",
+      "startLine": 32,
+      "endLine": 34,
+      "status": "CV claim; not an independently measured result"
+    },
+    {
+      "claim": "3 core modules",
+      "startLine": 43,
+      "endLine": 44,
+      "status": "CV claim; not an independently measured result"
+    },
+    {
+      "claim": "4 separate routed views",
+      "startLine": 72,
+      "endLine": 73,
+      "status": "CV claim; not an independently measured result"
+    }
+  ],
+  "extractionReproduction": {
+    "status": "PASS",
+    "command": [
+      "pdftotext",
+      "-layout",
+      "../upload/Ahmad_Kassar_Full_Stack_Developer_CV.pdf",
+      "-"
+    ],
+    "exitCode": 0,
+    "stderr": ""
+  },
+  "sourceSha256": "9c942d475d0440594788bb7541b2bddb2ea77182552d3a2caf7ee87d3dbdab99",
+  "checks": [
+    {
+      "name": "Source match: identity.name",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: identity.location",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: headline",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: summary",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: contact.email",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: links.0.sourceText",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: links.0.url",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: links.1.sourceText",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: links.1.url",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.0.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.0.employer",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.0.start",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.0.end",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.0.datesAsWritten",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.0.location",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.0.achievements.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.0.achievements.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.0.achievements.2",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.0.achievements.3",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.0.achievements.4",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.0.tools.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.0.tools.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.0.tools.2",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.0.tools.3",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.0.tools.4",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.0.tools.5",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.0.tools.6",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.1.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.1.employer",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.1.start",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.1.end",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.1.datesAsWritten",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.1.location",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.1.achievements.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.1.achievements.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.1.achievements.2",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.1.achievements.3",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.1.tools.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.1.tools.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.1.tools.2",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: experience.1.tools.3",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.0.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.0.items.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.0.items.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.0.items.2",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.0.items.3",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.0.items.4",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.0.items.5",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.0.items.6",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.0.items.7",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.0.items.8",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.0.items.9",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.0.items.10",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.0.items.11",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.0.items.12",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.0.items.13",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.1.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.1.items.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.1.items.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.1.items.2",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.1.items.3",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.1.items.4",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.1.items.5",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.1.items.6",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.1.items.7",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.1.items.8",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.2.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.2.items.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.2.items.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.2.items.2",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.2.items.3",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.2.items.4",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.2.items.5",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.3.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.3.items.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.3.items.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.3.items.2",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.3.items.3",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.3.items.4",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.3.items.5",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.3.items.6",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.3.items.7",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.3.items.8",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.3.items.9",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.3.items.10",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: skills.3.items.11",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.0.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.0.tools.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.0.tools.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.0.tools.2",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.0.tools.3",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.0.tools.4",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.0.achievements.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.0.achievements.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.1.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.1.tools.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.1.tools.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.1.tools.2",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.1.achievements.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.1.achievements.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.2.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.2.tools.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.2.tools.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.2.tools.2",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.2.tools.3",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.2.achievements.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.2.achievements.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.3.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.3.tools.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.3.tools.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.3.tools.2",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.3.tools.3",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.3.achievements.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: sections.0.items.3.achievements.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: education.0.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: education.0.institution",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: education.0.start",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: education.0.end",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: education.0.datesAsWritten",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: education.0.description",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: education.1.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: education.1.institution",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: education.1.start",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: education.1.end",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: education.1.datesAsWritten",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: languages.0.name",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: languages.0.proficiency",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: languages.1.name",
+      "status": "PASS"
+    },
+    {
+      "name": "Source match: languages.1.proficiency",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: identity.name",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: identity.location",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: identity.language",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: headline",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: summary",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: contact.email",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: links.0.kind",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: links.0.sourceText",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: links.0.url",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: links.1.kind",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: links.1.sourceText",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: links.1.url",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.0.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.0.employer",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.0.location",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.0.start",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.0.end",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.0.datesAsWritten",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.0.achievements.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.0.achievements.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.0.achievements.2",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.0.achievements.3",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.0.achievements.4",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.0.tools.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.0.tools.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.0.tools.2",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.0.tools.3",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.0.tools.4",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.0.tools.5",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.0.tools.6",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.1.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.1.employer",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.1.location",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.1.start",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.1.end",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.1.datesAsWritten",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.1.achievements.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.1.achievements.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.1.achievements.2",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.1.achievements.3",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.1.tools.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.1.tools.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.1.tools.2",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: experience.1.tools.3",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: education.0.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: education.0.institution",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: education.0.start",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: education.0.end",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: education.0.datesAsWritten",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: education.0.description",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: education.1.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: education.1.institution",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: education.1.start",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: education.1.end",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: education.1.datesAsWritten",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.0.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.0.items.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.0.items.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.0.items.2",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.0.items.3",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.0.items.4",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.0.items.5",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.0.items.6",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.0.items.7",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.0.items.8",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.0.items.9",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.0.items.10",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.0.items.11",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.0.items.12",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.0.items.13",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.1.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.1.items.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.1.items.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.1.items.2",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.1.items.3",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.1.items.4",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.1.items.5",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.1.items.6",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.1.items.7",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.1.items.8",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.2.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.2.items.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.2.items.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.2.items.2",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.2.items.3",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.2.items.4",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.2.items.5",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.3.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.3.items.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.3.items.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.3.items.2",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.3.items.3",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.3.items.4",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.3.items.5",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.3.items.6",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.3.items.7",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.3.items.8",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.3.items.9",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.3.items.10",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: skills.3.items.11",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: languages.0.name",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: languages.0.proficiency",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: languages.1.name",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: languages.1.proficiency",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.0.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.0.tools.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.0.tools.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.0.tools.2",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.0.tools.3",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.0.tools.4",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.0.achievements.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.0.achievements.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.1.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.1.tools.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.1.tools.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.1.tools.2",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.1.achievements.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.1.achievements.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.2.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.2.tools.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.2.tools.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.2.tools.2",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.2.tools.3",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.2.achievements.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.2.achievements.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.3.title",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.3.tools.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.3.tools.1",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.3.tools.2",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.3.tools.3",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.3.achievements.0",
+      "status": "PASS"
+    },
+    {
+      "name": "Mapped or labelled metadata: sections.0.items.3.achievements.1",
+      "status": "PASS"
+    },
+    {
+      "name": "All source bullets are represented",
+      "status": "PASS"
+    },
+    {
+      "name": "Verbatim bullet mappings cover every source bullet",
+      "status": "PASS"
+    },
+    {
+      "name": "Headline unchanged",
+      "status": "PASS"
+    },
+    {
+      "name": "Source summary preserved; display omits the total-years claim",
+      "status": "PASS"
+    },
+    {
+      "name": "Phone omitted from public content",
+      "status": "PASS"
+    },
+    {
+      "name": "Authored prose and labels are kept separately from CV facts",
+      "status": "PASS"
+    },
+    {
+      "name": "Missing credentials and licences remain empty",
+      "status": "PASS"
+    },
+    {
+      "name": "No project dates or URLs invented",
+      "status": "PASS"
+    },
+    {
+      "name": "Raw extraction is excluded from future Git tracking",
+      "status": "PASS"
+    },
+    {
+      "name": "Only the redacted CV is publicly downloadable",
+      "status": "PASS"
+    },
+    {
+      "name": "Metric is explicitly in source lines 7-8",
+      "status": "PASS"
+    },
+    {
+      "name": "Metric is explicitly in source lines 8-10",
+      "status": "PASS"
+    },
+    {
+      "name": "Metric is explicitly in source lines 11-12",
+      "status": "PASS"
+    },
+    {
+      "name": "Metric is explicitly in source lines 32-34",
+      "status": "PASS"
+    },
+    {
+      "name": "Metric is explicitly in source lines 43-44",
+      "status": "PASS"
+    },
+    {
+      "name": "Metric is explicitly in source lines 72-73",
+      "status": "PASS"
+    },
+    {
+      "name": "Fresh local extraction matches saved evidence byte for byte",
+      "status": "PASS"
+    }
+  ],
+  "failures": []
+}

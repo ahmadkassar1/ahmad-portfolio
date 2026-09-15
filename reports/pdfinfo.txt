@@ -1,0 +1,23 @@
+Command: pdfinfo /workspace/scratch/7b09987e149f/upload/Ahmad_Kassar_Full_Stack_Developer_CV.pdf
+Title:           Ahmad Kassar — Full-Stack Developer CV
+Subject:         Full-Stack Developer CV
+Keywords:        
+Author:          Ahmad Kassar
+Creator:         Ahmad Kassar
+Producer:        ReportLab PDF Library - (opensource)
+CreationDate:    Fri Aug 21 16:01:18 2026 EEST
+ModDate:         Fri Aug 21 16:01:18 2026 EEST
+Custom Metadata: no
+Metadata Stream: no
+Tagged:          no
+UserProperties:  no
+Suspects:        no
+Form:            none
+JavaScript:      no
+Pages:           2
+Encrypted:       no
+Page size:       595.276 x 841.89 pts (A4)
+Page rot:        0
+File size:       7461 bytes
+Optimized:       no
+PDF version:     1.4

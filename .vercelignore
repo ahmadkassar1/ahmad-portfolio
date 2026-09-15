@@ -1,0 +1,9 @@
+content/cv.source.txt
+private/
+upload/
+reports/
+docs/
+tmp/
+.git/
+.env*
+*.zip

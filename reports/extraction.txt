@@ -1,0 +1,6 @@
+Command: pdftotext -layout /workspace/scratch/7b09987e149f/upload/Ahmad_Kassar_Full_Stack_Developer_CV.pdf /workspace/scratch/7b09987e149f/ahmad-kassar-portfolio/content/cv.source.txt
+Exit code: 0
+Stdout:
+
+Stderr:
+

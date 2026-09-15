@@ -1,0 +1,9 @@
+{
+  "command": "git ls-files -z; scan staged paths and text for private phone; git log -p -- content/",
+  "baseCommit": "f387e83fb7aa4f723e5d9e2fadb3917ec5ea525d",
+  "trackedFileCount": 63,
+  "rawSourceTracked": false,
+  "phoneFoundInTrackedText": false,
+  "contentHistoryBeforePreviewCommitBytes": 0,
+  "overall": "PASS"
+}

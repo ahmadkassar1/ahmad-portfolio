@@ -1,0 +1,22 @@
+{
+  "command": "Local PyMuPDF redaction; pdftotext -layout validation",
+  "removed_fields": [
+    "phone number"
+  ],
+  "source_unmodified": true,
+  "redacted_path": "/workspace/scratch/7b09987e149f/ahmad-kassar-portfolio/public/Ahmad_Kassar_CV_Redacted.pdf",
+  "source_sha256": "736c67784e08c80ba474e9ec09fd8d0664c82df8bd44113d64c61a10563cf73e",
+  "redacted_sha256": "17201696922d98ffd85268c72291b2007b260e5e5359a7761b0c173a427de774",
+  "phone_absent_from_text": true,
+  "redaction_rectangles": [
+    {
+      "page": 1,
+      "rect": [
+        232.49156188964844,
+        95.8874740600586,
+        304.0645751953125,
+        108.94047546386719
+      ]
+    }
+  ]
+}

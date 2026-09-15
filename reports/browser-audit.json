@@ -1,0 +1,461 @@
+{
+  "command": [
+    "node",
+    "scripts/verify-site.mjs",
+    "http://127.0.0.1:3000"
+  ],
+  "base": "http://127.0.0.1:3000",
+  "browser": "153.0.8010.0",
+  "executablePath": "/workspace/scratch/7b09987e149f/ahmad-kassar-portfolio/tmp/chrome-runtime/chromium",
+  "screenshots": [
+    {
+      "name": "light-360",
+      "path": "reports/screenshots/light-360.png",
+      "viewport": {
+        "width": 360,
+        "height": 844
+      }
+    },
+    {
+      "name": "light-768",
+      "path": "reports/screenshots/light-768.png",
+      "viewport": {
+        "width": 768,
+        "height": 1000
+      }
+    },
+    {
+      "name": "light-834",
+      "path": "reports/screenshots/light-834.png",
+      "viewport": {
+        "width": 834,
+        "height": 1000
+      }
+    },
+    {
+      "name": "light-1280",
+      "path": "reports/screenshots/light-1280.png",
+      "viewport": {
+        "width": 1280,
+        "height": 1000
+      }
+    },
+    {
+      "name": "light-1920",
+      "path": "reports/screenshots/light-1920.png",
+      "viewport": {
+        "width": 1920,
+        "height": 1000
+      }
+    },
+    {
+      "name": "light-390",
+      "path": "reports/screenshots/light-390.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "name": "direction-390",
+      "path": "reports/screenshots/direction-390.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "name": "light-1440",
+      "path": "reports/screenshots/light-1440.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "direction-1440",
+      "path": "reports/screenshots/direction-1440.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      }
+    },
+    {
+      "name": "landscape-844",
+      "path": "reports/screenshots/landscape-844.png",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      }
+    },
+    {
+      "name": "keyboard-focus",
+      "path": "reports/screenshots/keyboard-focus.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      }
+    },
+    {
+      "name": "dark-1280",
+      "path": "reports/screenshots/dark-1280.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      }
+    },
+    {
+      "name": "javascript-disabled",
+      "path": "reports/screenshots/javascript-disabled.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      }
+    },
+    {
+      "name": "reduced-motion",
+      "path": "reports/screenshots/reduced-motion.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      }
+    },
+    {
+      "name": "text-zoom-200",
+      "path": "reports/screenshots/text-zoom-200.png",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      }
+    }
+  ],
+  "viewportChecks": [
+    {
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "width": 834,
+      "scrollWidth": 834
+    },
+    {
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "width": 1920,
+      "scrollWidth": 1920
+    },
+    {
+      "width": 390,
+      "scrollWidth": 390
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1440
+    },
+    {
+      "width": 320,
+      "scrollWidth": 320
+    }
+  ],
+  "errors": [],
+  "failedRequests": [],
+  "assertions": [
+    {
+      "name": "Page is the portfolio, not an authentication screen",
+      "passed": true,
+      "detail": 200
+    },
+    {
+      "name": "Exactly one h1",
+      "passed": true
+    },
+    {
+      "name": "English and left-to-right",
+      "passed": true
+    },
+    {
+      "name": "Noindex metadata",
+      "passed": true
+    },
+    {
+      "name": "Noindex response header",
+      "passed": true
+    },
+    {
+      "name": "No horizontal overflow at 360px",
+      "passed": true
+    },
+    {
+      "name": "No horizontal overflow at 768px",
+      "passed": true
+    },
+    {
+      "name": "No horizontal overflow at 834px",
+      "passed": true
+    },
+    {
+      "name": "No horizontal overflow at 1280px",
+      "passed": true
+    },
+    {
+      "name": "No horizontal overflow at 1920px",
+      "passed": true
+    },
+    {
+      "name": "No horizontal overflow at 390px",
+      "passed": true
+    },
+    {
+      "name": "No horizontal overflow at 1440px",
+      "passed": true
+    },
+    {
+      "name": "No horizontal overflow at 320px",
+      "passed": true
+    },
+    {
+      "name": "Light theme has no serious or critical axe issues",
+      "passed": true
+    },
+    {
+      "name": "Skip link is first keyboard target",
+      "passed": true
+    },
+    {
+      "name": "Skip link moves focus to main",
+      "passed": true
+    },
+    {
+      "name": "Project disclosure opens",
+      "passed": true
+    },
+    {
+      "name": "Project disclosure closes",
+      "passed": true
+    },
+    {
+      "name": "Copy email confirmation",
+      "passed": true
+    },
+    {
+      "name": "Copy email writes the real address",
+      "passed": true
+    },
+    {
+      "name": "Email fallback points to the CV email",
+      "passed": true
+    },
+    {
+      "name": "Theme toggle selects dark",
+      "passed": true
+    },
+    {
+      "name": "Dark theme has no serious or critical axe issues",
+      "passed": true
+    },
+    {
+      "name": "Every achievement readable with JavaScript disabled",
+      "passed": true,
+      "detail": {
+        "missing": []
+      }
+    },
+    {
+      "name": "Reduced motion shows final transform and full opacity",
+      "passed": true
+    },
+    {
+      "name": "200% text zoom reflows without horizontal overflow",
+      "passed": true,
+      "detail": {
+        "width": 1280,
+        "scrollWidth": 1280
+      }
+    }
+  ],
+  "axe": {
+    "light": [],
+    "dark": []
+  },
+  "webkit": {
+    "status": "SKIPPED",
+    "reason": "browserType.launch: Executable doesn't exist at /root/.cache/ms-playwright/webkit-2359/pw_run.sh\n╔════════════════════════════════════════════════════════════╗\n║ Looks like Playwright was just installed or updated.       ║\n║ Please run the following command to download new browsers: ║\n║                                                            ║\n║     npx playwright install                                 ║\n║                                                            ║\n║ <3 Playwright Team                                         ║\n╚════════════════════════════════════════════════════════════╝"
+  },
+  "keyboard": [
+    {
+      "tag": "A",
+      "text": "Email Ahmad Kassar at ahmadkassar771@gmail.com",
+      "href": "mailto:ahmadkassar771@gmail.com",
+      "outline": "solid"
+    },
+    {
+      "tag": "A",
+      "text": "Explore the work",
+      "href": "#work",
+      "outline": "solid"
+    },
+    {
+      "tag": "A",
+      "text": "TheBridgeHorecons",
+      "href": "#experience",
+      "outline": "solid"
+    },
+    {
+      "tag": "A",
+      "text": "PopulusInterphase",
+      "href": "#experience",
+      "outline": "solid"
+    },
+    {
+      "tag": "SUMMARY",
+      "text": "More about this project",
+      "href": null,
+      "outline": "solid"
+    },
+    {
+      "tag": "SUMMARY",
+      "text": "More about this project",
+      "href": null,
+      "outline": "solid"
+    },
+    {
+      "tag": "SUMMARY",
+      "text": "More about this project",
+      "href": null,
+      "outline": "solid"
+    },
+    {
+      "tag": "SUMMARY",
+      "text": "More about this project",
+      "href": null,
+      "outline": "solid"
+    },
+    {
+      "tag": "A",
+      "text": "ahmadkassar771@gmail.com",
+      "href": "mailto:ahmadkassar771@gmail.com",
+      "outline": "solid"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Copy email",
+      "href": null,
+      "outline": "solid"
+    },
+    {
+      "tag": "A",
+      "text": "LinkedIn",
+      "href": "https://linkedin.com/in/ahmad-kassar-2627ab2bb",
+      "outline": "solid"
+    },
+    {
+      "tag": "A",
+      "text": "GitHub",
+      "href": "https://github.com/ahmadkassar1",
+      "outline": "solid"
+    },
+    {
+      "tag": "A",
+      "text": "Download CV",
+      "href": "/Ahmad_Kassar_CV_Redacted.pdf",
+      "outline": "solid"
+    },
+    {
+      "tag": "A",
+      "text": "Back to top",
+      "href": "#top",
+      "outline": "solid"
+    },
+    {
+      "tag": "BODY",
+      "text": "Skip to contentAhmad KassarWorkExperienceContactFull-Stack DeveloperBeirut, LebanonAhmadKassarWEB APPS & ERP SYSTEMSBeirut-based, comfortable owning a feature f",
+      "href": null,
+      "outline": "none"
+    },
+    {
+      "tag": "A",
+      "text": "Skip to content",
+      "href": "#main",
+      "outline": "solid"
+    },
+    {
+      "tag": "A",
+      "text": "Ahmad Kassar — Home",
+      "href": "#top",
+      "outline": "solid"
+    },
+    {
+      "tag": "A",
+      "text": "Work",
+      "href": "#work",
+      "outline": "solid"
+    },
+    {
+      "tag": "A",
+      "text": "Experience",
+      "href": "#experience",
+      "outline": "solid"
+    },
+    {
+      "tag": "A",
+      "text": "Contact",
+      "href": "#contact",
+      "outline": "solid"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Toggle light and dark theme",
+      "href": null,
+      "outline": "solid"
+    },
+    {
+      "tag": "A",
+      "text": "Email Ahmad Kassar at ahmadkassar771@gmail.com",
+      "href": "mailto:ahmadkassar771@gmail.com",
+      "outline": "solid"
+    },
+    {
+      "tag": "A",
+      "text": "Explore the work",
+      "href": "#work",
+      "outline": "solid"
+    },
+    {
+      "tag": "A",
+      "text": "TheBridgeHorecons",
+      "href": "#experience",
+      "outline": "solid"
+    },
+    {
+      "tag": "A",
+      "text": "PopulusInterphase",
+      "href": "#experience",
+      "outline": "solid"
+    },
+    {
+      "tag": "SUMMARY",
+      "text": "More about this project",
+      "href": null,
+      "outline": "solid"
+    },
+    {
+      "tag": "SUMMARY",
+      "text": "More about this project",
+      "href": null,
+      "outline": "solid"
+    },
+    {
+      "tag": "SUMMARY",
+      "text": "More about this project",
+      "href": null,
+      "outline": "solid"
+    }
+  ],
+  "overall": "PASS"
+}
