@@ -23,9 +23,6 @@ jobs:
       - name: Install app dependencies
         run: npm ci
 
-      - name: Install Playwright test runner
-        run: npm install --no-save @playwright/test@1.55.0
-
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
