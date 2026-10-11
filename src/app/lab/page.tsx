@@ -5,7 +5,7 @@ import { labProjects } from "@/data/lab";
 export const metadata: Metadata = {
   title: "Lab",
   description:
-    "Self-contained builds and experiments — a SaaS analytics console, a form builder, a generative art studio, and a browser game.",
+    "Interactive frontend experiments: analytics, form building, mock data, document redaction and pricing scenarios.",
 };
 
 export default function LabIndex() {
@@ -27,9 +27,8 @@ export default function LabIndex() {
             Builds &amp; <span className="font-serif italic text-accent-bright">experiments</span>
           </h1>
           <p className="mt-5 text-base leading-relaxed text-ink-soft">
-            Four self-contained projects — each a different corner of frontend work, built to be
-            production-real rather than a throwaway demo. No external services; everything runs in
-            the browser.
+            {labProjects.length} interactive experiments exploring different parts of frontend development.
+            Try their controls and inspect how the interface responds. Sample data is used for demonstrations.
           </p>
         </header>
 

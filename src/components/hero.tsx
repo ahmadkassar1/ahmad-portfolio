@@ -1,4 +1,5 @@
 import { HeroSculpture } from "@/components/hero-sculpture";
+import { site } from "@/data/site";
 import { MetaLabel } from "@/components/meta-label";
 
 /* Server component on purpose: the text column animates with CSS only
@@ -11,7 +12,7 @@ export function Hero() {
       <div className="mx-auto grid max-w-6xl items-center gap-14 px-6 pb-24 pt-32 sm:pt-40 lg:grid-cols-12 lg:gap-6 lg:pb-32">
         <div className="relative z-10 lg:col-span-5">
           <div className="fade-rise">
-            <MetaLabel>Ahmad Kassar — Frontend Developer, Beirut</MetaLabel>
+            <MetaLabel>{site.name} — {site.role}, {site.location}</MetaLabel>
           </div>
 
           <h1 className="text-display rise mt-6 text-ink [animation-delay:80ms]">

@@ -26,4 +26,4 @@ export const shipped: Shipped[] = [
 ];
 
 export const training =
-  "42 Beirut — systems programming, peer review · business degree before code";
+  "Programming Advices · Scrimba Learn React · 42 Beirut assessment participation";

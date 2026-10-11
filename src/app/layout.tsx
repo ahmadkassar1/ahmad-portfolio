@@ -36,7 +36,6 @@ export const metadata: Metadata = {
     "TypeScript",
     "ERP",
     "Lebanon",
-    "Beirut",
   ],
   authors: [{ name: site.name, url: site.url }],
   creator: site.name,
@@ -72,7 +71,6 @@ const personJsonLd = {
   sameAs: [site.github, site.linkedin],
   address: { "@type": "PostalAddress", addressCountry: "LB" },
   worksFor: { "@type": "Organization", name: "Horecons" },
-  alumniOf: { "@type": "EducationalOrganization", name: "42 Beirut" },
   knowsAbout: [
     "Angular",
     "React",

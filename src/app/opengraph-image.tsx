@@ -64,7 +64,7 @@ export default function OpenGraphImage() {
           }}
         >
           <div>Frontend Developer — Angular · React · Next.js</div>
-          <div style={{ color: "#7396ff" }}>Beirut, Lebanon</div>
+          <div style={{ color: "#7396ff" }}>{site.location}</div>
         </div>
       </div>
     ),

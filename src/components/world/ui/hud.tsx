@@ -1,5 +1,6 @@
 "use client";
 
+import { featuredWork } from "@/data/featured-work";
 import { site } from "@/data/site";
 import { stations } from "@/data/stations";
 import { useExperience } from "@/lib/experience-store";
@@ -209,6 +210,9 @@ export function Hud() {
           >
             Ledger view
           </button>
+          <a href={featuredWork.links.demo} target="_blank" rel="noopener noreferrer" className="rounded-xl border border-accent/30 px-3 py-2 font-mono text-xs text-accent-bright transition-colors hover:bg-accent/10">
+            Course player ↗
+          </a>
         </div>
       </nav>
     </div>

@@ -52,8 +52,8 @@ export const labProjects: LabProject[] = [
     slug: "redacto",
     name: "Redacto",
     tagline:
-      "Provably-local document redaction — auto-detect and truly burn out PII from a PDF or image, with nothing ever leaving your browser (the CSP is the proof).",
-    blurb: "On-device PDF/image redaction — detect & truly remove PII, zero upload.",
+      "Document redaction experiment for PDFs and images, with detection and export controls. Use sample documents when evaluating the tool.",
+    blurb: "PDF/image redaction experiment — detection and export controls.",
     tags: ["Privacy", "PDF", "On-device"],
     status: "live",
     accent: "#b91c1c",
