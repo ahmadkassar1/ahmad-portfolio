@@ -35,7 +35,6 @@ function isEditableTarget(target: EventTarget | null) {
 }
 
 export function WalkControls() {
-  const camera = useThree((s) => s.camera);
   const gl = useThree((s) => s.gl);
   const navMode = useExperience((s) => s.navMode);
 
@@ -130,7 +129,7 @@ export function WalkControls() {
     };
   }, [navMode, gl]);
 
-  useFrame((_, rawDelta) => {
+  useFrame(({ camera }, rawDelta) => {
     const s = useExperience.getState();
     const active = s.navMode === "walk" && s.phase === "idle";
 

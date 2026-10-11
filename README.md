@@ -29,9 +29,9 @@ npm start
 - `src/components/featured-work.tsx`: server-rendered course player feature.
 - `src/components/world`: canvas, camera, scene objects and DOM controls/panels.
 - `src/data`: professional copy, project links, skills and Lab entries. `about.ts` is shared by both views; `featured-work.ts` supplies both the Ledger card and Ops Deck link.
-- `src/lib`: interaction state and feature utilities.
+- `src/lib`: interaction state and feature utilities. The Lab hash subscription supplies an empty server snapshot for consistent hydration and responds to browser navigation without resetting edits when Share uses `replaceState`.
 - `src/app/lab`: Helm analytics, Forge form builder, Fixtura mock-data generator, Redacto document redaction and Margin Lab pricing experiments.
-- `e2e/navigation.spec.ts`: existing Ops Deck navigation smoke test, run by the Playwright workflow.
+- `e2e`: Ops Deck navigation and shared-link regression tests, run by the Playwright workflow.
 
 ## Content and links
 
@@ -55,7 +55,7 @@ npx tsc --noEmit
 npm run build
 ```
 
-The existing navigation workflow installs Playwright separately and runs the Ops Deck smoke test. For changes, also check the affected views in a browser: Ledger at narrow and wide widths, reduced motion, keyboard focus, Ops Deck controls, and the relevant Lab interaction. Compilation alone does not establish accessibility, privacy, device compatibility or functional completeness.
+The workflow installs Chromium and runs the Ops Deck smoke plus Fixtura/Margin Lab shared-link tests. Playwright is a locked development dependency. Tests use localhost:3000 by default; set `PLAYWRIGHT_BASE_URL` to check another running preview. The navigation smoke uses a headed browser with software WebGL (CI supplies Xvfb). For changes, also check the affected views in a browser: Ledger at narrow and wide widths, reduced motion, keyboard focus, Ops Deck controls, and the relevant Lab interaction. Compilation alone does not establish accessibility, privacy, device compatibility or functional completeness.
 
 ## Deployment
 

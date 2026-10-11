@@ -51,7 +51,6 @@ export function LabPanel() {
               <li
                 key={p.slug}
                 className="rounded-xl border border-line/60 p-4 opacity-70"
-                aria-disabled="true"
               >
                 <div className="flex items-center justify-between gap-3">
                   <span className="flex items-center gap-2.5">

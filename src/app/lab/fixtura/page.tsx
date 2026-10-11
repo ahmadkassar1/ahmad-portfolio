@@ -17,6 +17,7 @@ import {
 import { generateDataset } from "@/lib/lab/fixtura/engine";
 import { EXT, MIME, serialize, type Format } from "@/lib/lab/fixtura/export";
 import { infer, type InferMode } from "@/lib/lab/fixtura/infer";
+import { useLocationHash } from "@/lib/lab/use-location-hash";
 
 const input =
   "w-full rounded-md border border-zinc-300 bg-white px-2.5 py-1.5 text-sm outline-none transition-colors placeholder:text-zinc-400 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/15";
@@ -26,8 +27,19 @@ const primaryBtn =
   "inline-flex items-center gap-1.5 rounded-lg bg-indigo-600 px-3.5 py-1.5 text-sm font-medium text-white transition-colors hover:bg-indigo-700";
 
 export default function FixturaPage() {
-  const [schema, setSchema] = useState<Schema>(DEFAULT_SCHEMA);
-  const [selectedId, setSelectedId] = useState<string>(DEFAULT_SCHEMA.entities[0].id);
+  const hash = useLocationHash();
+  const initialSchema = useMemo(() => {
+    const encoded = hash.match(/(?:^#|&)s=([^&]+)/)?.[1];
+    const shared = encoded ? decodeSchema(encoded) : null;
+    return shared?.entities[0] ? shared : DEFAULT_SCHEMA;
+  }, [hash]);
+
+  return <FixturaEditor key={hash} initialSchema={initialSchema} />;
+}
+
+function FixturaEditor({ initialSchema }: { initialSchema: Schema }) {
+  const [schema, setSchema] = useState(initialSchema);
+  const [selectedId, setSelectedId] = useState(initialSchema.entities[0].id);
   const [importing, setImporting] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
@@ -38,18 +50,6 @@ export default function FixturaPage() {
   const dataset = useMemo(() => generateDataset(schema), [schema]);
   const selected = schema.entities.find((e) => e.id === selectedId) ?? schema.entities[0];
   const selectedRows = dataset.find((d) => d.id === selected?.id)?.rows ?? [];
-
-  // Load a shared schema from the URL hash.
-  useEffect(() => {
-    const m = window.location.hash.match(/s=([^&]+)/);
-    if (m) {
-      const loaded = decodeSchema(m[1]);
-      if (loaded && loaded.entities[0]) {
-        setSchema(loaded);
-        setSelectedId(loaded.entities[0].id);
-      }
-    }
-  }, []);
 
   const flash = (m: string) => {
     setToast(m);
@@ -89,12 +89,12 @@ export default function FixturaPage() {
     }));
     setSelectedId(id);
   };
-  const removeEntity = (id: string) =>
-    setSchema((s) => {
-      const entities = s.entities.filter((e) => e.id !== id);
-      if (entities.length) setSelectedId(entities[0].id);
-      return { ...s, entities: entities.length ? entities : s.entities };
-    });
+  const removeEntity = (id: string) => {
+    const entities = schema.entities.filter((entity) => entity.id !== id);
+    if (!entities.length) return;
+    setSchema({ ...schema, entities });
+    if (id === selectedId) setSelectedId(entities[0].id);
+  };
 
   // --- export / share --------------------------------------------------------
   const download = (format: Format) => {
