@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { useLocationHash } from "@/lib/lab/use-location-hash";
 import {
   DEFAULT_PRODUCT,
   computePricing,
@@ -19,30 +20,25 @@ const num = "w-20 rounded-md border border-zinc-300 px-2 py-1.5 text-right text-
 const btn = "inline-flex items-center gap-1.5 rounded-lg border border-zinc-300 bg-white px-3 py-1.5 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-50";
 
 export default function MarginLabPage() {
-  const [product, setProduct] = useState<Product>(DEFAULT_PRODUCT);
+  const hash = useLocationHash();
+  const initialProduct = useMemo(() => {
+    const encoded = hash.match(/(?:^#|&)p=([^&]+)/)?.[1];
+    return (encoded ? decodeProduct(encoded) : null) ?? DEFAULT_PRODUCT;
+  }, [hash]);
+
+  return <MarginEditor key={hash} initialProduct={initialProduct} />;
+}
+
+function MarginEditor({ initialProduct }: { initialProduct: Product }) {
+  const [product, setProduct] = useState(initialProduct);
   const [scenario, setScenario] = useState(0); // material cost delta %
   const [toast, setToast] = useState<string | null>(null);
   const cid = useRef(100);
 
   const pricing = useMemo(() => computePricing(product), [product]);
   const scenarioPricing = useMemo(() => computePricing(product, 1 + scenario / 100), [product, scenario]);
-  const [selChannel, setSelChannel] = useState(product.channels[0]?.id ?? "");
+  const [selChannel, setSelChannel] = useState(initialProduct.channels[0]?.id ?? "");
   const sel = pricing.channels.find((c) => c.id === selChannel) ?? pricing.channels[0];
-
-  useEffect(() => {
-    const m = window.location.hash.match(/p=([^&]+)/);
-    if (m) {
-      const loaded = decodeProduct(m[1]);
-      if (loaded) setProduct(loaded);
-    }
-  }, []);
-
-  // Keep the break-even selector in sync if its channel gets deleted.
-  useEffect(() => {
-    if (!product.channels.some((c) => c.id === selChannel)) {
-      setSelChannel(product.channels[0]?.id ?? "");
-    }
-  }, [product.channels, selChannel]);
 
   const flash = (t: string) => {
     setToast(t);
@@ -266,7 +262,7 @@ export default function MarginLabPage() {
             <div className="rounded-xl border border-zinc-200 bg-white p-5">
               <div className="mb-3 flex items-center justify-between">
                 <h3 className="text-sm font-medium text-zinc-700">Break-even</h3>
-                <select value={selChannel} onChange={(e) => setSelChannel(e.target.value)} className="rounded-md border border-zinc-300 px-2 py-1 text-xs focus:border-green-700 focus:outline-none">
+                <select aria-label="Break-even channel" value={sel?.id ?? ""} onChange={(e) => setSelChannel(e.target.value)} className="rounded-md border border-zinc-300 px-2 py-1 text-xs focus:border-green-700 focus:outline-none">
                   {product.channels.map((c) => (
                     <option key={c.id} value={c.id}>
                       {c.name}

@@ -9,8 +9,7 @@ export function Footer() {
             ak<span className="text-accent-bright">.</span>
           </p>
           <p className="mt-1 text-sm text-ink-faint">
-            © {new Date().getFullYear()} {site.name}. Designed and built by
-            hand — Next.js, Tailwind CSS, Motion.
+            © {new Date().getFullYear()} {site.name}. Built with Next.js, Tailwind CSS and Motion.
           </p>
         </div>
         <ul className="flex gap-6 font-mono text-xs">

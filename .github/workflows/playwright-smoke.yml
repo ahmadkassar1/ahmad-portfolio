@@ -23,9 +23,6 @@ jobs:
       - name: Install app dependencies
         run: npm ci
 
-      - name: Install Playwright test runner
-        run: npm install --no-save @playwright/test@1.55.0
-
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
@@ -41,8 +38,8 @@ jobs:
           cat /tmp/next.log
           exit 1
 
-      - name: Run Playwright 3D smoke test
-        run: xvfb-run -a npx playwright test e2e/navigation.spec.ts --reporter=line --workers=1
+      - name: Run navigation and shared-link tests
+        run: xvfb-run -a npx playwright test e2e --reporter=line --workers=1
 
       - name: Print Next.js log on failure
         if: failure()

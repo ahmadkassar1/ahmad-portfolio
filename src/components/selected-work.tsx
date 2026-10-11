@@ -1,3 +1,4 @@
+import { FeaturedWork } from "@/components/featured-work";
 import type { ReactNode } from "react";
 import { MetaLabel } from "@/components/meta-label";
 import { Reveal } from "@/components/motion/reveal";
@@ -26,17 +27,19 @@ export function SelectedWork() {
         <SectionHeading
           index="01"
           title="Selected work"
-          lede="Products I've designed and built end to end, drawn as the interfaces they are. Behind each drawing is a working product with users."
+          lede="A public frontend challenge followed by selected personal projects. The interface drawings below illustrate their flows; they are not live product screenshots."
         />
+
+        <FeaturedWork />
 
         <div className="mt-20 space-y-24 sm:space-y-32">
           {projects.map((project, index) => {
             const flip = index % 2 === 1;
             return (
               <Reveal key={project.name}>
-                <article className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
+                <article className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-12">
                   <SpotlightCard
-                    className={`rounded-2xl border border-line bg-ground/40 p-6 [background-image:radial-gradient(var(--line)_1px,transparent_1px)] [background-size:18px_18px] sm:p-10 lg:col-span-7 ${
+                    className={`min-w-0 rounded-2xl border border-line bg-ground/40 p-6 [background-image:radial-gradient(var(--line)_1px,transparent_1px)] [background-size:18px_18px] sm:p-10 lg:col-span-7 ${
                       flip ? "lg:order-2" : ""
                     }`}
                   >
@@ -50,7 +53,7 @@ export function SelectedWork() {
                     </div>
                   </SpotlightCard>
 
-                  <div className={`lg:col-span-5 ${flip ? "lg:order-1" : ""}`}>
+                  <div className={`min-w-0 lg:col-span-5 ${flip ? "lg:order-1" : ""}`}>
                     <div className="flex items-baseline gap-3">
                       <span
                         aria-hidden="true"

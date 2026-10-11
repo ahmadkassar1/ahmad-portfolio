@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 test.use({
   viewport: { width: 1440, height: 960 },
-  reducedMotion: "no-preference",
+  contextOptions: { reducedMotion: "no-preference" },
   headless: false,
   launchOptions: {
     args: [
@@ -16,7 +16,7 @@ test.use({
 });
 
 test("3D navigation, panels and walk mode stay responsive", async ({ page }) => {
-  await page.goto("http://127.0.0.1:3000", { waitUntil: "domcontentloaded" });
+  await page.goto(process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:3000", { waitUntil: "domcontentloaded" });
 
   const webgl = await page.evaluate(() => {
     const canvas = document.createElement("canvas");

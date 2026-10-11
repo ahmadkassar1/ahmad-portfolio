@@ -55,7 +55,7 @@ export function AreaChart({ data }: { data: SeriesPoint[] }) {
   const plotW = W - PAD.left - PAD.right;
   const plotH = H - PAD.top - PAD.bottom;
 
-  const { areaPath, linePath, max, x, y, ticks } = useMemo(() => {
+  const { areaPath, linePath, x, y, ticks } = useMemo(() => {
     const values = data.map((d) => d.requests);
     const rawMax = Math.max(...values);
     // Round the axis ceiling up to a clean number.
@@ -68,7 +68,7 @@ export function AreaChart({ data }: { data: SeriesPoint[] }) {
     const linePath = `M${line.join(" L")}`;
     const areaPath = `${linePath} L${x(n - 1).toFixed(1)},${(PAD.top + plotH).toFixed(1)} L${x(0).toFixed(1)},${(PAD.top + plotH).toFixed(1)} Z`;
     const ticks = [0, 0.25, 0.5, 0.75, 1].map((t) => ({ v: max * t, yy: y(max * t) }));
-    return { areaPath, linePath, max, x, y, ticks };
+    return { areaPath, linePath, x, y, ticks };
   }, [data, plotW, plotH]);
 
   const onMove = (e: React.PointerEvent<HTMLDivElement>) => {
