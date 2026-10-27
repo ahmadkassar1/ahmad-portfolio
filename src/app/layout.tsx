@@ -70,7 +70,7 @@ const personJsonLd = {
   url: site.url,
   sameAs: [site.github, site.linkedin],
   address: { "@type": "PostalAddress", addressCountry: "LB" },
-  worksFor: { "@type": "Organization", name: "Horecons" },
+  // No current employer is verified. Former employers belong in dated experience, not worksFor.
   knowsAbout: [
     "Angular",
     "React",
