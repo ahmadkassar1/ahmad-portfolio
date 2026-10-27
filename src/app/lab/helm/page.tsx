@@ -178,7 +178,7 @@ export default function HelmPage() {
             <section className="overflow-hidden rounded-xl border border-zinc-200 bg-white">
               <div className="flex items-center justify-between border-b border-zinc-200 px-5 py-4">
                 <h3 className="text-sm font-medium text-zinc-700">Recent deliveries</h3>
-                <span className="text-xs text-zinc-400">live</span>
+                <span className="text-xs text-zinc-400">sample data</span>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-sm">
