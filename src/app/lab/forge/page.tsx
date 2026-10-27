@@ -264,7 +264,7 @@ export default function ForgePage() {
         </aside>
 
         {/* Canvas */}
-        <main className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-8">
+        <main id="main" tabIndex={-1} className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-8">
           <div className="mx-auto max-w-xl">
             <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm sm:p-8">
               <h2 className="mb-1 text-xl font-semibold tracking-tight">{schema.title}</h2>
