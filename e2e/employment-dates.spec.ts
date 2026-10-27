@@ -20,4 +20,13 @@ test("public portfolio shows verified past employment dates", async ({ page }) =
   // Prevent a future portfolio edit from incorrectly presenting Horecons
   // as Ahmad's current employer.
   await expect(experience).not.toContainText(/Horecons.{0,100}(?:2025\s*[–—-]\s*(?:now|present))/i);
+
+  // Search engines read JSON-LD separately from visible page copy. A past
+  // employer must not be represented as the current worksFor organization.
+  const schemaBlocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+  const person = schemaBlocks
+    .map((raw) => JSON.parse(raw) as Record<string, unknown>)
+    .find((data) => data["@type"] === "Person");
+  expect(person).toBeDefined();
+  expect(person).not.toHaveProperty("worksFor");
 });
