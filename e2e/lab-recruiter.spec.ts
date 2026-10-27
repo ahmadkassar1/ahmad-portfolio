@@ -20,6 +20,10 @@ test("Lab gallery labels sample demos and supports keyboard-first mobile navigat
 
   const cards = page.locator('main a[href^="/lab/"]');
   await expect(cards).toHaveCount(5);
+  // Sample analytics and experimental privacy tooling must not imply verified production guarantees.
+  await expect(cards.first()).toContainText(/sample deliveries table/i);
+  await expect(cards.nth(3)).toContainText("Experimental");
+  await expect(cards.nth(3)).not.toContainText("On-device");
   for (const slug of ["helm", "forge", "fixtura", "redacto", "margin-lab"]) {
     await expect(page.locator(`main a[href="/lab/${slug}"]`)).toBeVisible();
   }
