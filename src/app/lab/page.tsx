@@ -12,7 +12,7 @@ export default function LabIndex() {
   return (
     // Transparent surface: the layout's --ground + blueprint grid show
     // through, so the Lab reads as a native part of the portfolio.
-    <main className="relative min-h-dvh font-sans text-ink">
+    <main id="main" tabIndex={-1} className="relative min-h-dvh font-sans text-ink">
       <div className="mx-auto max-w-5xl px-6 py-16 sm:py-24">
         <Link
           href="/"
