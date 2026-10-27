@@ -44,5 +44,11 @@ test("Lab gallery labels sample demos and supports keyboard-first mobile navigat
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/\/lab\/helm\/?$/);
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  // The global skip link must work inside an individual Lab demo as well.
+  await expect(page.locator('main#main[tabindex="-1"]')).toHaveCount(1);
+  await skip.focus();
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(/\/lab\/helm\/?#main$/);
+  await expect(page.locator("main#main")).toBeFocused();
   expect(errors).toEqual([]);
 });
