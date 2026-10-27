@@ -100,7 +100,7 @@ function MarginEditor({ initialProduct }: { initialProduct: Product }) {
         </div>
       </header>
 
-      <main className="mx-auto grid max-w-6xl grid-cols-1 gap-5 p-4 sm:p-6 lg:grid-cols-[20rem_1fr]">
+      <main id="main" tabIndex={-1} className="mx-auto grid max-w-6xl grid-cols-1 gap-5 p-4 sm:p-6 lg:grid-cols-[20rem_1fr]">
         {/* Cost build-up */}
         <section className="space-y-4">
           <div className="rounded-xl border border-zinc-200 bg-white p-5">
