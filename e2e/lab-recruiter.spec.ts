@@ -52,3 +52,31 @@ test("Lab gallery labels sample demos and supports keyboard-first mobile navigat
   await expect(page.locator("main#main")).toBeFocused();
   expect(errors).toEqual([]);
 });
+
+
+test("All Lab detail routes support skip navigation and label sample content accurately", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+
+  for (const slug of ["forge", "fixtura", "redacto", "margin-lab"]) {
+    await page.goto(`${origin}/lab/${slug}`, { waitUntil: "domcontentloaded" });
+    const main = page.locator('main#main[tabindex="-1"]');
+    await expect(main).toHaveCount(1);
+    const skip = page.getByRole("link", { name: "Skip to content" });
+    await expect(skip).toHaveAttribute("href", "#main");
+    await skip.focus();
+    await page.keyboard.press("Enter");
+    await expect(page).toHaveURL(new RegExp(`/lab/${slug}/?#main$`));
+    await expect(main).toBeFocused();
+  }
+
+  await expect(page.locator("main#main")).toHaveCount(1);
+  await page.goto(`${origin}/lab/redacto`, { waitUntil: "domcontentloaded" });
+  await expect(page.getByText(/privacy behavior has not been independently audited/i)).toBeVisible();
+  await expect(page.getByText(/Experimental · use sample files/i)).toHaveCount(1);
+  await page.goto(`${origin}/lab/helm`, { waitUntil: "domcontentloaded" });
+  await expect(page.getByText("sample data", { exact: true })).toBeVisible();
+  expect(errors).toEqual([]);
+});
