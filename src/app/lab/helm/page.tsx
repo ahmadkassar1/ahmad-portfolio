@@ -111,7 +111,7 @@ export default function HelmPage() {
             </span>
           </header>
 
-          <main className="flex-1 space-y-6 p-5 lg:p-8">
+          <main id="main" tabIndex={-1} className="flex-1 space-y-6 p-5 lg:p-8">
             {/* Title row + range switch */}
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
