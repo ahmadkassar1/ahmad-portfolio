@@ -14,6 +14,15 @@ test("Lab gallery labels sample demos and supports keyboard-first mobile navigat
     page.getByText(/interactive demos using sample or local data, not live customer systems/i),
   ).toBeVisible();
 
+  // Global skip navigation must land on the Lab main landmark, not a missing hash target.
+  const skip = page.getByRole("link", { name: "Skip to content" });
+  await expect(skip).toHaveAttribute("href", "#main");
+  await expect(page.locator("main#main[tabindex=\"-1\"]")).toHaveCount(1);
+  await skip.focus();
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(/#main$/);
+  await expect(page.locator("main#main")).toBeFocused();
+
   const source = page.getByRole("link", { name: /Inspect Lab source/i });
   await expect(source).toHaveAttribute("href", /github\.com\/ahmadkassar1\/ahmad-portfolio/);
   await expect(source).toHaveAttribute("rel", /noopener noreferrer/);
