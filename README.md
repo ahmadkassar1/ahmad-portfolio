@@ -4,6 +4,23 @@ A frontend portfolio with two ways to browse: a server-rendered **Ledger** and a
 
 [Live portfolio](https://ahmad-portfolio-nine-weld.vercel.app/) · [Course player demo](https://itlegend-course-player-taupe.vercel.app/) · [Course player source](https://github.com/ahmadkassar1/itlegend-course-player)
 
+[Explore the interactive Lab](https://ahmad-portfolio-nine-weld.vercel.app/lab) · [Inspect Lab source](https://github.com/ahmadkassar1/ahmad-portfolio/tree/main/src/app/lab)
+
+## Lab quick tour for reviewers
+
+The five Lab experiments are **interactive portfolio demos**, not deployed customer products. They use fictional, sample or browser-local data. Each lives under `/lab/<slug>` in this repository; a working route and the claimed behavior still need to be checked on the live deployment.
+
+| Demo | Engineering problem illustrated | Suggested review path |
+| --- | --- | --- |
+| [Helm](https://ahmad-portfolio-nine-weld.vercel.app/lab/helm) | Present API delivery metrics and events in a readable analytics UI | Explore KPIs, SVG charts, command palette and deliveries table using fictional events. |
+| [Forge](https://ahmad-portfolio-nine-weld.vercel.app/lab/forge) | Configure structured forms with direct manipulation | Add and rearrange fields, change properties, undo/redo and inspect the exported schema. |
+| [Fixtura](https://ahmad-portfolio-nine-weld.vercel.app/lab/fixtura) | Generate repeatable test fixtures from schema inputs | Try sample JSON, TypeScript or SQL DDL; compare seeded output and JSON/CSV/SQL exports. |
+| [Redacto](https://ahmad-portfolio-nine-weld.vercel.app/lab/redacto) | Explore PDF/image redaction controls | Use **non-sensitive sample documents only**; detection and export behavior are experimental and have not been independently security-audited. |
+| [Margin Lab](https://ahmad-portfolio-nine-weld.vercel.app/lab/margin-lab) | Model pricing under costs and marketplace fees | Adjust costs/fees and compare break-even and what-if scenarios. |
+
+**Verification boundary:** The table describes features represented in `src/data/lab.ts`; it is not proof that every live workflow passed manual testing. No real merchant, customer, learner, payment or delivery metrics are implied. Test on the hosted site and review source before relying on any output, especially document redaction. The [course-player project](https://github.com/ahmadkassar1/itlegend-course-player) is a separate challenge demo with its own verification records.
+
+
 ## Setup
 
 Use Node.js 20.9 or newer and npm. No environment variables are required.
