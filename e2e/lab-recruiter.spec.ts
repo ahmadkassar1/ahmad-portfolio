@@ -80,3 +80,22 @@ test("All Lab detail routes support skip navigation and label sample content acc
   await expect(page.getByText("sample data", { exact: true })).toBeVisible();
   expect(errors).toEqual([]);
 });
+
+
+test("Main portfolio skip link transfers keyboard focus to content", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+
+  await page.goto(origin, { waitUntil: "domcontentloaded" });
+  const main = page.locator('main#main[tabindex="-1"]');
+  await expect(main).toHaveCount(1);
+  const skip = page.getByRole("link", { name: "Skip to content" });
+  await expect(skip).toHaveAttribute("href", "#main");
+  await skip.focus();
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(/#main$/);
+  await expect(main).toBeFocused();
+  expect(errors).toEqual([]);
+});
