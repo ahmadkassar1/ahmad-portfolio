@@ -22,8 +22,8 @@ export const labProjects: LabProject[] = [
     slug: "helm",
     name: "Helm",
     tagline:
-      "Analytics console for a fictional email + webhooks API — KPIs, hand-built SVG charts, a command palette, and a live deliveries table.",
-    blurb: "SaaS analytics dashboard — charts, command palette, live table.",
+      "Analytics console for a fictional email + webhooks API — KPIs, hand-built SVG charts, a command palette, and a sample deliveries table.",
+    blurb: "SaaS analytics dashboard — charts, command palette, sample table.",
     tags: ["Dashboard", "Data viz", "⌘K"],
     status: "live",
     accent: "#5aa9a0",
@@ -54,7 +54,7 @@ export const labProjects: LabProject[] = [
     tagline:
       "Document redaction experiment for PDFs and images, with detection and export controls. Use sample documents when evaluating the tool.",
     blurb: "PDF/image redaction experiment — detection and export controls.",
-    tags: ["Privacy", "PDF", "On-device"],
+    tags: ["Privacy", "PDF", "Experimental"],
     status: "live",
     accent: "#b91c1c",
   },

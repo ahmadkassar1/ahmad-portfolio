@@ -1,0 +1,101 @@
+import { expect, test } from "@playwright/test";
+
+const origin = process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:3000";
+
+test("Lab gallery labels sample demos and supports keyboard-first mobile navigation", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+
+  await page.goto(`${origin}/lab`, { waitUntil: "domcontentloaded" });
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Builds");
+  await expect(
+    page.getByText(/interactive demos using sample or local data, not live customer systems/i),
+  ).toBeVisible();
+
+  // Global skip navigation must land on the Lab main landmark, not a missing hash target.
+  const skip = page.getByRole("link", { name: "Skip to content" });
+  await expect(skip).toHaveAttribute("href", "#main");
+  await expect(page.locator("main#main[tabindex=\"-1\"]")).toHaveCount(1);
+  await skip.focus();
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(/#main$/);
+  await expect(page.locator("main#main")).toBeFocused();
+
+  const source = page.getByRole("link", { name: /Inspect Lab source/i });
+  await expect(source).toHaveAttribute("href", /github\.com\/ahmadkassar1\/ahmad-portfolio/);
+  await expect(source).toHaveAttribute("rel", /noopener noreferrer/);
+
+  const cards = page.locator('main a[href^="/lab/"]');
+  await expect(cards).toHaveCount(5);
+  // Sample analytics and experimental privacy tooling must not imply verified production guarantees.
+  await expect(cards.first()).toContainText(/sample deliveries table/i);
+  await expect(cards.nth(3)).toContainText("Experimental");
+  await expect(cards.nth(3)).not.toContainText("On-device");
+  for (const slug of ["helm", "forge", "fixtura", "redacto", "margin-lab"]) {
+    await expect(page.locator(`main a[href="/lab/${slug}"]`)).toBeVisible();
+  }
+
+  // Start at the preceding link and use a real Tab key to reach the first demo.
+  await source.focus();
+  await page.keyboard.press("Tab");
+  await expect(cards.first()).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(/\/lab\/helm\/?$/);
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  // The global skip link must work inside an individual Lab demo as well.
+  await expect(page.locator('main#main[tabindex="-1"]')).toHaveCount(1);
+  await skip.focus();
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(/\/lab\/helm\/?#main$/);
+  await expect(page.locator("main#main")).toBeFocused();
+  expect(errors).toEqual([]);
+});
+
+
+test("All Lab detail routes support skip navigation and label sample content accurately", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+
+  for (const slug of ["forge", "fixtura", "redacto", "margin-lab"]) {
+    await page.goto(`${origin}/lab/${slug}`, { waitUntil: "domcontentloaded" });
+    const main = page.locator('main#main[tabindex="-1"]');
+    await expect(main).toHaveCount(1);
+    const skip = page.getByRole("link", { name: "Skip to content" });
+    await expect(skip).toHaveAttribute("href", "#main");
+    await skip.focus();
+    await page.keyboard.press("Enter");
+    await expect(page).toHaveURL(new RegExp(`/lab/${slug}/?#main$`));
+    await expect(main).toBeFocused();
+  }
+
+  await expect(page.locator("main#main")).toHaveCount(1);
+  await page.goto(`${origin}/lab/redacto`, { waitUntil: "domcontentloaded" });
+  await expect(page.getByText(/privacy behavior has not been independently audited/i)).toBeVisible();
+  await expect(page.getByText(/Experimental · use sample files/i)).toHaveCount(1);
+  await page.goto(`${origin}/lab/helm`, { waitUntil: "domcontentloaded" });
+  await expect(page.getByText("sample data", { exact: true })).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+
+test("Main portfolio skip link transfers keyboard focus to content", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+
+  await page.goto(origin, { waitUntil: "domcontentloaded" });
+  const main = page.locator('main#main[tabindex="-1"]');
+  await expect(main).toHaveCount(1);
+  const skip = page.getByRole("link", { name: "Skip to content" });
+  await expect(skip).toHaveAttribute("href", "#main");
+  await skip.focus();
+  await page.keyboard.press("Enter");
+  await expect(page).toHaveURL(/#main$/);
+  await expect(main).toBeFocused();
+  expect(errors).toEqual([]);
+});
