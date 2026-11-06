@@ -255,7 +255,7 @@ function FixturaEditor({ initialSchema }: { initialSchema: Schema }) {
         </aside>
 
         {/* Preview */}
-        <main className="min-h-0 flex-1 overflow-auto p-4 sm:p-6">
+        <main id="main" tabIndex={-1} className="min-h-0 flex-1 overflow-auto p-4 sm:p-6">
           <div className="mb-3 flex items-center gap-2 text-sm text-zinc-500">
             <span className="font-medium text-zinc-700">{selected?.name}</span>
             <span className="text-zinc-400">·</span>

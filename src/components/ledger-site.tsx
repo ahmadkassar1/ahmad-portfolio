@@ -19,7 +19,7 @@ export function LedgerSite() {
   return (
     <>
       <Nav />
-      <main id="main">
+      <main id="main" tabIndex={-1}>
         <Hero />
         <SelectedWork />
         <DetailStrip />

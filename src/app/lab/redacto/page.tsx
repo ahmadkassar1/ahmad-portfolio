@@ -92,7 +92,7 @@ export default function RedactoPage() {
         <span className="grid h-7 w-7 shrink-0 place-items-center rounded-md bg-red-700 text-sm font-semibold text-white">▮</span>
         <span className="font-semibold tracking-tight">Redacto</span>
         <span className="hidden items-center gap-1.5 rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs text-zinc-500 sm:flex">
-          <span className="h-1.5 w-1.5 rounded-full bg-green-600" /> on-device · nothing uploaded
+          <span className="h-1.5 w-1.5 rounded-full bg-green-600" /> Experimental · use sample files
         </span>
         {status === "ready" && (
           <div className="ml-auto flex items-center gap-1.5">
@@ -106,6 +106,7 @@ export default function RedactoPage() {
         )}
       </header>
 
+      <main id="main" tabIndex={-1}>
       {status === "empty" && (
         <div className="mx-auto max-w-2xl px-6 py-20">
           <label
@@ -114,7 +115,7 @@ export default function RedactoPage() {
             className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-zinc-300 bg-white px-6 py-16 text-center transition-colors hover:border-red-400"
           >
             <span className="text-lg font-medium text-zinc-700">Drop a PDF or image to redact</span>
-            <span className="mt-1.5 text-sm text-zinc-500">It’s rendered and processed entirely in your browser — open DevTools, you’ll see zero uploads.</span>
+            <span className="mt-1.5 text-sm text-zinc-500">Use sample files to explore browser-based rendering and redaction controls; privacy behavior has not been independently audited.</span>
             <span className="mt-4 rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white">Choose a file</span>
             <input
               type="file"
@@ -125,7 +126,7 @@ export default function RedactoPage() {
           </label>
           <p className="mt-6 text-center text-xs text-zinc-400">
             Detects SSNs, card numbers (Luhn-checked), emails, phones &amp; more. Export burns the boxes into the pixels —
-            the redacted text is gone, not just covered.
+            verify redaction effectiveness before using sensitive documents.
           </p>
         </div>
       )}
@@ -207,6 +208,7 @@ export default function RedactoPage() {
           </aside>
         </div>
       )}
+      </main>
     </div>
   );
 }
