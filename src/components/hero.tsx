@@ -16,17 +16,17 @@ export function Hero() {
           </div>
 
           <h1 className="text-display rise mt-6 text-ink [animation-delay:80ms]">
-            Interfaces that{" "}
+            Software that{" "}
             <em className="font-serif italic text-accent-bright">
-              run the business
+              runs the business
             </em>
             .
           </h1>
 
           <p className="fade-rise mt-7 max-w-md text-lg leading-relaxed text-ink-soft [animation-delay:160ms]">
-            I design and build the working interfaces behind business
-            software: ERP modules, CRM pipelines, dashboards, and storefronts.
-            Dense, stateful products that people run their workday in.
+            I build B2B ERP and SaaS applications, from user interfaces to APIs
+            and data. My work spans project management, finance, accounting,
+            stock management, and AI-integrated workflows.
           </p>
 
           <div className="fade-rise mt-9 flex flex-wrap items-center gap-x-7 gap-y-5 [animation-delay:240ms]">
@@ -35,6 +35,13 @@ export function Hero() {
               className="rounded-full bg-accent px-6 py-3 text-sm font-medium text-ground transition-colors hover:bg-accent-bright"
             >
               See the work
+            </a>
+            <a
+              href={site.cv}
+              download
+              className="text-sm font-medium text-ink underline-offset-4 transition-colors hover:text-accent-bright hover:underline"
+            >
+              Download CV (PDF)
             </a>
             <a
               href="#contact"
@@ -51,7 +58,7 @@ export function Hero() {
           </div>
 
           <p className="fade-rise mt-8 font-mono text-xs text-ink-faint [animation-delay:320ms]">
-            Angular · React · Next.js · TypeScript
+            Angular · React · Next.js · TypeScript · Supabase · PostgreSQL
           </p>
         </div>
 

@@ -51,7 +51,7 @@ export default function OpenGraphImage() {
             display: "flex",
           }}
         >
-          Interfaces that run the business.
+          Software that runs the business.
         </div>
 
         <div
@@ -63,7 +63,7 @@ export default function OpenGraphImage() {
             color: "#a8a59a",
           }}
         >
-          <div>Frontend Developer — Angular · React · Next.js</div>
+          <div>{site.role}</div>
           <div style={{ color: "#7396ff" }}>{site.location}</div>
         </div>
       </div>

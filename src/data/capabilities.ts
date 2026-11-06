@@ -7,27 +7,27 @@ export type Capability = {
 export const capabilities: Capability[] = [
   {
     index: "01",
-    title: "Operations software",
+    title: "ERP & business operations",
     description:
-      "ERP modules for stock, sales, and projects: forms, tables, filters, and validation that catches a mistake before an order ships wrong.",
+      "Project management, finance, accounting, sales, and stock workflows, with reusable forms, data tables, filters, and validation.",
   },
   {
     index: "02",
-    title: "Pipelines & workflows",
+    title: "AI & workflow automation",
     description:
-      "Kanban boards, CRM stages, form builders, automation-connected flows. State that moves between columns and statuses without surprising anyone.",
+      "CRM pipelines, AI-generated outreach drafts, lead capture, and n8n automation that connect business data to the next action.",
   },
   {
     index: "03",
-    title: "Dashboards & internal tools",
+    title: "Full-stack SaaS applications",
     description:
-      "KPI surfaces, data tables, and admin panels, built for the people who look at them eight hours a day.",
+      "Responsive applications connected to backend API routes, Supabase, and PostgreSQL, including multi-tenant menus, ordering, and admin tools.",
   },
   {
     index: "04",
-    title: "Commerce & content",
+    title: "Interactive web experiences",
     description:
-      "Storefronts, QR ordering, and publishing platforms: customer-facing products built with the same discipline as the back office.",
+      "Course players, storefronts, dashboards, and interactive web demos with clear state management, accessible controls, and responsive layouts.",
   },
 ];
 

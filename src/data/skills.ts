@@ -24,7 +24,9 @@ export const skillGroups: SkillGroup[] = [
       "Angular Signals · SignalStore concepts",
       "RxJS",
       "REST APIs · async programming",
+      "Next.js API routes",
       "Supabase",
+      "PostgreSQL",
       "Routing, guards & navigation flows",
     ],
   },
@@ -36,6 +38,8 @@ export const skillGroups: SkillGroup[] = [
       "Vercel",
       "Linux & shell",
       "n8n automation",
+      "AI feature integration",
+      "Playwright · Jasmine · Jest",
     ],
   },
   {

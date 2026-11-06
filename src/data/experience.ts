@@ -14,7 +14,7 @@ export const shipped: Shipped[] = [
     context: "Horecons",
     period: "2025 — now",
     summary:
-      "The screens Horecons runs its operations on: sales, stock, and project modules in TheBridge ERP, plus Next.js event builds with n8n-connected lead flows.",
+      "B2B ERP features across project management, finance, accounting, sales, and stock management. Angular and TypeScript business workflows, plus React and Next.js event applications with n8n lead capture.",
   },
   {
     platform: "Populus",
