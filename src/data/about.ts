@@ -2,14 +2,14 @@ import { site } from "@/data/site";
 
 // Shared by the ledger and the Ops Deck so both views tell the same story.
 export const aboutNarrative = [
-  "I build business interfaces where the details matter: sales and stock screens, configurable forms, kanban boards and customer-facing flows. My work at Horecons and Interphase has centered on Angular and TypeScript.",
-  "My training includes online coursework with Programming Advices and Scrimba, and participation in the four-week assessment at 42 Beirut. I keep applying that foundation through frontend projects and practical problem solving.",
-  "For personal projects I also use React, Next.js and Supabase. I focus on reusable components, predictable state, accessible controls and verification of the interactions people rely on.",
+  "I am a full-stack developer and ERP specialist with 3+ years of web development experience. My work focuses on B2B business software, from project management, finance, accounting, sales, and stock management to configurable forms and Kanban workflows.",
+  "At Horecons and Interphase, I built Angular and TypeScript features for business platforms. My project work also spans React and Next.js applications, backend API routes, Supabase, PostgreSQL, AI-integrated CRM features, and n8n automation.",
+  "I focus on reusable components, clear data flows, accessible controls, and automated tests. My training includes coursework with Programming Advices and Scrimba, plus participation in the four-week assessment at 42 Beirut.",
 ];
 
 export const aboutFacts = [
   { label: "Location", value: site.location },
   { label: "Languages", value: "Arabic & English" },
-  { label: "Focus", value: "Business software & product interfaces" },
-  { label: "Personal projects", value: "React, Next.js + Supabase" },
+  { label: "Focus", value: "B2B ERP, SaaS & AI integrations" },
+  { label: "Development", value: "Interfaces, APIs & data" },
 ];

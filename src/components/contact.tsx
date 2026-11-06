@@ -21,10 +21,7 @@ export function Contact() {
             <em className="font-serif italic text-accent-bright">works</em>.
           </h2>
           <p className="mt-7 max-w-xl text-lg leading-relaxed text-ink-soft">
-            I take on products, interfaces, and systems: with teams that are
-            hiring, clients with something to build, or anyone who needs a
-            difficult interface shipped properly. Email is fastest; I reply
-            within a day.
+            {site.contactSummary}
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-4">
@@ -35,6 +32,13 @@ export function Contact() {
               Email me
             </a>
             <CopyEmailButton email={site.email} />
+            <a
+              href={site.cv}
+              download
+              className="rounded-full border border-line px-6 py-3 text-sm font-medium text-ink transition-colors hover:border-line-bright hover:text-accent-bright"
+            >
+              Download CV (PDF)
+            </a>
           </div>
 
           <div className="mt-16 flex flex-wrap gap-x-8 gap-y-3 border-t border-line pt-8 font-mono text-sm">

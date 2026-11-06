@@ -1,6 +1,6 @@
 # Ahmad Kassar — Portfolio
 
-A frontend portfolio with two ways to browse: a server-rendered **Ledger** and an optional interactive 3D **Ops Deck**. The Ledger is the default for reduced-motion visitors and less capable devices. The Lab contains five interactive frontend experiments with sample data.
+A professional portfolio for a **Full-Stack Developer | ERP Specialist**, focused on B2B ERP, SaaS, and AI-integrated business applications. It has two ways to browse: a server-rendered **Ledger** and an optional interactive 3D **Ops Deck**. The Ledger is the default for reduced-motion visitors and less capable devices. The Lab contains five interactive frontend experiments with sample data.
 
 [Live portfolio](https://ahmad-portfolio-nine-weld.vercel.app/) · [Course player demo](https://itlegend-course-player-taupe.vercel.app/) · [Course player source](https://github.com/ahmadkassar1/itlegend-course-player)
 
@@ -29,6 +29,7 @@ npm start
 - `src/components/featured-work.tsx`: server-rendered course player feature.
 - `src/components/world`: canvas, camera, scene objects and DOM controls/panels.
 - `src/data`: professional copy, project links, skills and Lab entries. `about.ts` is shared by both views; `featured-work.ts` supplies both the Ledger card and Ops Deck link.
+- `public/Ahmad_Kassar_Full_Stack_CV.pdf`: the current CV, linked from the Ledger and Ops Deck contact panel. Replace this file when the CV changes.
 - `src/lib`: interaction state and feature utilities. The Lab hash subscription supplies an empty server snapshot for consistent hydration and responds to browser navigation without resetting edits when Share uses `replaceState`.
 - `src/app/lab`: Helm analytics, Forge form builder, Fixtura mock-data generator, Redacto document redaction and Margin Lab pricing experiments.
 - `e2e`: Ops Deck navigation and shared-link regression tests, run by the Playwright workflow.

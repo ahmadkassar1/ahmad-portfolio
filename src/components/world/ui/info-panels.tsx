@@ -64,9 +64,7 @@ export function InfoPanels() {
       <PanelShell eyebrow="05" title="Contact" onClose={closePanel}>
         <div className="space-y-5">
           <p className="text-sm leading-relaxed text-ink-soft">
-            I take on products, interfaces, and systems — with teams that are
-            hiring, clients with something to build, or collaborators with a
-            good idea.
+            {site.contactSummary}
           </p>
           <a
             href={`mailto:${site.email}`}
@@ -74,7 +72,14 @@ export function InfoPanels() {
           >
             {site.email}
           </a>
-          <div className="flex gap-4">
+          <div className="flex flex-wrap gap-4">
+            <a
+              href={site.cv}
+              download
+              className="font-mono text-xs text-ink-soft underline-offset-4 hover:text-ink hover:underline"
+            >
+              Download CV (PDF)
+            </a>
             <a
               href={site.github}
               target="_blank"

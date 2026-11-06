@@ -29,7 +29,11 @@ export const metadata: Metadata = {
   },
   description: site.description,
   keywords: [
-    "frontend developer",
+    "full-stack developer",
+    "ERP specialist",
+    "B2B software",
+    "SaaS development",
+    "AI integrations",
     "Angular developer",
     "React developer",
     "Next.js",
@@ -78,6 +82,10 @@ const personJsonLd = {
     "TypeScript",
     "Tailwind CSS",
     "Supabase",
+    "PostgreSQL",
+    "ERP systems",
+    "Full-stack development",
+    "Workflow automation",
     "Frontend architecture",
   ],
 };
