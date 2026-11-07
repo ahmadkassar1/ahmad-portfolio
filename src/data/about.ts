@@ -2,8 +2,8 @@ import { site } from "@/data/site";
 
 // Shared by the ledger and the Ops Deck so both views tell the same story.
 export const aboutNarrative = [
-  "I am a full-stack developer and ERP specialist with 3+ years of web development experience. My work focuses on B2B business software, from project management, finance, accounting, sales, and stock management to configurable forms and Kanban workflows.",
-  "At Horecons and Interphase, I built Angular and TypeScript features for business platforms. My project work also spans React and Next.js applications, backend API routes, Supabase, PostgreSQL, AI-integrated CRM features, and n8n automation.",
+  "I am a full-stack developer and ERP specialist focused on B2B business software, from project management, finance, accounting, sales, and stock management to configurable forms and Kanban workflows.",
+  "At Horecons (Oct 2025 – Feb 2026) and Interphase (Mar 2024 – Sep 2025), I built Angular and TypeScript features for business platforms. My project work also spans React and Next.js applications, backend API routes, Supabase, PostgreSQL, AI-integrated CRM features, and n8n automation.",
   "I focus on reusable components, clear data flows, accessible controls, and automated tests. My training includes coursework with Programming Advices and Scrimba, plus participation in the four-week assessment at 42 Beirut.",
 ];
 
