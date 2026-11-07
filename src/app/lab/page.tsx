@@ -12,7 +12,7 @@ export default function LabIndex() {
   return (
     // Transparent surface: the layout's --ground + blueprint grid show
     // through, so the Lab reads as a native part of the portfolio.
-    <main className="relative min-h-dvh font-sans text-ink">
+    <main id="main" tabIndex={-1} className="relative min-h-dvh font-sans text-ink">
       <div className="mx-auto max-w-5xl px-6 py-16 sm:py-24">
         <Link
           href="/"
@@ -28,8 +28,16 @@ export default function LabIndex() {
           </h1>
           <p className="mt-5 text-base leading-relaxed text-ink-soft">
             {labProjects.length} interactive experiments exploring different parts of frontend development.
-            Try their controls and inspect how the interface responds. Sample data is used for demonstrations.
+            Try their controls and inspect how the interface responds. These are interactive demos using sample or local data, not live customer systems.
           </p>
+          <a
+            href="https://github.com/ahmadkassar1/ahmad-portfolio/tree/main/src/app/lab"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-5 inline-flex items-center rounded-md font-mono text-xs text-accent-bright underline underline-offset-4 hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4"
+          >
+            Inspect Lab source ↗
+          </a>
         </header>
 
         <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -50,7 +58,7 @@ export default function LabIndex() {
                     </span>
                   ) : (
                     <span className="ml-auto inline-flex items-center gap-1.5 rounded-full border border-accent/30 bg-accent/10 px-2.5 py-0.5 font-mono text-[11px] text-accent-bright">
-                      <span className="h-1.5 w-1.5 rounded-full bg-accent-bright" /> Live
+                      <span className="h-1.5 w-1.5 rounded-full bg-accent-bright" /> Demo
                     </span>
                   )}
                 </div>
@@ -66,13 +74,13 @@ export default function LabIndex() {
                   ))}
                 </div>
                 {p.status === "live" && (
-                  <span className="mt-5 font-mono text-xs text-accent-bright">Open project →</span>
+                  <span className="mt-5 font-mono text-xs text-accent-bright">Try interactive demo →</span>
                 )}
               </>
             );
 
             const cardCls =
-              "flex h-full flex-col rounded-2xl border border-line bg-panel/60 p-7 backdrop-blur-sm transition-colors";
+              "flex h-full flex-col rounded-2xl border border-line bg-panel/60 p-7 backdrop-blur-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-bright";
 
             return p.status === "live" ? (
               <Link key={p.slug} href={`/lab/${p.slug}`} className={`${cardCls} hover:border-line-bright`}>
